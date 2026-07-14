@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="NULLMARKET Медиа — новости, интервью и статьи о цифровых товарах, маркетплейсах и игровой индустрии.">
+    <title>NULLMARKET Медиа — новости и интервью</title>
+    <style>
+        /* ----- БАЗОВЫЕ СТИЛИ (светлая тема по умолчанию) ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: #f3f5fc;
+            color: #121826;
+            line-height: 1.5;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-theme {
+            background-color: #0b1120;
+            color: #e5e9f0;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #a78bfa, #3b82f6);
+            top: -150px;
+            left: -150px;
+        }
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f97316, #facc15);
+            bottom: -250px;
+            right: -200px;
+            opacity: 0.4;
+        }
+        .blur-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2dd4bf, #14b8a6);
+            top: 40%;
+            left: 60%;
+            opacity: 0.3;
+        }
+        body.dark-theme .blur-object { opacity: 0.25; }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.dark-theme .glass-card {
+            background: rgba(20, 30, 50, 0.75);
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-theme .header {
+            background: rgba(11, 17, 32, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+        body.dark-theme .logo {
+            background: linear-gradient(125deg, #e0e7ff, #a5b4fc, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: #4f46e5; }
+        .nav-link.active { color: #4f46e5; font-weight: 600; }
+        body.dark-theme .nav-link { color: #94a3b8; }
+        body.dark-theme .nav-link:hover,
+        body.dark-theme .nav-link.active { color: #818cf8; }
+
+        .badge {
+            background: linear-gradient(105deg, #d9e3f0, #ffffff);
+            padding: 6px 14px;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e2a47;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02), 0 2px 5px rgba(0,0,0,0.02);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        body.dark-theme .badge {
+            background: linear-gradient(105deg, #1e293b, #0f172a);
+            color: #e2e8f0;
+        }
+
+        .btn-download {
+            background: #11181c;
+            color: white;
+            border: none;
+            padding: 10px 26px;
+            border-radius: 48px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 14px -8px rgba(0,0,0,0.2);
+        }
+        body.dark-theme .btn-download {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        .btn-download:hover { transform: scale(1.02); opacity: 0.9; }
+
+        /* ----- ТЕМА (переключатель) ----- */
+        .theme-toggle {
+            background: rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 40px;
+            padding: 6px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 60px;
+            justify-content: center;
+        }
+        body.dark-theme .theme-toggle {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+        }
+        .theme-toggle .sun-icon,
+        .theme-toggle .moon-icon {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .theme-toggle .sun-icon { opacity: 0; transform: scale(0.5); position: absolute; }
+        .theme-toggle .moon-icon { opacity: 1; transform: scale(1); }
+        body.dark-theme .theme-toggle .sun-icon { opacity: 1; transform: scale(1); position: relative; }
+        body.dark-theme .theme-toggle .moon-icon { opacity: 0; transform: scale(0.5); position: absolute; }
+
+        /* ----- ПОЛЬЗОВАТЕЛЬСКОЕ МЕНЮ (как в index.html) ----- */
+        .user-menu-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+            white-space: nowrap;
+        }
+        body.dark-theme .user-name { color: #e5e9f0; }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            min-width: 220px;
+            display: none;
+            overflow: hidden;
+            z-index: 50;
+        }
+        body.dark-theme .user-dropdown {
+            background: #1e293b;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
+        }
+        .user-dropdown.active { display: block; }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        body.dark-theme .dropdown-header {
+            background: #0f172a;
+            border-bottom-color: #334155;
+        }
+        .dropdown-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: #0f172a;
+        }
+        body.dark-theme .dropdown-name { color: #e5e9f0; }
+        .dropdown-email {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        body.dark-theme .dropdown-email { color: #94a3b8; }
+        .dropdown-balance {
+            font-size: 13px;
+            margin-top: 6px;
+            color: #f59e0b;
+            font-weight: 600;
+        }
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #0f172a;
+        }
+        body.dark-theme .dropdown-item { color: #e5e9f0; }
+        .dropdown-item:hover { background: #f1f5f9; }
+        body.dark-theme .dropdown-item:hover { background: #334155; }
+        .dropdown-item.logout {
+            border-top: 1px solid #e2e8f0;
+            color: #ef4444;
+        }
+        body.dark-theme .dropdown-item.logout { border-top-color: #334155; }
+        .chevron {
+            transition: transform 0.2s;
+        }
+        .user-menu-container:hover .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* ----- ГЕРОЙ МЕДИА ----- */
+        .media-hero {
+            margin: 40px 0 48px;
+            border-radius: 48px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(245,248,255,0.8) 100%);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.7);
+            position: relative;
+            overflow: hidden;
+            padding: 40px 36px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-theme .media-hero {
+            background: linear-gradient(135deg, rgba(20, 30, 50, 0.9) 0%, rgba(11, 17, 32, 0.8) 100%);
+            border-color: rgba(255,255,255,0.08);
+        }
+        .media-hero-content { position: relative; z-index: 2; }
+        .media-hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(115deg, #111827, #2d3a5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+        body.dark-theme .media-hero h1 {
+            background: linear-gradient(115deg, #e0e7ff, #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .media-hero p {
+            font-size: 18px;
+            color: #475569;
+            max-width: 700px;
+        }
+        body.dark-theme .media-hero p { color: #94a3b8; }
+        .media-hero .hero-badge {
+            background: linear-gradient(95deg, #e0e7ff, #ede9fe);
+            border-radius: 32px;
+            padding: 6px 16px;
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4338ca;
+            margin-bottom: 18px;
+        }
+        body.dark-theme .media-hero .hero-badge {
+            background: linear-gradient(95deg, #1e293b, #2d3a5e);
+            color: #a5b4fc;
+        }
+
+        /* ----- КНОПКА СОЗДАНИЯ СТАТЬИ (для ролей) ----- */
+        .create-article-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(105deg, #4f46e5, #6366f1);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 48px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 8px 18px -8px rgba(79, 70, 229, 0.3);
+            margin-top: 18px;
+        }
+        .create-article-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(79, 70, 229, 0.4); }
+        .create-article-btn.hidden { display: none; }
+        body.dark-theme .create-article-btn {
+            background: linear-gradient(105deg, #818cf8, #6366f1);
+        }
+
+        /* ----- СЕТКА СТАТЕЙ ----- */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+            margin: 40px 0 60px;
+        }
+        .article-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 28px;
+            border: 1px solid rgba(255,255,240,0.6);
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        body.dark-theme .article-card {
+            background: rgba(20, 30, 50, 0.85);
+            border-color: rgba(255,255,255,0.06);
+        }
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 40px -16px rgba(0, 0, 0, 0.15);
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+        body.dark-theme .article-card:hover {
+            box-shadow: 0 24px 40px -16px rgba(0, 0, 0, 0.5);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+        .article-tag {
+            background: linear-gradient(95deg, #e0e7ff, #ede9fe);
+            border-radius: 40px;
+            padding: 4px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4338ca;
+            display: inline-block;
+            width: fit-content;
+        }
+        body.dark-theme .article-tag {
+            background: linear-gradient(95deg, #1e293b, #2d3a5e);
+            color: #a5b4fc;
+        }
+        .article-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #0f172a;
+        }
+        body.dark-theme .article-card h3 { color: #e5e9f0; }
+        .article-card p {
+            color: #475569;
+            flex: 1;
+        }
+        body.dark-theme .article-card p { color: #94a3b8; }
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #64748b;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 16px;
+            margin-top: auto;
+        }
+        body.dark-theme .article-meta {
+            color: #94a3b8;
+            border-top-color: rgba(255,255,255,0.06);
+        }
+        .article-meta .author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .article-meta .author-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        body.dark-theme .article-meta .author-avatar { background: #6366f1; }
+        .read-link {
+            font-weight: 600;
+            color: #4f46e5;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-family: inherit;
+            padding: 0;
+        }
+        .read-link:hover { gap: 12px; }
+        body.dark-theme .read-link { color: #818cf8; }
+
+        .article-views {
+            font-size: 12px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        body.dark-theme .article-views { color: #64748b; }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #64748b;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #0f172a;
+        }
+        body.dark-theme .empty-state h3 { color: #e5e9f0; }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px 0 50px;
+            flex-wrap: wrap;
+        }
+        .pagination button {
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: 1px solid #d1d5db;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        body.dark-theme .pagination button {
+            background: #1e293b;
+            border-color: #334155;
+            color: #e5e9f0;
+        }
+        .pagination button:hover {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+        .pagination button.active {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+        .pagination button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ----- МОДАЛЬНОЕ ОКНО ДЛЯ СОЗДАНИЯ СТАТЬИ ----- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: #ffffff;
+            border-radius: 40px;
+            max-width: 640px;
+            width: 100%;
+            padding: 36px 32px;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.3);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        body.dark-theme .modal-box {
+            background: #1e293b;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #94a3b8;
+            background: none;
+            border: none;
+            transition: color 0.2s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .modal-box h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        body.dark-theme .modal-box h2 { color: #e5e9f0; }
+        .modal-box label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+        body.dark-theme .modal-box label { color: #cbd5e1; }
+        .modal-box input,
+        .modal-box textarea,
+        .modal-box select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: border 0.2s;
+            background: #f8fafc;
+            color: #0f172a;
+            margin-bottom: 18px;
+        }
+        body.dark-theme .modal-box input,
+        body.dark-theme .modal-box textarea,
+        body.dark-theme .modal-box select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e5e9f0;
+        }
+        .modal-box input:focus,
+        .modal-box textarea:focus,
+        .modal-box select:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        .modal-box textarea { min-height: 120px; resize: vertical; }
+        .modal-box .submit-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 48px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .modal-box .submit-btn:hover { background: #4338ca; transform: translateY(-1px); }
+        body.dark-theme .modal-box .submit-btn { background: #6366f1; }
+        body.dark-theme .modal-box .submit-btn:hover { background: #818cf8; }
+
+        .modal-box .error-msg {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 14px;
+            display: none;
+        }
+        .modal-box .error-msg.show { display: block; }
+
+        /* ----- КРАСИВОЕ УВЕДОМЛЕНИЕ (Toast) ----- */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 420px;
+            width: 100%;
+        }
+        .toast {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 16px 20px;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            animation: slideInRight 0.4s ease;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        body.dark-theme .toast {
+            background: #1e293b;
+            border-color: rgba(255,255,255,0.06);
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOutRight {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(60px); }
+        }
+        .toast.hiding {
+            animation: slideOutRight 0.3s ease forwards;
+        }
+        .toast .toast-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+        .toast .toast-icon.success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+        .toast .toast-icon.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+        .toast .toast-icon.info {
+            background: rgba(79, 70, 229, 0.15);
+            color: #4f46e5;
+        }
+        .toast .toast-content {
+            flex: 1;
+        }
+        .toast .toast-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #0f172a;
+        }
+        body.dark-theme .toast .toast-title { color: #e5e9f0; }
+        .toast .toast-message {
+            font-size: 13px;
+            color: #64748b;
+        }
+        body.dark-theme .toast .toast-message { color: #94a3b8; }
+        .toast .toast-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .toast .toast-close:hover {
+            background: rgba(0,0,0,0.05);
+            color: #ef4444;
+        }
+        body.dark-theme .toast .toast-close:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* ----- ПОДВАЛ ----- */
+        .media-footer {
+            padding: 48px 0 32px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        body.dark-theme .media-footer { border-top-color: rgba(255,255,255,0.06); }
+        .media-footer a {
+            color: #475569;
+            text-decoration: none;
+        }
+        body.dark-theme .media-footer a { color: #94a3b8; }
+        .media-footer a:hover { color: #4f46e5; }
+        body.dark-theme .media-footer a:hover { color: #818cf8; }
+
+        @media (max-width: 760px) {
+            .container { padding: 0 20px; }
+            .media-hero { padding: 28px 20px; }
+            .media-hero h1 { font-size: 32px; }
+            .articles-grid { grid-template-columns: 1fr; }
+            .header-inner { flex-wrap: wrap; }
+            .nav-links { gap: 12px; }
+            .nav-link { font-size: 14px; }
+            .user-name { display: none; }
+            .user-menu-container { gap: 4px; }
+            .toast-container { right: 16px; left: 16px; max-width: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+<div class="blur-object blur-3"></div>
+
+<header class="header">
+    <div class="container header-inner">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/marketplace" class="nav-link">Маркетплейс</a>
+                <a href="/media" class="nav-link active">Медиа</a>
+                <a href="/support" class="nav-link">Поддержка</a>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <span class="badge">Новости и интервью</span>
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                <span class="sun-icon">☀️</span>
+                <span class="moon-icon">🌙</span>
+            </button>
+            <div id="authButtonContainer">
+                <button class="btn-download" id="mediaAuthBtn">Авторизация</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <!-- ГЕРОЙ МЕДИА -->
+    <div class="media-hero">
+        <div class="media-hero-content">
+            <div class="hero-badge">Интервью и статьи</div>
+            <h1>NULLMARKET Медиа — новости, интервью, аналитика</h1>
+            <p>Эксклюзивные материалы о цифровых товарах, маркетплейсах, игровой индустрии и трендах. Интервью с разработчиками, обзоры и мнения экспертов.</p>
+            <button class="create-article-btn hidden" id="createArticleBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                Создать статью
+            </button>
+        </div>
+    </div>
+
+    <!-- СЕТКА СТАТЕЙ -->
+    <div id="articlesContainer">
+        <div class="loading-spinner">Загрузка статей...</div>
+    </div>
+
+    <!-- ПАГИНАЦИЯ -->
+    <div class="pagination" id="pagination"></div>
+
+    <!-- ПОДВАЛ -->
+    <footer class="media-footer">
+        <div>© 2025-2026 NULLMARKET Медиа. Новости, интервью, аналитика о цифровых товарах и маркетплейсах.</div>
+        <div style="display: flex; gap: 32px;">
+            <a href="#">Все статьи</a>
+            <a href="#">Интервью</a>
+            <a href="#">Новости</a>
+            <a href="#">Контакты</a>
+        </div>
+    </footer>
+</main>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ СОЗДАНИЯ СТАТЬИ -->
+<div class="modal-overlay" id="createModal">
+    <div class="modal-box">
+        <button class="modal-close" id="modalClose">✕</button>
+        <h2>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Создать статью
+        </h2>
+        <form id="createArticleForm">
+            <label for="articleTitle">Заголовок</label>
+            <input type="text" id="articleTitle" placeholder="Введите заголовок статьи" required>
+
+            <label for="articleTag">Тег (категория)</label>
+            <select id="articleTag">
+                <option value="Интервью">Интервью</option>
+                <option value="Аналитика">Аналитика</option>
+                <option value="Новости">Новости</option>
+                <option value="Мнение">Мнение</option>
+                <option value="Обзор">Обзор</option>
+				<option value="Гайд">Гайд</option>
+            </select>
+
+            <label for="articleContent">Содержание</label>
+            <textarea id="articleContent" placeholder="Текст статьи..." required></textarea>
+
+            <div class="error-msg" id="formError">Заполните все поля</div>
+            <button type="submit" class="submit-btn">Опубликовать статью</button>
+        </form>
+    </div>
+</div>
+
+<!-- КОНТЕЙНЕР ДЛЯ УВЕДОМЛЕНИЙ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+    // ============================================================
+    // 1. ТЕМНАЯ / СВЕТЛАЯ ТЕМА
+    // ============================================================
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    const savedTheme = localStorage.getItem('nullmarket-theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-theme');
+    } else if (savedTheme === 'light') {
+        body.classList.remove('dark-theme');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        body.classList.add('dark-theme');
+        localStorage.setItem('nullmarket-theme', 'dark');
+    }
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-theme');
+        const isDark = body.classList.contains('dark-theme');
+        localStorage.setItem('nullmarket-theme', isDark ? 'dark' : 'light');
+    });
+
+    // ============================================================
+    // 2. КРАСИВЫЕ УВЕДОМЛЕНИЯ (TOAST)
+    // ============================================================
+    function showToast(title, message, type = 'info', duration = 3000) {
+        const container = document.getElementById('toastContainer');
+        const icons = {
+            success: '✓',
+            error: '✕',
+            info: '●'
+        };
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+            <div class="toast-icon ${type}">${icons[type]}</div>
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close">✕</button>
+        `;
+
+        // Кнопка закрытия
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            removeToast(toast);
+        });
+
+        container.appendChild(toast);
+
+        // Автоматическое закрытие
+        const timeout = setTimeout(() => {
+            removeToast(toast);
+        }, duration);
+
+        // При наведении отменяем авто-закрытие
+        toast.addEventListener('mouseenter', () => clearTimeout(timeout));
+        toast.addEventListener('mouseleave', () => {
+            setTimeout(() => removeToast(toast), duration);
+        });
+
+        return toast;
+    }
+
+    function removeToast(toast) {
+        if (toast.classList.contains('hiding')) return;
+        toast.classList.add('hiding');
+        setTimeout(() => {
+            if (toast.parentNode) toast.remove();
+        }, 300);
+    }
+
+    // ============================================================
+    // 3. ЗАГРУЗКА СТАТЕЙ С API
+    // ============================================================
+    let currentPage = 1;
+    const limit = 9;
+    let totalArticles = 0;
+
+    async function loadArticles(page = 1) {
+        const container = document.getElementById('articlesContainer');
+        container.innerHTML = '<div class="loading-spinner">Загрузка статей...</div>';
+
+        try {
+            const offset = (page - 1) * limit;
+            const res = await fetch(`/api/media/articles?limit=${limit}&offset=${offset}`);
+            if (!res.ok) throw new Error('Ошибка загрузки статей');
+            const data = await res.json();
+            totalArticles = data.total || 0;
+            renderArticles(data.articles || []);
+            renderPagination(page, Math.ceil(totalArticles / limit));
+        } catch (e) {
+            console.error('Ошибка загрузки статей:', e);
+            container.innerHTML = `
+                <div class="empty-state">
+                    <h3>Не удалось загрузить статьи</h3>
+                    <p>Попробуйте обновить страницу позже</p>
+                </div>
+            `;
+            showToast('Ошибка', 'Не удалось загрузить статьи', 'error');
+        }
+    }
+
+    function renderArticles(articles) {
+        const container = document.getElementById('articlesContainer');
+        if (!articles || articles.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <h3>Пока нет статей</h3>
+                    <p>Будьте первым, кто опубликует материал!</p>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '<div class="articles-grid">';
+        articles.forEach(art => {
+            const date = new Date(art.created_at).toLocaleDateString('ru-RU', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+            const avatarLetter = (art.author_name || 'А').charAt(0).toUpperCase();
+            const views = art.views || 0;
+            html += `
+                <div class="article-card">
+                    <span class="article-tag">${art.tag || 'Статья'}</span>
+                    <h3>${art.title}</h3>
+                    <p>${art.content ? art.content.substring(0, 160) + (art.content.length > 160 ? '...' : '') : ''}</p>
+                    <div class="article-meta">
+                        <span class="author">
+                            <span class="author-avatar">${avatarLetter}</span>
+                            ${art.author_name || 'Автор'}
+                        </span>
+                        <span>${date}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                        <span class="article-views">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            ${views}
+                        </span>
+                        <a href="/media/${art.slug}" class="read-link">Читать полностью →</a>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    }
+
+    function renderPagination(currentPage, totalPages) {
+        const container = document.getElementById('pagination');
+        if (totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+
+        let html = `<button onclick="changePage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}>←</button>`;
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === currentPage) {
+                html += `<button class="active">${i}</button>`;
+            } else if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
+                html += `<button onclick="changePage(${i})">${i}</button>`;
+            } else if (i === currentPage - 3 || i === currentPage + 3) {
+                html += `<button disabled>…</button>`;
+            }
+        }
+        html += `<button onclick="changePage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}>→</button>`;
+        container.innerHTML = html;
+    }
+
+    function changePage(page) {
+        if (page < 1) return;
+        const totalPages = Math.ceil(totalArticles / limit);
+        if (page > totalPages) return;
+        currentPage = page;
+        loadArticles(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ============================================================
+    // 4. АВТОРИЗАЦИЯ / ПОЛЬЗОВАТЕЛЬСКОЕ МЕНЮ
+    // ============================================================
+    let isAuthenticated = false;
+    let currentUser = null;
+
+    const editorRoles = [
+        'head_beta_testers', 'head_cooperation', 'head_marketing',
+        'head_support', 'head_moderation', 'tech_admin', 'developer',
+        'tech_lead', 'ciso', 'ceo', 'board_of_directors'
+    ];
+
+    const authContainer = document.getElementById('authButtonContainer');
+    const createBtn = document.getElementById('createArticleBtn');
+
+    function showAuthButton() {
+        if (authContainer) {
+            authContainer.innerHTML = '<button class="btn-download" id="mediaAuthBtn">Авторизация</button>';
+            const newBtn = document.getElementById('mediaAuthBtn');
+            if (newBtn) {
+                newBtn.addEventListener('click', () => window.location.href = '/auth');
+            }
+        }
+        createBtn.classList.add('hidden');
+    }
+
+    function showUserMenu(user) {
+        const container = document.getElementById('authButtonContainer');
+        if (!container) return;
+
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-menu-container';
+        userDiv.innerHTML = `
+            <img src="${user.avatar}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=40&rounded=true'">
+            <span class="user-name">${user.name}</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="user-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-name">${user.name}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-balance">Баланс: ${user.balance || 0} ₽</div>
+                </div>
+                <div class="dropdown-item" data-action="purchases">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6M17 13l1.5 6M9 21h6M12 15v6"/></svg>
+                    Покупки
+                </div>
+                <div class="dropdown-item" data-action="sales">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Продажи
+                </div>
+                <div class="dropdown-item" data-action="messages">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                    Сообщения
+                </div>
+                <div class="dropdown-item" data-action="finance">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Финансы
+                </div>
+                <div class="dropdown-item" data-action="profile" data-user-id="${user.user_id}">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Профиль
+                </div>
+                <div class="dropdown-item logout" data-action="logout">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                    Выйти
+                </div>
+            </div>
+        `;
+
+        container.innerHTML = '';
+        container.appendChild(userDiv);
+
+        const menuContainer = container.querySelector('.user-menu-container');
+        const dropdown = container.querySelector('.user-dropdown');
+
+        menuContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', () => {
+            dropdown.classList.remove('active');
+        });
+
+        container.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                dropdown.classList.remove('active');
+                const action = item.dataset.action;
+                const userId = item.dataset.userId;
+
+                switch(action) {
+                    case 'logout':
+                        try {
+                            await fetch('/api/logout', { method: 'POST' });
+                            isAuthenticated = false;
+                            currentUser = null;
+                            showToast('Выход', 'Вы вышли из аккаунта', 'success');
+                            setTimeout(() => window.location.reload(), 1000);
+                        } catch(e) {
+                            showToast('Ошибка', 'Не удалось выйти из аккаунта', 'error');
+                        }
+                        break;
+                    case 'profile':
+                        if (userId) window.location.href = `/user/${userId}`;
+                        else window.location.href = '/profile';
+                        break;
+                    case 'purchases': showToast('Покупки', 'История покупок скоро появится', 'info'); break;
+                    case 'sales': showToast('Продажи', 'Ваши продажи будут здесь', 'info'); break;
+                    case 'messages': window.location.href = '/messages'; break;
+                    case 'finance': showToast('Финансы', 'Финансовые операции и вывод средств', 'info'); break;
+                    default: showToast('Раздел', `"${item.innerText.trim()}" в разработке`, 'info');
+                }
+            });
+        });
+
+        // Проверяем роль для кнопки создания статьи
+        if (user.role && editorRoles.includes(user.role)) {
+            createBtn.classList.remove('hidden');
+        } else {
+            createBtn.classList.add('hidden');
+        }
+    }
+
+    async function checkAuth() {
+        try {
+            const response = await fetch('/api/me');
+            if (response.ok) {
+                isAuthenticated = true;
+                currentUser = await response.json();
+                showUserMenu(currentUser);
+            } else {
+                isAuthenticated = false;
+                showAuthButton();
+            }
+        } catch(e) {
+            console.log('Ошибка проверки авторизации:', e);
+            isAuthenticated = false;
+            showAuthButton();
+        }
+    }
+
+    // ============================================================
+    // 5. СОЗДАНИЕ СТАТЬИ (МОДАЛЬНОЕ ОКНО)
+    // ============================================================
+    const modal = document.getElementById('createModal');
+    const modalClose = document.getElementById('modalClose');
+    const createForm = document.getElementById('createArticleForm');
+    const formError = document.getElementById('formError');
+
+    createBtn.addEventListener('click', () => {
+        if (!isAuthenticated) {
+            showToast('Ошибка', 'Сначала авторизуйтесь', 'error');
+            return;
+        }
+        modal.classList.add('active');
+        formError.classList.remove('show');
+        document.getElementById('articleTitle').value = '';
+        document.getElementById('articleContent').value = '';
+    });
+
+    modalClose.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+    });
+
+    createForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const title = document.getElementById('articleTitle').value.trim();
+        const tag = document.getElementById('articleTag').value;
+        const content = document.getElementById('articleContent').value.trim();
+
+        if (!title || !content) {
+            formError.textContent = 'Заполните заголовок и содержание';
+            formError.classList.add('show');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/media/articles', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, tag, content })
+            });
+
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.error || 'Ошибка публикации');
+            }
+
+            const data = await res.json();
+            showToast('Успех!', 'Статья опубликована', 'success');
+            modal.classList.remove('active');
+            currentPage = 1;
+            loadArticles(1);
+            if (data.slug) {
+                setTimeout(() => {
+                    window.location.href = `/media/${data.slug}`;
+                }, 1500);
+            }
+        } catch (e) {
+            console.error('Ошибка создания статьи:', e);
+            formError.textContent = e.message || 'Ошибка сервера';
+            formError.classList.add('show');
+            showToast('Ошибка', e.message || 'Не удалось опубликовать статью', 'error');
+        }
+    });
+
+    // ============================================================
+    // 6. ЗАПУСК
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        checkAuth();
+        loadArticles(1);
+    });
+
+    console.log('NULLMARKET Медиа загружена');
+    console.log('Роли с правами на создание статей:', editorRoles.join(', '));
+</script>
+</body>
+</html>

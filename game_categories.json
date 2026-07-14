@@ -1,0 +1,4646 @@
+[
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "A Plague Tale: Innocence",
+        "id": 48
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "A Plague Tale: Innocence",
+        "id": 49
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "A Way Out",
+        "id": 50
+    },
+    {
+        "category_name": "Совместная игра",
+        "category_slug": "coop",
+        "game_name": "A Way Out",
+        "id": 51
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "ARK Survival Evolved",
+        "id": 52
+    },
+    {
+        "category_name": "Динозавры",
+        "category_slug": "dinosaurs",
+        "game_name": "ARK Survival Evolved",
+        "id": 53
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "ARK Survival Evolved",
+        "id": 54
+    },
+    {
+        "category_name": "Топ-аккаунты",
+        "category_slug": "top-accounts",
+        "game_name": "ARK Survival Evolved",
+        "id": 55
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "ARK Survival Evolved",
+        "id": 56
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Atomic Heart",
+        "id": 57
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Atomic Heart",
+        "id": 58
+    },
+    {
+        "category_name": "Артефакты",
+        "category_slug": "artifacts",
+        "game_name": "Atomic Heart",
+        "id": 59
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Apex Legends",
+        "id": 60
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Apex Legends",
+        "id": 61
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Apex Legends",
+        "id": 62
+    },
+    {
+        "category_name": "Буст рейтинга",
+        "category_slug": "rank-boost",
+        "game_name": "Apex Legends",
+        "id": 63
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Assassin's Creed Valhalla",
+        "id": 64
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Assassin's Creed Valhalla",
+        "id": 65
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Assassin's Creed Valhalla",
+        "id": 66
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Assassin's Creed Odyssey",
+        "id": 67
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Assassin's Creed Odyssey",
+        "id": 68
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Assassin's Creed Origins",
+        "id": 69
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Assassin's Creed Origins",
+        "id": 70
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Armored Core VI",
+        "id": 71
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Armored Core VI",
+        "id": 72
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Age of Empires IV",
+        "id": 73
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Age of Empires IV",
+        "id": 74
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Age of Wonders 4",
+        "id": 75
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Age of Wonders 4",
+        "id": 76
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Alan Wake 2",
+        "id": 77
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Alan Wake 2",
+        "id": 78
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Among Us",
+        "id": 79
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Among Us",
+        "id": 80
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Anno 1800",
+        "id": 81
+    },
+    {
+        "category_name": "Строительство",
+        "category_slug": "building",
+        "game_name": "Anno 1800",
+        "id": 82
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Anthem",
+        "id": 83
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Anthem",
+        "id": 84
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Astroneer",
+        "id": 85
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Astroneer",
+        "id": 86
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Atlas",
+        "id": 87
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Atlas",
+        "id": 88
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Avowed",
+        "id": 89
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Avowed",
+        "id": 90
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Battlefield 2042",
+        "id": 91
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Battlefield 2042",
+        "id": 92
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Battlefield 2042",
+        "id": 93
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Battlefield V",
+        "id": 94
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Battlefield V",
+        "id": 95
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Baldur's Gate 3",
+        "id": 96
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Baldur's Gate 3",
+        "id": 97
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Baldur's Gate 3",
+        "id": 98
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Baldur's Gate 3",
+        "id": 99
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Banishers: Ghosts of New Eden",
+        "id": 100
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Banishers: Ghosts of New Eden",
+        "id": 101
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Barotrauma",
+        "id": 102
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Barotrauma",
+        "id": 103
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Battlerite",
+        "id": 104
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Battlerite",
+        "id": 105
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Bayonetta 3",
+        "id": 106
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Bayonetta 3",
+        "id": 107
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Beat Saber",
+        "id": 108
+    },
+    {
+        "category_name": "Песни",
+        "category_slug": "songs",
+        "game_name": "Beat Saber",
+        "id": 109
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Ben 10: Power Trip",
+        "id": 110
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Ben 10: Power Trip",
+        "id": 111
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Beyond Good and Evil 2",
+        "id": 112
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Beyond Good and Evil 2",
+        "id": 113
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "BioShock Infinite",
+        "id": 114
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "BioShock Infinite",
+        "id": 115
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Black Desert Online",
+        "id": 116
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Black Desert Online",
+        "id": 117
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Black Desert Online",
+        "id": 118
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Black Desert Online",
+        "id": 119
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Black Myth: Wukong",
+        "id": 120
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Black Myth: Wukong",
+        "id": 121
+    },
+    {
+        "category_name": "Артефакты",
+        "category_slug": "artifacts",
+        "game_name": "Black Myth: Wukong",
+        "id": 122
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Blasphemous 2",
+        "id": 123
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Blasphemous 2",
+        "id": 124
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "BlazBlue: Cross Tag Battle",
+        "id": 125
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "BlazBlue: Cross Tag Battle",
+        "id": 126
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Borderlands 3",
+        "id": 127
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Borderlands 3",
+        "id": 128
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Borderlands 3",
+        "id": 129
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Brawlhalla",
+        "id": 130
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Brawlhalla",
+        "id": 131
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Brawlhalla",
+        "id": 132
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Brotato",
+        "id": 133
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Brotato",
+        "id": 134
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Bus Simulator 21",
+        "id": 135
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Bus Simulator 21",
+        "id": 136
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Call of Duty: Modern Warfare III",
+        "id": 137
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Call of Duty: Modern Warfare III",
+        "id": 138
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Call of Duty: Modern Warfare III",
+        "id": 139
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Call of Duty: Modern Warfare III",
+        "id": 140
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Call of Duty: Warzone",
+        "id": 141
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Call of Duty: Warzone",
+        "id": 142
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Call of Duty: Warzone",
+        "id": 143
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Call of Duty: Warzone",
+        "id": 144
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Call of Duty: Black Ops Cold War",
+        "id": 145
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Call of Duty: Black Ops Cold War",
+        "id": 146
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Call of Duty: Black Ops Cold War",
+        "id": 147
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Call of Duty: Vanguard",
+        "id": 148
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Call of Duty: Vanguard",
+        "id": 149
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Call of Duty: Vanguard",
+        "id": 150
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Cities: Skylines II",
+        "id": 151
+    },
+    {
+        "category_name": "Строительство",
+        "category_slug": "building",
+        "game_name": "Cities: Skylines II",
+        "id": 152
+    },
+    {
+        "category_name": "Моды",
+        "category_slug": "mods",
+        "game_name": "Cities: Skylines II",
+        "id": 153
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Civilization VI",
+        "id": 154
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Civilization VI",
+        "id": 155
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Civilization VII",
+        "id": 156
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Civilization VII",
+        "id": 157
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Company of Heroes 3",
+        "id": 158
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Company of Heroes 3",
+        "id": 159
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Counter-Strike 2",
+        "id": 160
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Counter-Strike 2",
+        "id": 161
+    },
+    {
+        "category_name": "Буст рейтинга",
+        "category_slug": "rank-boost",
+        "game_name": "Counter-Strike 2",
+        "id": 162
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Counter-Strike 2",
+        "id": 163
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Cyberpunk 2077",
+        "id": 164
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Cyberpunk 2077",
+        "id": 165
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Cyberpunk 2077",
+        "id": 166
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Cyberpunk 2077",
+        "id": 167
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Cyberpunk 2077",
+        "id": 168
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Chivalry 2",
+        "id": 169
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Chivalry 2",
+        "id": 170
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Crusader Kings III",
+        "id": 171
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Crusader Kings III",
+        "id": 172
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Cult of the Lamb",
+        "id": 173
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Cult of the Lamb",
+        "id": 174
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Cuphead",
+        "id": 175
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Cuphead",
+        "id": 176
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dota 2",
+        "id": 177
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Dota 2",
+        "id": 178
+    },
+    {
+        "category_name": "Буст рейтинга",
+        "category_slug": "rank-boost",
+        "game_name": "Dota 2",
+        "id": 179
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Dota 2",
+        "id": 180
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Dota 2",
+        "id": 181
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dark Souls III",
+        "id": 182
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Dark Souls III",
+        "id": 183
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Dark Souls III",
+        "id": 184
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dead Cells",
+        "id": 185
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Dead Cells",
+        "id": 186
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dead Island 2",
+        "id": 187
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Dead Island 2",
+        "id": 188
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dead Space Remake",
+        "id": 189
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Dead Space Remake",
+        "id": 190
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Death Stranding",
+        "id": 191
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Death Stranding",
+        "id": 192
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Deathloop",
+        "id": 193
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Deathloop",
+        "id": 194
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Deep Rock Galactic",
+        "id": 195
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Deep Rock Galactic",
+        "id": 196
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Deep Rock Galactic",
+        "id": 197
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Demon's Souls",
+        "id": 198
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Demon's Souls",
+        "id": 199
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Destiny 2",
+        "id": 200
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Destiny 2",
+        "id": 201
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Destiny 2",
+        "id": 202
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Destiny 2",
+        "id": 203
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Diablo IV",
+        "id": 204
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Diablo IV",
+        "id": 205
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Diablo IV",
+        "id": 206
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Diablo IV",
+        "id": 207
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Diablo IV",
+        "id": 208
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Diablo II: Resurrected",
+        "id": 209
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Diablo II: Resurrected",
+        "id": 210
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Diablo II: Resurrected",
+        "id": 211
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Disco Elysium",
+        "id": 212
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Disco Elysium",
+        "id": 213
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Divinity: Original Sin 2",
+        "id": 214
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Divinity: Original Sin 2",
+        "id": 215
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Divinity: Original Sin 2",
+        "id": 216
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dragon Age: Dreadwolf",
+        "id": 217
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Dragon Age: Dreadwolf",
+        "id": 218
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dragon Ball FighterZ",
+        "id": 219
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Dragon Ball FighterZ",
+        "id": 220
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dragon Ball Z: Kakarot",
+        "id": 221
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Dragon Ball Z: Kakarot",
+        "id": 222
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dragon's Dogma 2",
+        "id": 223
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Dragon's Dogma 2",
+        "id": 224
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Dying Light 2",
+        "id": 225
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Dying Light 2",
+        "id": 226
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Elden Ring",
+        "id": 227
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Elden Ring",
+        "id": 228
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Elden Ring",
+        "id": 229
+    },
+    {
+        "category_name": "Артефакты",
+        "category_slug": "artifacts",
+        "game_name": "Elden Ring",
+        "id": 230
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Elden Ring",
+        "id": 231
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Escape from Tarkov",
+        "id": 232
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Escape from Tarkov",
+        "id": 233
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Escape from Tarkov",
+        "id": 234
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Escape from Tarkov",
+        "id": 235
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Euro Truck Simulator 2",
+        "id": 236
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Euro Truck Simulator 2",
+        "id": 237
+    },
+    {
+        "category_name": "Моды",
+        "category_slug": "mods",
+        "game_name": "Euro Truck Simulator 2",
+        "id": 238
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Evil West",
+        "id": 239
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Evil West",
+        "id": 240
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Exoprimal",
+        "id": 241
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Exoprimal",
+        "id": 242
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Elex II",
+        "id": 243
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Elex II",
+        "id": 244
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Empire of Sin",
+        "id": 245
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Empire of Sin",
+        "id": 246
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Endless Dungeon",
+        "id": 247
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Endless Dungeon",
+        "id": 248
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Everspace 2",
+        "id": 249
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Everspace 2",
+        "id": 250
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Evil Dead: The Game",
+        "id": 251
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Evil Dead: The Game",
+        "id": 252
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Fortnite",
+        "id": 253
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Fortnite",
+        "id": 254
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Fortnite",
+        "id": 255
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Fortnite",
+        "id": 256
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Fortnite",
+        "id": 257
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "FIFA 24",
+        "id": 258
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "FIFA 24",
+        "id": 259
+    },
+    {
+        "category_name": "Игроки",
+        "category_slug": "players",
+        "game_name": "FIFA 24",
+        "id": 260
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "FIFA 24",
+        "id": 261
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "FIFA 23",
+        "id": 262
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "FIFA 23",
+        "id": 263
+    },
+    {
+        "category_name": "Игроки",
+        "category_slug": "players",
+        "game_name": "FIFA 23",
+        "id": 264
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Fable",
+        "id": 265
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Fable",
+        "id": 266
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Far Cry 6",
+        "id": 267
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Far Cry 6",
+        "id": 268
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Far Cry 6",
+        "id": 269
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Final Fantasy XVI",
+        "id": 270
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Final Fantasy XVI",
+        "id": 271
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Final Fantasy XVI",
+        "id": 272
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Final Fantasy VII Remake",
+        "id": 273
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Final Fantasy VII Remake",
+        "id": 274
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Final Fantasy XIV",
+        "id": 275
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Final Fantasy XIV",
+        "id": 276
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Final Fantasy XIV",
+        "id": 277
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Fire Emblem Engage",
+        "id": 278
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Fire Emblem Engage",
+        "id": 279
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Forspoken",
+        "id": 280
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Forspoken",
+        "id": 281
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Forza Horizon 5",
+        "id": 282
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Forza Horizon 5",
+        "id": 283
+    },
+    {
+        "category_name": "Автомобили",
+        "category_slug": "cars",
+        "game_name": "Forza Horizon 5",
+        "id": 284
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Forza Horizon 5",
+        "id": 285
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Forza Motorsport",
+        "id": 286
+    },
+    {
+        "category_name": "Автомобили",
+        "category_slug": "cars",
+        "game_name": "Forza Motorsport",
+        "id": 287
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Frostpunk 2",
+        "id": 288
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Frostpunk 2",
+        "id": 289
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Genshin Impact",
+        "id": 290
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Genshin Impact",
+        "id": 291
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Genshin Impact",
+        "id": 292
+    },
+    {
+        "category_name": "Артефакты",
+        "category_slug": "artifacts",
+        "game_name": "Genshin Impact",
+        "id": 293
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Genshin Impact",
+        "id": 294
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Grand Theft Auto V",
+        "id": 295
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Grand Theft Auto V",
+        "id": 296
+    },
+    {
+        "category_name": "Автомобили",
+        "category_slug": "cars",
+        "game_name": "Grand Theft Auto V",
+        "id": 297
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Grand Theft Auto V",
+        "id": 298
+    },
+    {
+        "category_name": "Моды",
+        "category_slug": "mods",
+        "game_name": "Grand Theft Auto V",
+        "id": 299
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Grand Theft Auto VI",
+        "id": 300
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Grand Theft Auto VI",
+        "id": 301
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Ghost of Tsushima",
+        "id": 302
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Ghost of Tsushima",
+        "id": 303
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Ghost of Tsushima",
+        "id": 304
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "God of War",
+        "id": 305
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "God of War",
+        "id": 306
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "God of War Ragnarok",
+        "id": 307
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "God of War Ragnarok",
+        "id": 308
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "God of War Ragnarok",
+        "id": 309
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Gothic",
+        "id": 310
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Gothic",
+        "id": 311
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Gothic",
+        "id": 312
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Grim Dawn",
+        "id": 313
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Grim Dawn",
+        "id": 314
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Grim Dawn",
+        "id": 315
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Guild Wars 2",
+        "id": 316
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Guild Wars 2",
+        "id": 317
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Guild Wars 2",
+        "id": 318
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Guild Wars 2",
+        "id": 319
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Gunfire Reborn",
+        "id": 320
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Gunfire Reborn",
+        "id": 321
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Hades",
+        "id": 322
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Hades",
+        "id": 323
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Hades II",
+        "id": 324
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Hades II",
+        "id": 325
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Half-Life: Alyx",
+        "id": 326
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Half-Life: Alyx",
+        "id": 327
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Halo Infinite",
+        "id": 328
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Halo Infinite",
+        "id": 329
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Halo Infinite",
+        "id": 330
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Halo Infinite",
+        "id": 331
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Heartbound",
+        "id": 332
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Heartbound",
+        "id": 333
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Hell Let Loose",
+        "id": 334
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Hell Let Loose",
+        "id": 335
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Hellblade: Senua's Sacrifice",
+        "id": 336
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Hellblade: Senua's Sacrifice",
+        "id": 337
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Hogwarts Legacy",
+        "id": 338
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Hogwarts Legacy",
+        "id": 339
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Hogwarts Legacy",
+        "id": 340
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Horizon Forbidden West",
+        "id": 341
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Horizon Forbidden West",
+        "id": 342
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Horizon Zero Dawn",
+        "id": 343
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Horizon Zero Dawn",
+        "id": 344
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Hot Wheels Unleashed 2",
+        "id": 345
+    },
+    {
+        "category_name": "Автомобили",
+        "category_slug": "cars",
+        "game_name": "Hot Wheels Unleashed 2",
+        "id": 346
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Humanity",
+        "id": 347
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Humanity",
+        "id": 348
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Hunt: Showdown",
+        "id": 349
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Hunt: Showdown",
+        "id": 350
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Hunt: Showdown",
+        "id": 351
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Hyper Scape",
+        "id": 352
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Hyper Scape",
+        "id": 353
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Immortals Fenyx Rising",
+        "id": 354
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Immortals Fenyx Rising",
+        "id": 355
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Immortals of Aveum",
+        "id": 356
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Immortals of Aveum",
+        "id": 357
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Inscryption",
+        "id": 358
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Inscryption",
+        "id": 359
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Insurgency: Sandstorm",
+        "id": 360
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Insurgency: Sandstorm",
+        "id": 361
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "It Takes Two",
+        "id": 362
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "It Takes Two",
+        "id": 363
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Isonzo",
+        "id": 364
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Isonzo",
+        "id": 365
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Jedi: Survivor",
+        "id": 366
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Jedi: Survivor",
+        "id": 367
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Jedi: Fallen Order",
+        "id": 368
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Jedi: Fallen Order",
+        "id": 369
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Just Cause 4",
+        "id": 370
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Just Cause 4",
+        "id": 371
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Jurassic World Evolution 2",
+        "id": 372
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Jurassic World Evolution 2",
+        "id": 373
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Kena: Bridge of Spirits",
+        "id": 374
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Kena: Bridge of Spirits",
+        "id": 375
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Kingdom Come: Deliverance",
+        "id": 376
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Kingdom Come: Deliverance",
+        "id": 377
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Kingdom Hearts IV",
+        "id": 378
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Kingdom Hearts IV",
+        "id": 379
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Kirby and the Forgotten Land",
+        "id": 380
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Kirby and the Forgotten Land",
+        "id": 381
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "KSP 2",
+        "id": 382
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "KSP 2",
+        "id": 383
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "League of Legends",
+        "id": 384
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "League of Legends",
+        "id": 385
+    },
+    {
+        "category_name": "Буст рейтинга",
+        "category_slug": "rank-boost",
+        "game_name": "League of Legends",
+        "id": 386
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "League of Legends",
+        "id": 387
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "League of Legends",
+        "id": 388
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Lost Ark",
+        "id": 389
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Lost Ark",
+        "id": 390
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Lost Ark",
+        "id": 391
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Lost Ark",
+        "id": 392
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Lords of the Fallen",
+        "id": 393
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Lords of the Fallen",
+        "id": 394
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Lies of P",
+        "id": 395
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Lies of P",
+        "id": 396
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Little Nightmares II",
+        "id": 397
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Little Nightmares II",
+        "id": 398
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Lunacid",
+        "id": 399
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Lunacid",
+        "id": 400
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Lego Star Wars: The Skywalker Saga",
+        "id": 401
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Lego Star Wars: The Skywalker Saga",
+        "id": 402
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Life is Strange: True Colors",
+        "id": 403
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Life is Strange: True Colors",
+        "id": 404
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Minecraft",
+        "id": 405
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Minecraft",
+        "id": 406
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Minecraft",
+        "id": 407
+    },
+    {
+        "category_name": "Моды",
+        "category_slug": "mods",
+        "game_name": "Minecraft",
+        "id": 408
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Minecraft",
+        "id": 409
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Mortal Kombat 1",
+        "id": 410
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Mortal Kombat 1",
+        "id": 411
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Mortal Kombat 1",
+        "id": 412
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Mortal Kombat 1",
+        "id": 413
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Monster Hunter: World",
+        "id": 414
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Monster Hunter: World",
+        "id": 415
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Monster Hunter: World",
+        "id": 416
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Monster Hunter Rise",
+        "id": 417
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Monster Hunter Rise",
+        "id": 418
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Monster Hunter Rise",
+        "id": 419
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Mass Effect Legendary Edition",
+        "id": 420
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Mass Effect Legendary Edition",
+        "id": 421
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Metro Exodus",
+        "id": 422
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Metro Exodus",
+        "id": 423
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Metro Exodus",
+        "id": 424
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "My Time at Sandrock",
+        "id": 425
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "My Time at Sandrock",
+        "id": 426
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Marvel's Spider-Man",
+        "id": 427
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Marvel's Spider-Man",
+        "id": 428
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Marvel's Spider-Man: Miles Morales",
+        "id": 429
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Marvel's Spider-Man: Miles Morales",
+        "id": 430
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Marvel's Avengers",
+        "id": 431
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Marvel's Avengers",
+        "id": 432
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Marvel's Midnight Suns",
+        "id": 433
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Marvel's Midnight Suns",
+        "id": 434
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Mount and Blade II: Bannerlord",
+        "id": 435
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Mount and Blade II: Bannerlord",
+        "id": 436
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "MultiVersus",
+        "id": 437
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "MultiVersus",
+        "id": 438
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "MultiVersus",
+        "id": 439
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "New World",
+        "id": 440
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "New World",
+        "id": 441
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "New World",
+        "id": 442
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "New World",
+        "id": 443
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Nioh 2",
+        "id": 444
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Nioh 2",
+        "id": 445
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "No Man's Sky",
+        "id": 446
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "No Man's Sky",
+        "id": 447
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "No Man's Sky",
+        "id": 448
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS",
+        "id": 449
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS",
+        "id": 450
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Need for Speed Unbound",
+        "id": 451
+    },
+    {
+        "category_name": "Автомобили",
+        "category_slug": "cars",
+        "game_name": "Need for Speed Unbound",
+        "id": 452
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Need for Speed Unbound",
+        "id": 453
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Neon White",
+        "id": 454
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Neon White",
+        "id": 455
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "NieR: Automata",
+        "id": 456
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "NieR: Automata",
+        "id": 457
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Nightingale",
+        "id": 458
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Nightingale",
+        "id": 459
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Overwatch 2",
+        "id": 460
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Overwatch 2",
+        "id": 461
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Overwatch 2",
+        "id": 462
+    },
+    {
+        "category_name": "Буст рейтинга",
+        "category_slug": "rank-boost",
+        "game_name": "Overwatch 2",
+        "id": 463
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Overwatch 2",
+        "id": 464
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Ori and the Will of the Wisps",
+        "id": 465
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Ori and the Will of the Wisps",
+        "id": 466
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Outriders",
+        "id": 467
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Outriders",
+        "id": 468
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Outriders",
+        "id": 469
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Outlast Trials",
+        "id": 470
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Outlast Trials",
+        "id": 471
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Outer Wilds",
+        "id": 472
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Outer Wilds",
+        "id": 473
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Oxenfree II",
+        "id": 474
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Oxenfree II",
+        "id": 475
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Overcooked 2",
+        "id": 476
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Overcooked 2",
+        "id": 477
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Path of Exile",
+        "id": 478
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Path of Exile",
+        "id": 479
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Path of Exile",
+        "id": 480
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Path of Exile",
+        "id": 481
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Path of Exile",
+        "id": 482
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "PUBG: Battlegrounds",
+        "id": 483
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "PUBG: Battlegrounds",
+        "id": 484
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "PUBG: Battlegrounds",
+        "id": 485
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "PUBG: Battlegrounds",
+        "id": 486
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Palworld",
+        "id": 487
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Palworld",
+        "id": 488
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Palworld",
+        "id": 489
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Palworld",
+        "id": 490
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Payday 3",
+        "id": 491
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Payday 3",
+        "id": 492
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Payday 3",
+        "id": 493
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Persona 5 Royal",
+        "id": 494
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Persona 5 Royal",
+        "id": 495
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Persona 3 Reload",
+        "id": 496
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Persona 3 Reload",
+        "id": 497
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Plague Tale: Requiem",
+        "id": 498
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Plague Tale: Requiem",
+        "id": 499
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Planet Zoo",
+        "id": 500
+    },
+    {
+        "category_name": "Строительство",
+        "category_slug": "building",
+        "game_name": "Planet Zoo",
+        "id": 501
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Portal 2",
+        "id": 502
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Portal 2",
+        "id": 503
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Prey",
+        "id": 504
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Prey",
+        "id": 505
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Project Zomboid",
+        "id": 506
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Project Zomboid",
+        "id": 507
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Rust",
+        "id": 508
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Rust",
+        "id": 509
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Rust",
+        "id": 510
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Rust",
+        "id": 511
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Rust",
+        "id": 512
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Rainbow Six Siege",
+        "id": 513
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Rainbow Six Siege",
+        "id": 514
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Rainbow Six Siege",
+        "id": 515
+    },
+    {
+        "category_name": "Буст рейтинга",
+        "category_slug": "rank-boost",
+        "game_name": "Rainbow Six Siege",
+        "id": 516
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Rainbow Six Siege",
+        "id": 517
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Red Dead Redemption 2",
+        "id": 518
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Red Dead Redemption 2",
+        "id": 519
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Red Dead Redemption 2",
+        "id": 520
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Red Dead Redemption 2",
+        "id": 521
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Remnant II",
+        "id": 522
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Remnant II",
+        "id": 523
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Resident Evil 4 Remake",
+        "id": 524
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Resident Evil 4 Remake",
+        "id": 525
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Resident Evil Village",
+        "id": 526
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Resident Evil Village",
+        "id": 527
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Returnal",
+        "id": 528
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Returnal",
+        "id": 529
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Riders Republic",
+        "id": 530
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Riders Republic",
+        "id": 531
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Risk of Rain 2",
+        "id": 532
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Risk of Rain 2",
+        "id": 533
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "RoboCop: Rogue City",
+        "id": 534
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "RoboCop: Rogue City",
+        "id": 535
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Rogue Legacy 2",
+        "id": 536
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Rogue Legacy 2",
+        "id": 537
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Starfield",
+        "id": 538
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Starfield",
+        "id": 539
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Starfield",
+        "id": 540
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Starfield",
+        "id": 541
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Star Wars Jedi: Survivor",
+        "id": 542
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Star Wars Jedi: Survivor",
+        "id": 543
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Star Wars: Squadrons",
+        "id": 544
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Star Wars: Squadrons",
+        "id": 545
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Stardew Valley",
+        "id": 546
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Stardew Valley",
+        "id": 547
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Stardew Valley",
+        "id": 548
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Stardew Valley",
+        "id": 549
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Street Fighter 6",
+        "id": 550
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Street Fighter 6",
+        "id": 551
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Street Fighter 6",
+        "id": 552
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Street Fighter 6",
+        "id": 553
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Sekiro: Shadows Die Twice",
+        "id": 554
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Sekiro: Shadows Die Twice",
+        "id": 555
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Sekiro: Shadows Die Twice",
+        "id": 556
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Sons of the Forest",
+        "id": 557
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Sons of the Forest",
+        "id": 558
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Sons of the Forest",
+        "id": 559
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Spider-Man 2",
+        "id": 560
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Spider-Man 2",
+        "id": 561
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Spider-Man 2",
+        "id": 562
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Spiritfarer",
+        "id": 563
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Spiritfarer",
+        "id": 564
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Star Trek Online",
+        "id": 565
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Star Trek Online",
+        "id": 566
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Star Wars Battlefront II",
+        "id": 567
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Star Wars Battlefront II",
+        "id": 568
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Stellaris",
+        "id": 569
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Stellaris",
+        "id": 570
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Subnautica",
+        "id": 571
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Subnautica",
+        "id": 572
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Subnautica",
+        "id": 573
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Super Mario Bros. Wonder",
+        "id": 574
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Super Mario Bros. Wonder",
+        "id": 575
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Syberia: The World Before",
+        "id": 576
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Syberia: The World Before",
+        "id": 577
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Tears of the Kingdom",
+        "id": 578
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Tears of the Kingdom",
+        "id": 579
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Last of Us Part I",
+        "id": 580
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "The Last of Us Part I",
+        "id": 581
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Last of Us Part II",
+        "id": 582
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "The Last of Us Part II",
+        "id": 583
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Witcher 3",
+        "id": 584
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "The Witcher 3",
+        "id": 585
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "The Witcher 3",
+        "id": 586
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "The Witcher 3",
+        "id": 587
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Elder Scrolls Online",
+        "id": 588
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "The Elder Scrolls Online",
+        "id": 589
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "The Elder Scrolls Online",
+        "id": 590
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Elder Scrolls V: Skyrim",
+        "id": 591
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "The Elder Scrolls V: Skyrim",
+        "id": 592
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "The Elder Scrolls V: Skyrim",
+        "id": 593
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Sims 4",
+        "id": 594
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "The Sims 4",
+        "id": 595
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "The Sims 4",
+        "id": 596
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "The Sims 4",
+        "id": 597
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Tom Clancy's The Division 2",
+        "id": 598
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Tom Clancy's The Division 2",
+        "id": 599
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Tom Clancy's The Division 2",
+        "id": 600
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Total War: Warhammer III",
+        "id": 601
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Total War: Warhammer III",
+        "id": 602
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Tower of Fantasy",
+        "id": 603
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Tower of Fantasy",
+        "id": 604
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Tower of Fantasy",
+        "id": 605
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Tunic",
+        "id": 606
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Tunic",
+        "id": 607
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Terraria",
+        "id": 608
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Terraria",
+        "id": 609
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Terraria",
+        "id": 610
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Crew Motorfest",
+        "id": 611
+    },
+    {
+        "category_name": "Автомобили",
+        "category_slug": "cars",
+        "game_name": "The Crew Motorfest",
+        "id": 612
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Dark Pictures Anthology",
+        "id": 613
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "The Dark Pictures Anthology",
+        "id": 614
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Finals",
+        "id": 615
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "The Finals",
+        "id": 616
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "The Finals",
+        "id": 617
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Legend of Zelda: Breath of the Wild",
+        "id": 618
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "The Legend of Zelda: Breath of the Wild",
+        "id": 619
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Legend of Zelda: Tears of the Kingdom",
+        "id": 620
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "The Legend of Zelda: Tears of the Kingdom",
+        "id": 621
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Lord of the Rings: Gollum",
+        "id": 622
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "The Lord of the Rings: Gollum",
+        "id": 623
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "The Outer Worlds",
+        "id": 624
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "The Outer Worlds",
+        "id": 625
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Untitled Goose Game",
+        "id": 626
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Untitled Goose Game",
+        "id": 627
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Uncharted: Legacy of Thieves Collection",
+        "id": 628
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Uncharted: Legacy of Thieves Collection",
+        "id": 629
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Unravel Two",
+        "id": 630
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Unravel Two",
+        "id": 631
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Urban Terror",
+        "id": 632
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Urban Terror",
+        "id": 633
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Valorant",
+        "id": 634
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Valorant",
+        "id": 635
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Valorant",
+        "id": 636
+    },
+    {
+        "category_name": "Буст рейтинга",
+        "category_slug": "rank-boost",
+        "game_name": "Valorant",
+        "id": 637
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Valorant",
+        "id": 638
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "V Rising",
+        "id": 639
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "V Rising",
+        "id": 640
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "V Rising",
+        "id": 641
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Victoria 3",
+        "id": 642
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Victoria 3",
+        "id": 643
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Voidtrain",
+        "id": 644
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Voidtrain",
+        "id": 645
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Volcanoids",
+        "id": 646
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Volcanoids",
+        "id": 647
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Warframe",
+        "id": 648
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Warframe",
+        "id": 649
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Warframe",
+        "id": 650
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Warframe",
+        "id": 651
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Warframe",
+        "id": 652
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "World of Warcraft",
+        "id": 653
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "World of Warcraft",
+        "id": 654
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "World of Warcraft",
+        "id": 655
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "World of Warcraft",
+        "id": 656
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "World of Warcraft",
+        "id": 657
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "World of Tanks",
+        "id": 658
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "World of Tanks",
+        "id": 659
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "World of Tanks",
+        "id": 660
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "World of Tanks",
+        "id": 661
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Watch Dogs: Legion",
+        "id": 662
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Watch Dogs: Legion",
+        "id": 663
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Wasteland 3",
+        "id": 664
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Wasteland 3",
+        "id": 665
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Warhammer 40,000: Darktide",
+        "id": 666
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Warhammer 40,000: Darktide",
+        "id": 667
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Warhammer 40,000: Rogue Trader",
+        "id": 668
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Warhammer 40,000: Rogue Trader",
+        "id": 669
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "We Happy Few",
+        "id": 670
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "We Happy Few",
+        "id": 671
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Wings of Prey",
+        "id": 672
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Wings of Prey",
+        "id": 673
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Wolfenstein: Youngblood",
+        "id": 674
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Wolfenstein: Youngblood",
+        "id": 675
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Wo Long: Fallen Dynasty",
+        "id": 676
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Wo Long: Fallen Dynasty",
+        "id": 677
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "WWE 2K23",
+        "id": 678
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "WWE 2K23",
+        "id": 679
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Xenoblade Chronicles 3",
+        "id": 680
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Xenoblade Chronicles 3",
+        "id": 681
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Xenonauts 2",
+        "id": 682
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Xenonauts 2",
+        "id": 683
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "XDefiant",
+        "id": 684
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "XDefiant",
+        "id": 685
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Yakuza: Like a Dragon",
+        "id": 686
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Yakuza: Like a Dragon",
+        "id": 687
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Yakuza 0",
+        "id": 688
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Yakuza 0",
+        "id": 689
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Youtubers Life 2",
+        "id": 690
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Youtubers Life 2",
+        "id": 691
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Zombie Army 4: Dead War",
+        "id": 692
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Zombie Army 4: Dead War",
+        "id": 693
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Zombie Army 4: Dead War",
+        "id": 694
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Zelda: Tears of the Kingdom",
+        "id": 695
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Zelda: Tears of the Kingdom",
+        "id": 696
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Zelda: Breath of the Wild",
+        "id": 697
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Zelda: Breath of the Wild",
+        "id": 698
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Бесконечное лето",
+        "id": 702
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Бесконечное лето",
+        "id": 703
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Ведьмак 3",
+        "id": 704
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Ведьмак 3",
+        "id": 705
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Ведьмак 3",
+        "id": 706
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Ведьмак 3",
+        "id": 707
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Готика",
+        "id": 708
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Готика",
+        "id": 709
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Готика",
+        "id": 710
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Дарк Соулс 3",
+        "id": 711
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Дарк Соулс 3",
+        "id": 712
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Дарк Соулс 3",
+        "id": 713
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Дота 2",
+        "id": 714
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Дота 2",
+        "id": 715
+    },
+    {
+        "category_name": "Буст рейтинга",
+        "category_slug": "rank-boost",
+        "game_name": "Дота 2",
+        "id": 716
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Европа Трактор Симулятор",
+        "id": 717
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Европа Трактор Симулятор",
+        "id": 718
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Жизнь симулятор",
+        "id": 719
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Жизнь симулятор",
+        "id": 720
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Зомби армей",
+        "id": 721
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Зомби армей",
+        "id": 722
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Игры престолов",
+        "id": 723
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Игры престолов",
+        "id": 724
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Киберпанк 2077",
+        "id": 725
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Киберпанк 2077",
+        "id": 726
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Киберпанк 2077",
+        "id": 727
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Киберпанк 2077",
+        "id": 728
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "КС 2",
+        "id": 729
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "КС 2",
+        "id": 730
+    },
+    {
+        "category_name": "Буст рейтинга",
+        "category_slug": "rank-boost",
+        "game_name": "КС 2",
+        "id": 731
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Легенда о Зельде",
+        "id": 732
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Легенда о Зельде",
+        "id": 733
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Лост Арк",
+        "id": 734
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Лост Арк",
+        "id": 735
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Лост Арк",
+        "id": 736
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Майнкрафт",
+        "id": 737
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Майнкрафт",
+        "id": 738
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Майнкрафт",
+        "id": 739
+    },
+    {
+        "category_name": "Моды",
+        "category_slug": "mods",
+        "game_name": "Майнкрафт",
+        "id": 740
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Мортал Комбат 1",
+        "id": 741
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Мортал Комбат 1",
+        "id": 742
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Монстер Хантер",
+        "id": 743
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Монстер Хантер",
+        "id": 744
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Новый Мир",
+        "id": 745
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Новый Мир",
+        "id": 746
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Новый Мир",
+        "id": 747
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Овервотч 2",
+        "id": 748
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Овервотч 2",
+        "id": 749
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Овервотч 2",
+        "id": 750
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Пабг",
+        "id": 751
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Пабг",
+        "id": 752
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Пабг",
+        "id": 753
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Палворлд",
+        "id": 754
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Палворлд",
+        "id": 755
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Персона 5",
+        "id": 756
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Персона 5",
+        "id": 757
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Ред Дед Редемпшн 2",
+        "id": 758
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Ред Дед Редемпшн 2",
+        "id": 759
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Ред Дед Редемпшн 2",
+        "id": 760
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Руст",
+        "id": 761
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Руст",
+        "id": 762
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Руст",
+        "id": 763
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Руст",
+        "id": 764
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Резидент Ивил 4",
+        "id": 765
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Резидент Ивил 4",
+        "id": 766
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Секейро",
+        "id": 767
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Секейро",
+        "id": 768
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Секейро",
+        "id": 769
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Старфилд",
+        "id": 770
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Старфилд",
+        "id": 771
+    },
+    {
+        "category_name": "Ресурсы",
+        "category_slug": "resources",
+        "game_name": "Старфилд",
+        "id": 772
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Симс 4",
+        "id": 773
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Симс 4",
+        "id": 774
+    },
+    {
+        "category_name": "Персонажи",
+        "category_slug": "characters",
+        "game_name": "Симс 4",
+        "id": 775
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Скайрим",
+        "id": 776
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Скайрим",
+        "id": 777
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Скайрим",
+        "id": 778
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Стар Варс",
+        "id": 779
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Стар Варс",
+        "id": 780
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Тарков",
+        "id": 781
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Тарков",
+        "id": 782
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Тарков",
+        "id": 783
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Тарков",
+        "id": 784
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Тотал Вар",
+        "id": 785
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Тотал Вар",
+        "id": 786
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Террария",
+        "id": 787
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Террария",
+        "id": 788
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Террария",
+        "id": 789
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Ужас Аркхэма",
+        "id": 790
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Ужас Аркхэма",
+        "id": 791
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Фар Край 6",
+        "id": 792
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Фар Край 6",
+        "id": 793
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Фар Край 6",
+        "id": 794
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Фортнайт",
+        "id": 795
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Фортнайт",
+        "id": 796
+    },
+    {
+        "category_name": "Внутриигровая валюта",
+        "category_slug": "in-game-currency",
+        "game_name": "Фортнайт",
+        "id": 797
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Финал Фэнтези",
+        "id": 798
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Финал Фэнтези",
+        "id": 799
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Хогвартс Легаси",
+        "id": 800
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Хогвартс Легаси",
+        "id": 801
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Хогвартс Легаси",
+        "id": 802
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Хало",
+        "id": 803
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Хало",
+        "id": 804
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Хант Шоудаун",
+        "id": 805
+    },
+    {
+        "category_name": "Скины",
+        "category_slug": "skins",
+        "game_name": "Хант Шоудаун",
+        "id": 806
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Цивилизация",
+        "id": 807
+    },
+    {
+        "category_name": "Стратегии",
+        "category_slug": "strategies",
+        "game_name": "Цивилизация",
+        "id": 808
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Черный Миф Вуконг",
+        "id": 809
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Черный Миф Вуконг",
+        "id": 810
+    },
+    {
+        "category_name": "Артефакты",
+        "category_slug": "artifacts",
+        "game_name": "Черный Миф Вуконг",
+        "id": 811
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Шторм",
+        "id": 812
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Шторм",
+        "id": 813
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Элден Ринг",
+        "id": 814
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Элден Ринг",
+        "id": 815
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Элден Ринг",
+        "id": 816
+    },
+    {
+        "category_name": "Артефакты",
+        "category_slug": "artifacts",
+        "game_name": "Элден Ринг",
+        "id": 817
+    },
+    {
+        "category_name": "Буст",
+        "category_slug": "boost",
+        "game_name": "Элден Ринг",
+        "id": 818
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Эскап фром Тарков",
+        "id": 819
+    },
+    {
+        "category_name": "Предметы",
+        "category_slug": "items",
+        "game_name": "Эскап фром Тарков",
+        "id": 820
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Южный Парк",
+        "id": 821
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Южный Парк",
+        "id": 822
+    },
+    {
+        "category_name": "Аккаунты",
+        "category_slug": "accounts",
+        "game_name": "Якудза",
+        "id": 823
+    },
+    {
+        "category_name": "Прохождение",
+        "category_slug": "walkthrough",
+        "game_name": "Якудза",
+        "id": 824
+    }
+]

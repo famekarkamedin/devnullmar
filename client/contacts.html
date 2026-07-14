@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="NULLMARKET — Контакты службы поддержки, реквизиты, график работы, частые вопросы">
+    <title>NULLMARKET — Контакты и поддержка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: #f3f5fc;
+            color: #121826;
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #a78bfa, #3b82f6);
+            top: -150px;
+            left: -150px;
+        }
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f97316, #facc15);
+            bottom: -250px;
+            right: -200px;
+            opacity: 0.4;
+        }
+        .blur-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2dd4bf, #14b8a6);
+            top: 40%;
+            left: 60%;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .btn-download {
+            background: #11181c;
+            color: white;
+            border: none;
+            padding: 10px 26px;
+            border-radius: 48px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 14px -8px rgba(0,0,0,0.2);
+        }
+
+        .page-title {
+            margin: 48px 0 24px;
+        }
+        .page-title h1 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(115deg, #111827, #2d3a5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+        .page-title p {
+            font-size: 18px;
+            color: #475569;
+        }
+
+        .contact-hero-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(245,248,255,0.85));
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 48px;
+            margin-bottom: 48px;
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            margin-top: 32px;
+            justify-content: space-between;
+        }
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 140px;
+        }
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(145deg, #d97706, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .stat-label {
+            font-size: 15px;
+            color: #475569;
+            margin-top: 4px;
+        }
+        .stat-loading {
+            opacity: 0.5;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.2; }
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 48px 0 24px;
+            background: linear-gradient(125deg, #1e293b, #334155);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .contacts-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin-bottom: 48px;
+        }
+        .dept-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 28px;
+            border: 1px solid rgba(255,255,240,0.6);
+            transition: all 0.25s;
+        }
+        .dept-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+        .dept-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+        .dept-contact {
+            font-size: 15px;
+            margin-bottom: 12px;
+            color: #334155;
+        }
+        .dept-time {
+            font-size: 13px;
+            color: #f59e0b;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .two-col-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        .info-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 36px;
+            padding: 32px;
+            border: 1px solid rgba(165, 180, 252, 0.2);
+        }
+        .info-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+        .details-list {
+            list-style: none;
+        }
+        .details-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .details-list li strong {
+            color: #0f172a;
+        }
+
+        .feedback-section {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 42px;
+            padding: 44px 40px;
+            margin: 32px 0 40px;
+            border: 1px solid rgba(165, 180, 252, 0.3);
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+        .form-group {
+            flex: 1;
+            min-width: 220px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e293b;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 28px;
+            border: 1px solid #cbd5e1;
+            background: rgba(255,255,255,0.9);
+            font-family: inherit;
+            font-size: 15px;
+            transition: 0.2s;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
+        }
+        .btn-send {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 14px 38px;
+            border-radius: 48px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-send:hover {
+            background: #1e293b;
+        }
+
+        .my-tickets-section {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 42px;
+            padding: 32px 36px;
+            margin: 32px 0 40px;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+        .ticket-item {
+            background: white;
+            border-radius: 24px;
+            padding: 18px 24px;
+            margin-bottom: 14px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .ticket-item:hover {
+            border-color: #a5b4fc;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .ticket-status {
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-open { background: #fee2e2; color: #b91c1c; }
+        .status-closed { background: #e2e3e5; color: #4a5568; }
+
+        .faq-accordion {
+            margin: 32px 0;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .faq-question {
+            padding: 20px 28px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.5);
+        }
+        .faq-question:hover {
+            background: rgba(255,255,255,0.8);
+        }
+        .faq-answer {
+            padding: 0 28px 20px 28px;
+            color: #475569;
+            line-height: 1.5;
+            display: none;
+        }
+        .faq-answer.active {
+            display: block;
+        }
+
+        .footer {
+            padding: 48px 0 32px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            margin-top: 48px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 760px) {
+            .page-title h1 { font-size: 34px; }
+            .container { padding: 0 20px; }
+            .contact-hero-card { padding: 28px; }
+            .feedback-section { padding: 28px 24px; }
+        }
+
+        .user-menu-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            min-width: 220px;
+            display: none;
+            overflow: hidden;
+            z-index: 50;
+        }
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        .dropdown-name { font-weight: 700; font-size: 14px; }
+        .dropdown-email { font-size: 11px; color: #64748b; margin-top: 2px; }
+        .dropdown-balance { font-size: 13px; margin-top: 6px; color: #f59e0b; font-weight: 600; }
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 14px;
+        }
+        .dropdown-item:hover { background: #f1f5f9; }
+        .dropdown-item.logout { border-top: 1px solid #e2e8f0; color: #ef4444; }
+        .chevron { transition: transform 0.2s; margin-left: 6px; }
+        .user-menu-container:hover .chevron { transform: rotate(180deg); }
+        @media (max-width: 640px) { .user-name { display: none; } }
+
+        .btn-outline-light {
+            border: 1px solid #cbd5e1;
+            padding: 8px 20px;
+            border-radius: 40px;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .btn-outline-light:hover {
+            background: white;
+            border-color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+<div class="blur-object blur-3"></div>
+
+<header class="header">
+    <div class="container header-inner">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+			<div class="nav-links">
+				<a href="/" class="nav-link">Главная</a>
+				<a href="/marketplace" class="nav-link">Маркетплейс</a>
+				<a href="/support" class="nav-link">Поддержка</a>
+				<a href="/media" class="nav-link">Медиа</a>
+                <a href="/contacts" class="nav-link active">Контакты</a>
+            </div>
+        </div>
+        <div id="authButtonContainer">
+            <button class="btn-download" id="downloadAppBtn">Авторизация</button>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <div class="page-title">
+        <h1>Поддержка и контакты</h1>
+        <p>Свяжитесь с нами любым удобным способом — мы всегда готовы помочь</p>
+    </div>
+
+    <div class="contact-hero-card">
+        <div class="stats-row" id="statsRow">
+            <div class="stat-item">
+                <div class="stat-number" id="statOnline">24/7</div>
+                <div class="stat-label">Чат-бот поддержки</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number stat-loading" id="statResponse">--</div>
+                <div class="stat-label">Среднее время ответа</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number stat-loading" id="statResolved">--</div>
+                <div class="stat-label">Решённых обращений</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number stat-loading" id="statUsers">--</div>
+                <div class="stat-label">Пользователей онлайн</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Отделы поддержки</div>
+    <div class="contacts-grid-4">
+        <div class="dept-card">
+            <h3>Общая поддержка</h3>
+            <div class="dept-contact">support@nullmarket.com</div>
+            <div class="dept-contact">Telegram: @NULLMARKET_support_bot</div>
+            <div class="dept-time">График: 24/7 (бот), операторы 9:00-21:00 МСК</div>
+        </div>
+        <div class="dept-card">
+            <h3>Отдел продавцов</h3>
+            <div class="dept-contact">sellers@nullmarket.com</div>
+            <div class="dept-contact">Telegram: @null_seller_support</div>
+            <div class="dept-time">График: Пн-Пт 10:00-20:00 МСК</div>
+        </div>
+        <div class="dept-card">
+            <h3>Финансовый отдел</h3>
+            <div class="dept-contact">finance@nullmarket.com</div>
+            <div class="dept-contact">Вывод средств, заморозки</div>
+            <div class="dept-time">Ответ: до 24 часов</div>
+        </div>
+        <div class="dept-card">
+            <h3>Арбитраж и споры</h3>
+            <div class="dept-contact">arbitration@nullmarket.com</div>
+            <div class="dept-contact">Только по активным сделкам</div>
+            <div class="dept-time">Рассмотрение: 1-3 рабочих дня</div>
+        </div>
+    </div>
+
+    <div class="two-col-layout">
+        <div class="info-card">
+            <h3>Реквизиты компании</h3>
+            <ul class="details-list">
+                <li><strong>Полное наименование</strong><span>ООО «НУЛЛМАРКЕТ»</span></li>
+                <li><strong>ИНН / КПП</strong><span>7701234567 / 770101001</span></li>
+                <li><strong>ОГРН</strong><span>1237700098765</span></li>
+                <li><strong>Юридический адрес</strong><span>123456, г. Москва, ул. Цифровая, д. 12, этаж 5</span></li>
+                <li><strong>Почтовый адрес</strong><span>123456, г. Москва, а/я 100</span></li>
+                <li><strong>БИК</strong><span>044525411</span></li>
+                <li><strong>Расчётный счёт</strong><span>40802810100012345678</span></li>
+                <li><strong>Корр. счёт</strong><span>30101810400000000411</span></li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h3>График работы отделов</h3>
+            <ul class="details-list">
+                <li><strong>Техподдержка (чат)</strong><span>09:00 - 23:00 ежедневно</span></li>
+                <li><strong>Телефонная линия</strong><span>10:00 - 19:00 Пн-Пт</span></li>
+                <li><strong>Отдел безопасности</strong><span>10:00 - 20:00 Пн-Пт</span></li>
+                <li><strong>Финансовые операции</strong><span>09:00 - 21:00 без выходных</span></li>
+                <li><strong>Арбитраж</strong><span>11:00 - 19:00 Пн-Пт</span></li>
+                <li><strong>Выходные дни</strong><span>Операторы в сокращённом режиме</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="myTicketsBlock" class="my-tickets-section" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 24px;">
+            <div>
+                <div style="font-size: 26px; font-weight: 700;">Мои обращения</div>
+                <p style="color: #475569; margin-top: 6px;">История ваших тикетов в поддержку</p>
+            </div>
+            <button id="refreshTicketsBtn" class="btn-outline-light">Обновить</button>
+        </div>
+        <div id="ticketsList"></div>
+        <div id="ticketsEmptyMessage" style="text-align: center; padding: 40px; color: #64748b;">У вас пока нет обращений. Создайте тикет через форму ниже.</div>
+    </div>
+
+    <div class="feedback-section">
+        <div style="font-size: 32px; font-weight: 700; margin-bottom: 12px;">Создать обращение</div>
+        <div style="font-size: 16px; color: #334155; margin-bottom: 32px;">Заполните форму, и менеджер свяжется с вами в ближайшее время.</div>
+        <form id="ticketForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Тема обращения *</label>
+                    <input type="text" id="ticketSubject" placeholder="Например: проблема с оплатой" required>
+                </div>
+                <div class="form-group">
+                    <label>Отдел *</label>
+                    <select id="ticketDepartment">
+                        <option value="support">Техподдержка и сделки</option>
+                        <option value="sales">Продавцам</option>
+                        <option value="finance">Финансы и выплаты</option>
+                        <option value="arbitration">Арбитраж</option>
+                        <option value="partners">Партнёрство</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Приоритет</label>
+                    <select id="ticketPriority">
+                        <option value="Низкий">Низкий</option>
+                        <option value="Средний" selected>Средний</option>
+                        <option value="Высокий">Высокий</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Номер заказа (если есть)</label>
+                    <input type="text" id="orderId" placeholder="NULL-XXXXXX">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Сообщение *</label>
+                <textarea rows="5" id="ticketMessage" placeholder="Опишите ситуацию подробно. Укажите номер заказа, если есть." required></textarea>
+            </div>
+            <div style="margin-top: 28px;">
+                <button type="submit" class="btn-send">Отправить обращение</button>
+            </div>
+        </form>
+        <div id="ticketFormResult" style="margin-top: 18px; font-size: 14px;"></div>
+    </div>
+
+    <div class="section-title">Часто задаваемые вопросы</div>
+    <div class="faq-accordion">
+        <div class="faq-item">
+            <div class="faq-question">Как быстро отвечают в поддержку? <span>+</span></div>
+            <div class="faq-answer">В рабочие часы среднее время ответа составляет 15-30 минут. В нерабочее время вы можете оставить обращение через форму или бот, и мы ответим на следующий день.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Как открыть спор по сделке? <span>+</span></div>
+            <div class="faq-answer">Перейдите в раздел «Мои покупки», найдите нужный заказ и нажмите «Открыть спор». Арбитраж рассмотрит вашу ситуацию в течение 1-3 дней.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Как стать продавцом на NULLMARKET? <span>+</span></div>
+            <div class="faq-answer">Зарегистрируйтесь, пройдите верификацию в разделе «Стать продавцом» и создайте первое объявление. Комиссия платформы — всего 3%.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Какие способы вывода средств? <span>+</span></div>
+            <div class="faq-answer">Банковские карты (Visa/Mastercard), СБП, USDT (TRC20/BEP20), QIWI, ЮMoney. Минимальная сумма вывода — 500 рублей.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Что делать, если продавец не отвечает? <span>+</span></div>
+            <div class="faq-answer">Если продавец не отвечает более 24 часов, вы можете открыть спор. Средства будут заморожены до выяснения обстоятельств.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Как связаться с арбитражем напрямую? <span>+</span></div>
+            <div class="faq-answer">Напишите на arbitration@nullmarket.com с указанием номера спора или заказа. Ответ придёт в течение суток.</div>
+        </div>
+    </div>
+
+    <div style="background: linear-gradient(105deg, #ede9fe, #e0e7ff); border-radius: 32px; padding: 28px 36px; margin: 20px 0 48px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <div>
+                <div style="font-weight: 800; font-size: 20px;">Отдел партнёрств и рекламы</div>
+                <div style="margin-top: 8px; color: #334155;">Предложения по интеграции, API для крупных селлеров, рекламные кампании</div>
+                <div style="margin-top: 12px;"><strong>partners@nullmarket.com</strong> | Telegram: @null_partners</div>
+            </div>
+            <button id="partnerBtn" style="background: #0f172a; color: white; padding: 12px 32px; border-radius: 48px; border: none; font-weight: 600; cursor: pointer;">Стать партнёром</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div>© 2025-2026 NULLMARKET — маркетплейс цифровых товаров</div>
+        <div style="display: flex; gap: 32px;">
+            <span>Контакты</span>
+            <span>Правила</span>
+            <span>Политика конфиденциальности</span>
+            <span>Публичная оферта</span>
+        </div>
+    </footer>
+</main>
+
+<script>
+    let isAuthenticated = false;
+    let currentUser = null;
+
+    function notice(msg, isError = false) {
+        let div = document.createElement('div');
+        div.innerText = msg;
+        div.style.position = 'fixed';
+        div.style.bottom = '28px';
+        div.style.left = '50%';
+        div.style.transform = 'translateX(-50%)';
+        div.style.backgroundColor = isError ? '#dc2626' : '#181e2c';
+        div.style.color = '#f0f3fa';
+        div.style.padding = '12px 28px';
+        div.style.borderRadius = '56px';
+        div.style.fontSize = '14px';
+        div.style.fontWeight = '500';
+        div.style.zIndex = '9999';
+        div.style.backdropFilter = 'blur(12px)';
+        div.style.border = '1px solid rgba(255,255,255,0.2)';
+        div.style.boxShadow = '0 12px 18px -8px rgba(0,0,0,0.2)';
+        document.body.appendChild(div);
+        setTimeout(() => div.remove(), 2600);
+    }
+
+    // ============================================================
+    // 1. ЗАГРУЗКА СТАТИСТИКИ С СЕРВЕРА
+    // ============================================================
+    async function loadStats() {
+        const stats = {
+            response: document.getElementById('statResponse'),
+            resolved: document.getElementById('statResolved'),
+            users: document.getElementById('statUsers')
+        };
+
+        try {
+            const res = await fetch('/api/admin/stats');
+            if (!res.ok) throw new Error('Ошибка загрузки статистики');
+            const data = await res.json();
+
+            const totalUsers = data.totalUsers || 0;
+            const totalTickets = data.totalTickets || 0;
+            const pendingTickets = data.pendingTickets || 0;
+            const resolvedTickets = totalTickets - pendingTickets;
+            const resolvedPercent = totalTickets > 0 ? Math.round((resolvedTickets / totalTickets) * 100) : 98;
+
+            // Онлайн пользователи — реальное количество активных сессий
+            const onlineUsers = data.onlineUsers || 0;
+
+            // Среднее время ответа (рассчитываем на основе данных)
+            let avgResponse = '15 мин';
+            if (totalTickets > 100) {
+                const baseTime = 15 - Math.min(10, Math.floor(totalTickets / 1000));
+                avgResponse = `${baseTime} мин`;
+            } else if (totalTickets > 50) {
+                avgResponse = '20 мин';
+            } else if (totalTickets > 10) {
+                avgResponse = '30 мин';
+            }
+
+            // Убираем анимацию загрузки
+            Object.values(stats).forEach(el => el.classList.remove('stat-loading'));
+
+            // Анимируем обновление
+            animateNumber(stats.users, onlineUsers, '');
+            stats.response.textContent = avgResponse;
+            stats.resolved.textContent = `${resolvedPercent}%`;
+
+        } catch (e) {
+            console.error('Ошибка загрузки статистики:', e);
+            // Запасные значения
+            stats.response.textContent = '15 мин';
+            stats.resolved.textContent = '98%';
+            stats.users.textContent = '0';
+            Object.values(stats).forEach(el => el.classList.remove('stat-loading'));
+        }
+    }
+
+    function animateNumber(element, target, suffix = '') {
+        const start = 0;
+        const duration = 800;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * target);
+
+            if (target > 1000) {
+                element.textContent = current.toLocaleString() + suffix;
+            } else {
+                element.textContent = current + suffix;
+            }
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            } else {
+                if (target > 1000) {
+                    element.textContent = target.toLocaleString() + suffix;
+                } else {
+                    element.textContent = target + suffix;
+                }
+            }
+        }
+
+        requestAnimationFrame(update);
+    }
+
+    // ============================================================
+    // 2. АВТОРИЗАЦИЯ
+    // ============================================================
+    async function checkAuth() {
+        try {
+            const response = await fetch('/api/me');
+            if (response.ok) {
+                isAuthenticated = true;
+                currentUser = await response.json();
+                showUserMenu(currentUser);
+                loadUserTickets();
+                document.getElementById('myTicketsBlock').style.display = 'block';
+            } else {
+                isAuthenticated = false;
+                showAuthButton();
+                document.getElementById('myTicketsBlock').style.display = 'none';
+            }
+        } catch(e) {
+            isAuthenticated = false;
+            showAuthButton();
+            document.getElementById('myTicketsBlock').style.display = 'none';
+        }
+    }
+
+    function showAuthButton() {
+        const container = document.getElementById('authButtonContainer');
+        if (container) {
+            container.innerHTML = '<button class="btn-download" id="downloadAppBtn">Авторизация</button>';
+            const newBtn = document.getElementById('downloadAppBtn');
+            if (newBtn) newBtn.addEventListener('click', () => window.location.href = '/auth');
+        }
+    }
+
+    function showUserMenu(user) {
+        const container = document.getElementById('authButtonContainer');
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-menu-container';
+        userDiv.innerHTML = `
+            <img src="${user.avatar}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=40&rounded=true'">
+            <span class="user-name">${user.name}</span>
+            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="user-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-name">${user.name}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-balance">Баланс: ${user.balance || 0} ₽</div>
+                </div>
+                <div class="dropdown-item" data-action="purchases">Покупки</div>
+                <div class="dropdown-item" data-action="profile" data-user-id="${user.user_id}">Профиль</div>
+                <div class="dropdown-item logout" data-action="logout">Выйти</div>
+            </div>
+        `;
+        container.innerHTML = '';
+        container.appendChild(userDiv);
+        const menuContainer = document.querySelector('.user-menu-container');
+        const dropdown = document.querySelector('.user-dropdown');
+        menuContainer.addEventListener('click', (e) => { e.stopPropagation(); dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'; });
+        document.addEventListener('click', () => { if(dropdown) dropdown.style.display = 'none'; });
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                dropdown.style.display = 'none';
+                const action = item.dataset.action;
+                if (action === 'logout') {
+                    await fetch('/api/logout', { method: 'POST' });
+                    isAuthenticated = false;
+                    notice('Вы вышли из аккаунта');
+                    setTimeout(() => window.location.reload(), 800);
+                } else if (action === 'profile') {
+                    window.location.href = `/user/${currentUser.user_id}`;
+                } else {
+                    notice('Раздел в разработке');
+                }
+            });
+        });
+    }
+
+    async function loadUserTickets() {
+        if (!isAuthenticated) return;
+        try {
+            const res = await fetch('/api/tickets');
+            if (res.ok) {
+                const tickets = await res.json();
+                const container = document.getElementById('ticketsList');
+                const emptyMsg = document.getElementById('ticketsEmptyMessage');
+                if (!tickets || tickets.length === 0) {
+                    container.innerHTML = '';
+                    emptyMsg.style.display = 'block';
+                    return;
+                }
+                emptyMsg.style.display = 'none';
+                container.innerHTML = tickets.map(ticket => `
+                    <div class="ticket-item" data-ticket-id="${ticket.id}">
+                        <div style="flex: 2">
+                            <div style="font-weight: 700; margin-bottom: 6px;">${escapeHtml(ticket.subject)}</div>
+                            <div style="font-size: 12px; color: #64748b;">№ ${ticket.ticket_number} | ${new Date(ticket.created_at).toLocaleDateString()}</div>
+                        </div>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <span class="ticket-status ${ticket.status === 'open' ? 'status-open' : 'status-closed'}">${ticket.status === 'open' ? 'Открыт' : 'Закрыт'}</span>
+                            <span style="font-size: 12px; background: #f1f5f9; padding: 4px 12px; border-radius: 30px;">${ticket.department}</span>
+                        </div>
+                    </div>
+                `).join('');
+                document.querySelectorAll('.ticket-item').forEach(el => {
+                    el.addEventListener('click', () => { window.location.href = `/support/${el.dataset.ticketId}`; });
+                });
+            }
+        } catch(e) { console.error(e); }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // ============================================================
+    // 3. ОБРАБОТЧИКИ ФОРМ
+    // ============================================================
+    const ticketForm = document.getElementById('ticketForm');
+    if (ticketForm) {
+        ticketForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!isAuthenticated) {
+                document.getElementById('ticketFormResult').innerHTML = '<span style="color:#dc2626;">Для создания обращения необходимо авторизоваться.</span>';
+                return;
+            }
+            const subject = document.getElementById('ticketSubject').value.trim();
+            const department = document.getElementById('ticketDepartment').value;
+            const priority = document.getElementById('ticketPriority').value;
+            const message = document.getElementById('ticketMessage').value.trim();
+            if (!subject || !message) {
+                document.getElementById('ticketFormResult').innerHTML = '<span style="color:#dc2626;">Заполните тему и сообщение</span>';
+                return;
+            }
+            try {
+                const res = await fetch('/api/tickets', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ subject, department, priority, message })
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    document.getElementById('ticketFormResult').innerHTML = `<span style="color:#10b981;">Обращение №${data.ticket_number} создано. Мы ответим в ближайшее время.</span>`;
+                    ticketForm.reset();
+                    loadUserTickets();
+                } else {
+                    document.getElementById('ticketFormResult').innerHTML = `<span style="color:#dc2626;">Ошибка: ${data.error || 'попробуйте позже'}</span>`;
+                }
+            } catch(err) {
+                document.getElementById('ticketFormResult').innerHTML = '<span style="color:#dc2626;">Ошибка соединения с сервером</span>';
+            }
+        });
+    }
+
+    // ============================================================
+    // 4. ДОПОЛНИТЕЛЬНЫЕ ОБРАБОТЧИКИ
+    // ============================================================
+    document.getElementById('refreshTicketsBtn')?.addEventListener('click', () => loadUserTickets());
+    document.getElementById('partnerBtn')?.addEventListener('click', () => { notice('По вопросам партнёрства: partners@nullmarket.com'); });
+    document.querySelector('.logo')?.addEventListener('click', () => window.location.href = '/');
+
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            const answer = q.nextElementSibling;
+            answer.classList.toggle('active');
+            q.querySelector('span').textContent = answer.classList.contains('active') ? '−' : '+';
+        });
+    });
+
+    // ============================================================
+    // 5. ЗАПУСК
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        loadStats();
+        checkAuth();
+    });
+</script>
+</body>
+</html>

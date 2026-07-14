@@ -1,0 +1,2665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title id="articleTitle">NULLMARKET — Статья</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        /* ----- БАЗОВЫЕ СТИЛИ ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: #f3f5fc;
+            color: #121826;
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-theme {
+            background-color: #0b1120;
+            color: #e5e9f0;
+        }
+
+        /* ----- Абстрактные размытые объекты ----- */
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #a78bfa, #3b82f6);
+            top: -150px;
+            left: -150px;
+        }
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f97316, #facc15);
+            bottom: -250px;
+            right: -200px;
+            opacity: 0.4;
+        }
+        .blur-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2dd4bf, #14b8a6);
+            top: 40%;
+            left: 60%;
+            opacity: 0.3;
+        }
+        body.dark-theme .blur-object { opacity: 0.25; }
+
+        /* ----- КОНТЕЙНЕР (1000px) ----- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ----- ШАПКА ----- */
+        .header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-theme .header {
+            background: rgba(11, 17, 32, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+        body.dark-theme .logo {
+            background: linear-gradient(125deg, #e0e7ff, #a5b4fc, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: #4f46e5; }
+        .nav-link.active { color: #4f46e5; font-weight: 600; }
+        body.dark-theme .nav-link { color: #94a3b8; }
+        body.dark-theme .nav-link:hover,
+        body.dark-theme .nav-link.active { color: #818cf8; }
+
+        .btn-download {
+            background: #11181c;
+            color: white;
+            border: none;
+            padding: 10px 26px;
+            border-radius: 48px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 14px -8px rgba(0,0,0,0.2);
+        }
+        body.dark-theme .btn-download {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        .btn-download:hover { transform: scale(1.02); opacity: 0.9; }
+
+        /* ----- КНОПКИ УПРАВЛЕНИЯ СТАТЬЕЙ ----- */
+        .article-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .btn-edit {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-edit:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-delete:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+        body.dark-theme .btn-edit { background: #6366f1; }
+        body.dark-theme .btn-edit:hover { background: #818cf8; }
+        body.dark-theme .btn-delete { background: #dc2626; }
+        body.dark-theme .btn-delete:hover { background: #b91c1c; }
+
+        /* ----- ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ----- */
+        .theme-toggle {
+            background: rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 40px;
+            padding: 6px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 60px;
+            justify-content: center;
+        }
+        body.dark-theme .theme-toggle {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+        }
+        .theme-toggle .sun-icon { opacity: 0; transform: scale(0.5); position: absolute; }
+        .theme-toggle .moon-icon { opacity: 1; transform: scale(1); }
+        body.dark-theme .theme-toggle .sun-icon { opacity: 1; transform: scale(1); position: relative; }
+        body.dark-theme .theme-toggle .moon-icon { opacity: 0; transform: scale(0.5); position: absolute; }
+
+        /* ----- ПОЛЬЗОВАТЕЛЬСКОЕ МЕНЮ ----- */
+        .user-menu-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+            white-space: nowrap;
+        }
+        body.dark-theme .user-name { color: #e5e9f0; }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            min-width: 220px;
+            display: none;
+            overflow: hidden;
+            z-index: 50;
+        }
+        body.dark-theme .user-dropdown {
+            background: #1e293b;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
+        }
+        .user-dropdown.active { display: block; }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        body.dark-theme .dropdown-header {
+            background: #0f172a;
+            border-bottom-color: #334155;
+        }
+        .dropdown-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: #0f172a;
+        }
+        body.dark-theme .dropdown-name { color: #e5e9f0; }
+        .dropdown-email {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        body.dark-theme .dropdown-email { color: #94a3b8; }
+        .dropdown-balance {
+            font-size: 13px;
+            margin-top: 6px;
+            color: #f59e0b;
+            font-weight: 600;
+        }
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #0f172a;
+        }
+        body.dark-theme .dropdown-item { color: #e5e9f0; }
+        .dropdown-item:hover { background: #f1f5f9; }
+        body.dark-theme .dropdown-item:hover { background: #334155; }
+        .dropdown-item.logout {
+            border-top: 1px solid #e2e8f0;
+            color: #ef4444;
+        }
+        body.dark-theme .dropdown-item.logout { border-top-color: #334155; }
+        .chevron {
+            transition: transform 0.2s;
+        }
+        .user-menu-container:hover .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* ----- СТАТЬЯ ----- */
+        .article-hero {
+            margin: 40px 0 32px;
+            border-radius: 48px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(245,248,255,0.8) 100%);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.7);
+            padding: 48px 40px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-theme .article-hero {
+            background: linear-gradient(135deg, rgba(20, 30, 50, 0.9) 0%, rgba(11, 17, 32, 0.8) 100%);
+            border-color: rgba(255,255,255,0.08);
+        }
+
+        .article-tag {
+            display: inline-block;
+            background: linear-gradient(95deg, #e0e7ff, #ede9fe);
+            border-radius: 32px;
+            padding: 4px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4338ca;
+            margin-bottom: 16px;
+        }
+        body.dark-theme .article-tag {
+            background: linear-gradient(95deg, #1e293b, #2d3a5e);
+            color: #a5b4fc;
+        }
+
+        .article-hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+            background: linear-gradient(115deg, #111827, #2d3a5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+        body.dark-theme .article-hero h1 {
+            background: linear-gradient(115deg, #e0e7ff, #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            color: #64748b;
+            font-size: 15px;
+        }
+        body.dark-theme .article-meta { color: #94a3b8; }
+        .article-meta .author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .article-meta .author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        body.dark-theme .article-meta .author-avatar { background: #6366f1; }
+
+        .article-body {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 48px 40px;
+            margin: 0 0 60px;
+            border: 1px solid rgba(255,255,240,0.6);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-theme .article-body {
+            background: rgba(20, 30, 50, 0.85);
+            border-color: rgba(255,255,255,0.06);
+        }
+
+        .article-body .content {
+            font-size: 17px;
+            line-height: 1.8;
+        }
+        .article-body .content p {
+            margin-bottom: 18px;
+            color: #1e293b;
+        }
+        body.dark-theme .article-body .content p { color: #cbd5e1; }
+
+        .article-body .content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 36px 0 16px;
+            color: #0f172a;
+        }
+        body.dark-theme .article-body .content h2 { color: #e5e9f0; }
+
+        .article-body .content h3 {
+            font-size: 21px;
+            font-weight: 600;
+            margin: 28px 0 12px;
+            color: #0f172a;
+        }
+        body.dark-theme .article-body .content h3 { color: #e5e9f0; }
+
+        .article-body .content ul, .article-body .content ol {
+            margin: 16px 0 20px 24px;
+            color: #1e293b;
+        }
+        body.dark-theme .article-body .content ul,
+        body.dark-theme .article-body .content ol { color: #cbd5e1; }
+        .article-body .content li { margin-bottom: 8px; }
+
+        .article-body .content strong {
+            color: #0f172a;
+            font-weight: 700;
+        }
+        body.dark-theme .article-body .content strong { color: #e5e9f0; }
+
+        .article-body .content em {
+            font-style: italic;
+            color: #4f46e5;
+        }
+        body.dark-theme .article-body .content em { color: #818cf8; }
+
+        /* ===== СТИЛИ ДЛЯ РАСШИРЕННЫХ ТЕГОВ ===== */
+
+        .article-body .content .article-image {
+            margin: 24px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .article-body .content .article-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .article-body .content .article-image figcaption {
+            padding: 12px 16px;
+            background: rgba(0,0,0,0.04);
+            font-size: 14px;
+            color: #64748b;
+            text-align: center;
+        }
+        body.dark-theme .article-body .content .article-image figcaption {
+            background: rgba(255,255,255,0.04);
+            color: #94a3b8;
+        }
+
+        .article-body .content .checklist {
+            margin: 16px 0 20px;
+            padding: 0;
+            list-style: none;
+        }
+        .article-body .content .checklist li {
+            padding: 8px 12px 8px 40px;
+            position: relative;
+            margin-bottom: 4px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .article-body .content .checklist li:hover {
+            background: rgba(0,0,0,0.02);
+        }
+        body.dark-theme .article-body .content .checklist li:hover {
+            background: rgba(255,255,255,0.03);
+        }
+        .article-body .content .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #94a3b8;
+        }
+        .article-body .content .checklist li.checked::before {
+            content: "☑";
+            color: #22c55e;
+        }
+
+        .article-body .content .article-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .article-body .content .article-table th {
+            background: rgba(79, 70, 229, 0.08);
+            color: #0f172a;
+            font-weight: 600;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid rgba(79, 70, 229, 0.2);
+        }
+        body.dark-theme .article-body .content .article-table th {
+            background: rgba(99, 102, 241, 0.12);
+            color: #e5e9f0;
+            border-bottom-color: rgba(99, 102, 241, 0.2);
+        }
+        .article-body .content .article-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            color: #1e293b;
+        }
+        body.dark-theme .article-body .content .article-table td {
+            border-bottom-color: rgba(255,255,255,0.06);
+            color: #cbd5e1;
+        }
+        .article-body .content .article-table tr:hover td {
+            background: rgba(0,0,0,0.02);
+        }
+        body.dark-theme .article-body .content .article-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .article-body .content .hidden-content {
+            border: 2px dashed rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            position: relative;
+            background: rgba(239, 68, 68, 0.04);
+        }
+        body.dark-theme .article-body .content .hidden-content {
+            background: rgba(239, 68, 68, 0.06);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+        .article-body .content .hidden-content .hidden-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        body.dark-theme .article-body .content .hidden-content .hidden-badge {
+            background: #dc2626;
+        }
+        .article-body .content .hidden-content .hidden-lock {
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .article-body .content .hidden-content .hidden-role {
+            font-size: 13px;
+            color: #64748b;
+        }
+        body.dark-theme .article-body .content .hidden-content .hidden-role {
+            color: #94a3b8;
+        }
+
+        .article-body .content .text-color {
+            font-weight: 500;
+        }
+
+        .article-body .content .youtube-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            margin: 24px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .article-body .content .youtube-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .article-body .content a {
+            color: #4f46e5;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s;
+        }
+        body.dark-theme .article-body .content a {
+            color: #818cf8;
+        }
+        .article-body .content a:hover {
+            color: #6366f1;
+        }
+        body.dark-theme .article-body .content a:hover {
+            color: #a5b4fc;
+        }
+
+        .article-body .content .block-bug {
+            background: rgba(239, 68, 68, 0.08);
+            border-left: 4px solid #dc2626;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            position: relative;
+        }
+        body.dark-theme .article-body .content .block-bug {
+            background: rgba(239, 68, 68, 0.12);
+        }
+        .article-body .content .block-bug::before {
+            content: "🐛";
+            display: block;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .article-body .content .block-bug strong { color: #dc2626; }
+        body.dark-theme .article-body .content .block-bug strong { color: #f87171; }
+
+        .article-body .content .block-tip {
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 4px solid #10b981;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            position: relative;
+        }
+        body.dark-theme .article-body .content .block-tip {
+            background: rgba(16, 185, 129, 0.12);
+        }
+        .article-body .content .block-tip::before {
+            content: "💡";
+            display: block;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .article-body .content .block-tip strong { color: #059669; }
+        body.dark-theme .article-body .content .block-tip strong { color: #34d399; }
+
+        .article-body .content .block-warning {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid #f59e0b;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            position: relative;
+        }
+        body.dark-theme .article-body .content .block-warning {
+            background: rgba(245, 158, 11, 0.12);
+        }
+        .article-body .content .block-warning::before {
+            content: "⚠️";
+            display: block;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .article-body .content .block-warning strong { color: #d97706; }
+        body.dark-theme .article-body .content .block-warning strong { color: #fbbf24; }
+
+        .article-body .content .block-info {
+            background: rgba(59, 130, 246, 0.08);
+            border-left: 4px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            position: relative;
+        }
+        body.dark-theme .article-body .content .block-info {
+            background: rgba(59, 130, 246, 0.12);
+        }
+        .article-body .content .block-info::before {
+            content: "ℹ️";
+            display: block;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .article-body .content .block-info strong { color: #2563eb; }
+        body.dark-theme .article-body .content .block-info strong { color: #60a5fa; }
+
+        .article-body .content .block-success {
+            background: rgba(34, 197, 94, 0.08);
+            border-left: 4px solid #22c55e;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            position: relative;
+        }
+        body.dark-theme .article-body .content .block-success {
+            background: rgba(34, 197, 94, 0.12);
+        }
+        .article-body .content .block-success::before {
+            content: "✅";
+            display: block;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .article-body .content .block-success strong { color: #16a34a; }
+        body.dark-theme .article-body .content .block-success strong { color: #4ade80; }
+
+        .article-body .content .block-highlight {
+            background: rgba(79, 70, 229, 0.06);
+            border-left: 4px solid #4f46e5;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            position: relative;
+        }
+        body.dark-theme .article-body .content .block-highlight {
+            background: rgba(99, 102, 241, 0.1);
+            border-left-color: #818cf8;
+        }
+        .article-body .content .block-highlight::before {
+            content: "⭐";
+            display: block;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .article-body .content .block-quote {
+            background: rgba(100, 116, 139, 0.06);
+            border-left: 4px solid #64748b;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #475569;
+            position: relative;
+        }
+        body.dark-theme .article-body .content .block-quote {
+            background: rgba(100, 116, 139, 0.1);
+            color: #94a3b8;
+        }
+        .article-body .content .block-quote::before {
+            content: "📝";
+            display: block;
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-style: normal;
+        }
+        .article-body .content .block-quote cite {
+            display: block;
+            margin-top: 8px;
+            font-style: normal;
+            font-weight: 600;
+            color: #334155;
+        }
+        body.dark-theme .article-body .content .block-quote cite { color: #cbd5e1; }
+
+        .article-body .content .block-code {
+            background: rgba(15, 23, 42, 0.08);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #1e293b;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        body.dark-theme .article-body .content .block-code {
+            background: rgba(30, 41, 59, 0.6);
+            color: #e5e9f0;
+            border-color: rgba(255,255,255,0.05);
+        }
+
+        .article-body .content .block-spoiler {
+            background: rgba(0,0,0,0.03);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 16px 0;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        body.dark-theme .article-body .content .block-spoiler {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.05);
+        }
+        .article-body .content .block-spoiler .spoiler-title {
+            font-weight: 600;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        body.dark-theme .article-body .content .block-spoiler .spoiler-title {
+            color: #818cf8;
+        }
+        .article-body .content .block-spoiler .spoiler-title::after {
+            content: "▶";
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+        .article-body .content .block-spoiler.active .spoiler-title::after {
+            transform: rotate(90deg);
+        }
+        .article-body .content .block-spoiler .spoiler-content {
+            display: none;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        body.dark-theme .article-body .content .block-spoiler .spoiler-content {
+            border-top-color: rgba(255,255,255,0.05);
+        }
+        .article-body .content .block-spoiler.active .spoiler-content {
+            display: block;
+        }
+
+        .article-body .content .block-collapse {
+            background: rgba(0,0,0,0.03);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 16px 0;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        body.dark-theme .article-body .content .block-collapse {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.05);
+        }
+        .article-body .content .block-collapse .collapse-title {
+            font-weight: 600;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        body.dark-theme .article-body .content .block-collapse .collapse-title {
+            color: #818cf8;
+        }
+        .article-body .content .block-collapse .collapse-title::after {
+            content: "▼";
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+        .article-body .content .block-collapse.active .collapse-title::after {
+            transform: rotate(180deg);
+        }
+        .article-body .content .block-collapse .collapse-content {
+            display: none;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        body.dark-theme .article-body .content .block-collapse .collapse-content {
+            border-top-color: rgba(255,255,255,0.05);
+        }
+        .article-body .content .block-collapse.active .collapse-content {
+            display: block;
+        }
+
+        .article-body .content .block-info i,
+        .article-body .content .block-warning i,
+        .article-body .content .block-tip i,
+        .article-body .content .block-success i,
+        .article-body .content .block-highlight i,
+        .article-body .content .block-bug i {
+            margin-right: 6px;
+        }
+
+        .article-body .content ul li i,
+        .article-body .content ol li i {
+            width: 20px;
+            display: inline-block;
+            color: #4f46e5;
+            margin-right: 4px;
+        }
+        body.dark-theme .article-body .content ul li i,
+        body.dark-theme .article-body .content ol li i {
+            color: #818cf8;
+        }
+
+        .article-body .content h2 i,
+        .article-body .content h3 i {
+            margin-right: 10px;
+            color: #4f46e5;
+        }
+        body.dark-theme .article-body .content h2 i,
+        body.dark-theme .article-body .content h3 i {
+            color: #818cf8;
+        }
+
+        .article-body .views {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        body.dark-theme .article-body .views {
+            border-top-color: rgba(255,255,255,0.06);
+            color: #64748b;
+        }
+
+        .article-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: -20px 0 40px;
+            padding: 16px 24px;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        body.dark-theme .article-footer {
+            background: rgba(20, 30, 50, 0.6);
+            border-color: rgba(255,255,255,0.06);
+        }
+        .article-footer .back-link {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        body.dark-theme .article-footer .back-link { color: #818cf8; }
+        .article-footer .back-link:hover { gap: 12px; }
+        .article-footer .share-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .article-footer .share-links span {
+            color: #64748b;
+            font-size: 14px;
+        }
+        body.dark-theme .article-footer .share-links span { color: #94a3b8; }
+        .article-footer .share-links a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        body.dark-theme .article-footer .share-links a { color: #818cf8; }
+        .article-footer .share-links a:hover { text-decoration: underline; }
+
+        .loading-state {
+            text-align: center;
+            padding: 80px 20px;
+            font-size: 18px;
+            color: #64748b;
+        }
+        .error-state {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .error-state h2 {
+            font-size: 32px;
+            color: #ef4444;
+            margin-bottom: 12px;
+        }
+
+        /* ----- МОДАЛЬНЫЕ ОКНА ----- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: #ffffff;
+            border-radius: 40px;
+            max-width: 640px;
+            width: 100%;
+            padding: 36px 32px;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.3);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        body.dark-theme .modal-box {
+            background: #1e293b;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #94a3b8;
+            background: none;
+            border: none;
+            transition: color 0.2s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .modal-box h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        body.dark-theme .modal-box h2 { color: #e5e9f0; }
+        .modal-box label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+        body.dark-theme .modal-box label { color: #cbd5e1; }
+        .modal-box input,
+        .modal-box textarea,
+        .modal-box select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: border 0.2s;
+            background: #f8fafc;
+            color: #0f172a;
+            margin-bottom: 18px;
+        }
+        body.dark-theme .modal-box input,
+        body.dark-theme .modal-box textarea,
+        body.dark-theme .modal-box select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e5e9f0;
+        }
+        .modal-box input:focus,
+        .modal-box textarea:focus,
+        .modal-box select:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        .modal-box textarea { min-height: 120px; resize: vertical; }
+        .modal-box .submit-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 48px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .modal-box .submit-btn:hover { background: #4338ca; transform: translateY(-1px); }
+        body.dark-theme .modal-box .submit-btn { background: #6366f1; }
+        body.dark-theme .modal-box .submit-btn:hover { background: #818cf8; }
+        .modal-box .error-msg {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 14px;
+            display: none;
+        }
+        .modal-box .error-msg.show { display: block; }
+
+        /* ----- МОДАЛЬНОЕ ОКНО HIDDEN ТЕГА ----- */
+        .modal-box .role-checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 12px 0 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        .modal-box .role-checkboxes label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 400;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 10px;
+            transition: background 0.2s;
+        }
+        .modal-box .role-checkboxes label:hover {
+            background: rgba(79, 70, 229, 0.05);
+        }
+        body.dark-theme .modal-box .role-checkboxes label:hover {
+            background: rgba(99, 102, 241, 0.08);
+        }
+        .modal-box .role-checkboxes input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            accent-color: #4f46e5;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .modal-box .role-checkboxes .role-label {
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-box .role-checkboxes .role-label .role-name {
+            font-weight: 600;
+            color: #0f172a;
+        }
+        body.dark-theme .modal-box .role-checkboxes .role-label .role-name {
+            color: #e5e9f0;
+        }
+        .modal-box .role-checkboxes .role-label .role-desc {
+            font-size: 11px;
+            color: #64748b;
+        }
+        body.dark-theme .modal-box .role-checkboxes .role-label .role-desc {
+            color: #94a3b8;
+        }
+        .modal-box .hidden-preview {
+            background: rgba(0,0,0,0.03);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 12px 0 16px;
+            border: 1px dashed rgba(0,0,0,0.1);
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 14px;
+            color: #475569;
+        }
+        body.dark-theme .modal-box .hidden-preview {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.08);
+            color: #94a3b8;
+        }
+        .modal-box .hidden-preview p { margin-bottom: 8px; }
+        .modal-box .hidden-preview img { 
+            max-width: 100%; 
+            border-radius: 8px;
+            margin: 4px 0;
+        }
+
+        /* ----- МОДАЛЬНОЕ ОКНО ДЛЯ ВВОДА ДАННЫХ (ЗАМЕНА PROMT) ----- */
+        .modal-box .input-group {
+            margin-bottom: 18px;
+        }
+        .modal-box .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+        body.dark-theme .modal-box .input-group label {
+            color: #cbd5e1;
+        }
+        .modal-box .input-group input,
+        .modal-box .input-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: border 0.2s;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        body.dark-theme .modal-box .input-group input,
+        body.dark-theme .modal-box .input-group textarea {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e5e9f0;
+        }
+        .modal-box .input-group input:focus,
+        .modal-box .input-group textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        .modal-box .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        .modal-box .modal-actions .btn-cancel {
+            padding: 10px 24px;
+            background: none;
+            border: 1px solid #d1d5db;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+        body.dark-theme .modal-box .modal-actions .btn-cancel {
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        .modal-box .modal-actions .btn-cancel:hover {
+            background: rgba(0,0,0,0.05);
+        }
+        body.dark-theme .modal-box .modal-actions .btn-cancel:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .modal-box .modal-actions .btn-confirm {
+            padding: 10px 24px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        body.dark-theme .modal-box .modal-actions .btn-confirm {
+            background: #6366f1;
+        }
+        .modal-box .modal-actions .btn-confirm:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+        body.dark-theme .modal-box .modal-actions .btn-confirm:hover {
+            background: #818cf8;
+        }
+
+        /* ----- TOAST-УВЕДОМЛЕНИЯ ----- */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 420px;
+            width: 100%;
+        }
+        .toast {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 16px 20px;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            animation: slideInRight 0.4s ease;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        body.dark-theme .toast {
+            background: #1e293b;
+            border-color: rgba(255,255,255,0.06);
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOutRight {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(60px); }
+        }
+        .toast.hiding {
+            animation: slideOutRight 0.3s ease forwards;
+        }
+        .toast .toast-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+        .toast .toast-icon.success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+        .toast .toast-icon.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+        .toast .toast-icon.info {
+            background: rgba(79, 70, 229, 0.15);
+            color: #4f46e5;
+        }
+        .toast .toast-content {
+            flex: 1;
+        }
+        .toast .toast-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #0f172a;
+        }
+        body.dark-theme .toast .toast-title { color: #e5e9f0; }
+        .toast .toast-message {
+            font-size: 13px;
+            color: #64748b;
+        }
+        body.dark-theme .toast .toast-message { color: #94a3b8; }
+        .toast .toast-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .toast .toast-close:hover {
+            background: rgba(0,0,0,0.05);
+            color: #ef4444;
+        }
+        body.dark-theme .toast .toast-close:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .footer {
+            padding: 32px 0;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        body.dark-theme .footer { border-top-color: rgba(255,255,255,0.06); }
+        .footer a {
+            color: #475569;
+            text-decoration: none;
+        }
+        body.dark-theme .footer a { color: #94a3b8; }
+        .footer a:hover { color: #4f46e5; }
+        body.dark-theme .footer a:hover { color: #818cf8; }
+
+        .role-checkboxes::-webkit-scrollbar {
+            width: 6px;
+        }
+        .role-checkboxes::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        .role-checkboxes::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 8px;
+        }
+        body.dark-theme .role-checkboxes::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+        }
+        body.dark-theme .role-checkboxes::-webkit-scrollbar-thumb {
+            background: #6366f1;
+        }
+
+        @media (max-width: 760px) {
+            .container { padding: 0 20px; }
+            .article-hero { padding: 28px 20px; }
+            .article-hero h1 { font-size: 30px; }
+            .article-body { padding: 28px 20px; }
+            .article-body .content { font-size: 16px; }
+            .article-body .content h2 { font-size: 22px; }
+            .header-inner { flex-wrap: wrap; }
+            .nav-links { gap: 12px; }
+            .nav-link { font-size: 14px; }
+            .user-name { display: none; }
+            .user-menu-container { gap: 4px; }
+            .article-footer { flex-direction: column; align-items: stretch; text-align: center; }
+            .article-footer .share-links { justify-content: center; }
+            .article-actions { justify-content: center; }
+            .toast-container { right: 16px; left: 16px; max-width: none; }
+            .modal-box { padding: 24px 18px; }
+        }
+
+        .editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.06);
+            max-height: 160px;
+            overflow-y: auto;
+        }
+        body.dark-theme .editor-toolbar {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.06);
+        }
+        .editor-toolbar .toolbar-btn {
+            padding: 4px 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 16px;
+            background: white;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: #334155;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        body.dark-theme .editor-toolbar .toolbar-btn {
+            background: #1e293b;
+            border-color: rgba(255,255,255,0.1);
+            color: #cbd5e1;
+        }
+        .editor-toolbar .toolbar-btn:hover {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+        body.dark-theme .editor-toolbar .toolbar-btn:hover {
+            background: #6366f1;
+            color: white;
+        }
+        .editor-toolbar .toolbar-btn i {
+            font-size: 12px;
+        }
+        .editor-toolbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .editor-toolbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        .editor-toolbar::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 8px;
+        }
+        body.dark-theme .editor-toolbar::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+        }
+        body.dark-theme .editor-toolbar::-webkit-scrollbar-thumb {
+            background: #6366f1;
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+<div class="blur-object blur-3"></div>
+
+<header class="header">
+    <div class="container header-inner">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/marketplace" class="nav-link">Маркетплейс</a>
+                <a href="/support" class="nav-link">Поддержка</a>
+                <a href="/media" class="nav-link active">Медиа</a>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                <span class="sun-icon">☀️</span>
+                <span class="moon-icon">🌙</span>
+            </button>
+            <div id="authButtonContainer">
+                <button class="btn-download" id="authBtn">Авторизация</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <div id="articleContainer">
+        <div class="loading-state">Загрузка статьи...</div>
+    </div>
+</main>
+
+<!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-box">
+        <button class="modal-close" id="modalClose">✕</button>
+        <h2><i class="fas fa-pen-to-square"></i> Редактировать статью</h2>
+        
+        <div class="editor-toolbar">
+            <button class="toolbar-btn" data-tag="bold"><i class="fas fa-bold"></i> B</button>
+            <button class="toolbar-btn" data-tag="italic"><i class="fas fa-italic"></i> I</button>
+            <button class="toolbar-btn" data-tag="underline"><i class="fas fa-underline"></i> U</button>
+            <button class="toolbar-btn" data-tag="strike"><i class="fas fa-strikethrough"></i> S</button>
+            <button class="toolbar-btn" data-tag="url"><i class="fas fa-link"></i> Ссылка</button>
+            <button class="toolbar-btn" data-tag="img"><i class="fas fa-image"></i> Изобр.</button>
+            <button class="toolbar-btn" data-tag="youtube"><i class="fab fa-youtube"></i> YouTube</button>
+            <button class="toolbar-btn" data-tag="h2"><i class="fas fa-heading"></i> H2</button>
+            <button class="toolbar-btn" data-tag="h3"><i class="fas fa-heading"></i> H3</button>
+            <button class="toolbar-btn" data-tag="list"><i class="fas fa-list"></i> Список</button>
+            <button class="toolbar-btn" data-tag="checklist"><i class="fas fa-list-check"></i> Чеклист</button>
+            <button class="toolbar-btn" data-tag="table"><i class="fas fa-table"></i> Таблица</button>
+            <button class="toolbar-btn" data-tag="spoiler"><i class="fas fa-eye-slash"></i> Спойлер</button>
+            <button class="toolbar-btn" data-tag="collapse"><i class="fas fa-chevron-down"></i> Сворач.</button>
+            <button class="toolbar-btn" data-tag="hidden" id="insertHiddenBtn"><i class="fas fa-lock"></i> HIDDEN</button>
+            <button class="toolbar-btn" data-tag="info"><i class="fas fa-info-circle"></i> Инфо</button>
+            <button class="toolbar-btn" data-tag="tip"><i class="fas fa-lightbulb"></i> Совет</button>
+            <button class="toolbar-btn" data-tag="warning"><i class="fas fa-triangle-exclamation"></i> Предупр.</button>
+            <button class="toolbar-btn" data-tag="success"><i class="fas fa-check-circle"></i> Успех</button>
+            <button class="toolbar-btn" data-tag="bug"><i class="fas fa-bug"></i> Баг</button>
+            <button class="toolbar-btn" data-tag="quote"><i class="fas fa-quote-right"></i> Цитата</button>
+            <button class="toolbar-btn" data-tag="code"><i class="fas fa-code"></i> Код</button>
+        </div>
+
+        <form id="editArticleForm">
+            <label for="editTitle">Заголовок</label>
+            <input type="text" id="editTitle" required>
+
+            <label for="editTag">Тег (категория)</label>
+            <select id="editTag">
+                <option value="Интервью">Интервью</option>
+                <option value="Аналитика">Аналитика</option>
+                <option value="Новости">Новости</option>
+                <option value="Мнение">Мнение</option>
+                <option value="Обзор">Обзор</option>
+				<option value="Гайд">Гайд</option>
+            </select>
+
+            <label for="editContent">Содержание</label>
+            <textarea id="editContent" required></textarea>
+
+            <div class="error-msg" id="editError">Заполните все поля</div>
+            <button type="submit" class="submit-btn">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО HIDDEN ТЕГА -->
+<div class="modal-overlay" id="hiddenModal">
+    <div class="modal-box">
+        <button class="modal-close" id="hiddenModalClose">✕</button>
+        <h2><i class="fas fa-lock"></i> Скрыть содержимое для групп</h2>
+        
+        <p style="color: #64748b; margin-bottom: 16px;">
+            Выберите группы пользователей, которые смогут видеть скрытый контент.
+        </p>
+
+        <div class="role-checkboxes" id="roleCheckboxes">
+            <!-- Роли будут загружены из функций -->
+        </div>
+
+        <label for="hiddenContent">Содержимое (скрытое для выбранных групп)</label>
+        <textarea id="hiddenContent" placeholder="Введите содержимое, которое будет скрываться для групп..." style="min-height: 100px;"></textarea>
+
+        <div class="hidden-preview" id="hiddenPreview">
+            <p style="color: #94a3b8; font-style: italic;">Предварительный просмотр...</p>
+        </div>
+
+        <button class="submit-btn" id="insertHiddenTag"><i class="fas fa-plus"></i> Вставить тег</button>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ ВВОДА ДАННЫХ (ЗАМЕНА PROMT) -->
+<div class="modal-overlay" id="inputModal">
+    <div class="modal-box">
+        <button class="modal-close" id="inputModalClose">✕</button>
+        <h2 id="inputModalTitle"><i class="fas fa-pencil"></i> Введите данные</h2>
+        <div id="inputModalBody"></div>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="inputModalCancel">Отмена</button>
+            <button class="btn-confirm" id="inputModalConfirm">Подтвердить</button>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ УДАЛЕНИЯ -->
+<div class="modal-overlay" id="confirmModal">
+    <div class="modal-box" style="max-width: 480px;">
+        <button class="modal-close" id="confirmClose">✕</button>
+        <h2 style="color: #ef4444;"><i class="fas fa-trash-can"></i> Удалить статью?</h2>
+        <p style="color: #64748b; margin-bottom: 24px; font-size: 16px;">
+            Вы уверены, что хотите удалить статью <strong id="confirmArticleTitle" style="color: #0f172a;"></strong>?
+            <br>Это действие <strong style="color: #ef4444;">нельзя отменить</strong>.
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+            <button id="confirmCancel" style="padding: 8px 20px; background: none; border: 1px solid #d1d5db; border-radius: 30px; cursor: pointer; font-weight: 500;">Отмена</button>
+            <button class="btn-delete" id="confirmDelete" style="padding: 8px 20px; border-radius: 30px;">Удалить</button>
+        </div>
+    </div>
+</div>
+
+<!-- КОНТЕЙНЕР ДЛЯ УВЕДОМЛЕНИЙ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<footer class="container footer">
+    <div>© 2025-2026 NULLMARKET Медиа. Новости, интервью, аналитика о цифровых товарах и маркетплейсах.</div>
+    <div style="display: flex; gap: 24px;">
+        <a href="/media">Все статьи</a>
+        <a href="#">Контакты</a>
+    </div>
+</footer>
+
+<script>
+    // ============================================================
+    // 0. ФУНКЦИИ РОЛЕЙ (определены первыми)
+    // ============================================================
+    function getRoleLevel(role) {
+        const levels = {
+            'user': 0,
+            'beta_tester': 20,
+            'support_trainee': 30,
+            'tech_support': 35,
+            'pro_support': 40,
+            'recruiter': 60,
+            'smm_manager': 70,
+            'pr_manager': 75,
+            'senior_pr_manager': 80,
+            'content_label_moderator': 86,
+            'content_moderator': 87,
+            'senior_content_label_moderator': 88,
+            'senior_content_moderator': 89,
+            'head_beta_testers': 90,
+            'head_cooperation': 91,
+            'head_marketing': 92,
+            'head_support': 93,
+            'head_moderation': 94,
+            'tech_admin': 95,
+            'developer': 96,
+            'tech_lead': 97,
+            'ciso': 98,
+            'ceo': 99,
+            'board_of_directors': 100
+        };
+        return levels[role] || 0;
+    }
+
+    function getNextRole(currentRole) {
+        const promotionPath = {
+            'user': 'beta_tester',
+            'beta_tester': 'support_trainee',
+            'support_trainee': 'tech_support',
+            'tech_support': 'pro_support',
+            'pro_support': 'recruiter',
+            'recruiter': 'smm_manager',
+            'smm_manager': 'pr_manager',
+            'pr_manager': 'senior_pr_manager',
+            'senior_pr_manager': 'content_label_moderator',
+            'content_label_moderator': 'content_moderator',
+            'content_moderator': 'senior_content_label_moderator',
+            'senior_content_label_moderator': 'senior_content_moderator',
+            'senior_content_moderator': 'head_beta_testers',
+            'head_beta_testers': 'head_cooperation',
+            'head_cooperation': 'head_marketing',
+            'head_marketing': 'head_support',
+            'head_support': 'head_moderation',
+            'head_moderation': 'tech_admin',
+            'tech_admin': 'developer',
+            'developer': 'tech_lead',
+            'tech_lead': 'ciso',
+            'ciso': 'ceo',
+            'ceo': 'board_of_directors',
+            'board_of_directors': null
+        };
+        return promotionPath[currentRole] || null;
+    }
+
+    function getRoleName(role) {
+        const names = {
+            'user': 'Пользователь',
+            'beta_tester': 'Бета-Тестер',
+            'support_trainee': 'Стажер Поддержки',
+            'tech_support': 'Тех. Поддержка',
+            'pro_support': 'Проф. Поддержка',
+            'recruiter': 'Рекрутер',
+            'smm_manager': 'Смм Менеджер',
+            'pr_manager': 'Пиар Менеджер',
+            'senior_pr_manager': 'Старший Пиар Менеджер',
+            'content_label_moderator': 'Модератор разметки контента',
+            'content_moderator': 'Модератор Контента',
+            'senior_content_label_moderator': 'Старший Модератор разметки контента',
+            'senior_content_moderator': 'Старший Модератор контента',
+            'head_beta_testers': 'Руководитель Бета-Тестеров',
+            'head_cooperation': 'Руководитель Сотрудничеств',
+            'head_marketing': 'Руководитель Маркетинга и RP',
+            'head_support': 'Руководитель Поддержки',
+            'head_moderation': 'Руководитель Модерации',
+            'tech_admin': 'Тех. Администратор',
+            'developer': 'Разработчики',
+            'tech_lead': 'Ведущий разработчик',
+            'ciso': 'Глава Безопасности',
+            'ceo': 'Исполнительный Директор',
+            'board_of_directors': 'Совет Директоров'
+        };
+        return names[role] || role;
+    }
+
+    // Список всех ролей (определен один раз)
+    const ROLES_LIST = [
+        { id: 'user', name: 'Пользователь', level: 0 },
+        { id: 'beta_tester', name: 'Бета-Тестер', level: 20 },
+        { id: 'support_trainee', name: 'Стажер Поддержки', level: 30 },
+        { id: 'tech_support', name: 'Тех. Поддержка', level: 35 },
+        { id: 'pro_support', name: 'Проф. Поддержка', level: 40 },
+        { id: 'recruiter', name: 'Рекрутер', level: 60 },
+        { id: 'smm_manager', name: 'Смм Менеджер', level: 70 },
+        { id: 'pr_manager', name: 'Пиар Менеджер', level: 75 },
+        { id: 'senior_pr_manager', name: 'Старший Пиар Менеджер', level: 80 },
+        { id: 'content_label_moderator', name: 'Модератор разметки контента', level: 86 },
+        { id: 'content_moderator', name: 'Модератор Контента', level: 87 },
+        { id: 'senior_content_label_moderator', name: 'Старший Модератор разметки контента', level: 88 },
+        { id: 'senior_content_moderator', name: 'Старший Модератор контента', level: 89 },
+        { id: 'head_beta_testers', name: 'Руководитель Бета-Тестеров', level: 90 },
+        { id: 'head_cooperation', name: 'Руководитель Сотрудничеств', level: 91 },
+        { id: 'head_marketing', name: 'Руководитель Маркетинга и RP', level: 92 },
+        { id: 'head_support', name: 'Руководитель Поддержки', level: 93 },
+        { id: 'head_moderation', name: 'Руководитель Модерации', level: 94 },
+        { id: 'tech_admin', name: 'Тех. Администратор', level: 95 },
+        { id: 'developer', name: 'Разработчики', level: 96 },
+        { id: 'tech_lead', name: 'Ведущий разработчик', level: 97 },
+        { id: 'ciso', name: 'Глава Безопасности', level: 98 },
+        { id: 'ceo', name: 'Исполнительный Директор', level: 99 },
+        { id: 'board_of_directors', name: 'Совет Директоров', level: 100 }
+    ];
+
+    function getAllRoles() {
+        return ROLES_LIST;
+    }
+
+    // ============================================================
+    // 1. МОДАЛЬНОЕ ОКНО ДЛЯ ВВОДА ДАННЫХ (ЗАМЕНА PROMPT)
+    // ============================================================
+    let inputModalResolve = null;
+
+    function showInputModal(title, fields) {
+        return new Promise((resolve) => {
+            const modal = document.getElementById('inputModal');
+            const modalTitle = document.getElementById('inputModalTitle');
+            const modalBody = document.getElementById('inputModalBody');
+            const confirmBtn = document.getElementById('inputModalConfirm');
+            const cancelBtn = document.getElementById('inputModalCancel');
+            const closeBtn = document.getElementById('inputModalClose');
+
+            modalTitle.innerHTML = title;
+            modalBody.innerHTML = '';
+            
+            fields.forEach((field, index) => {
+                const group = document.createElement('div');
+                group.className = 'input-group';
+                
+                const label = document.createElement('label');
+                label.textContent = field.label;
+                group.appendChild(label);
+                
+                if (field.type === 'textarea') {
+                    const textarea = document.createElement('textarea');
+                    textarea.id = 'input_' + index;
+                    textarea.placeholder = field.placeholder || '';
+                    textarea.rows = field.rows || 3;
+                    if (field.value) textarea.value = field.value;
+                    group.appendChild(textarea);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = field.type || 'text';
+                    input.id = 'input_' + index;
+                    input.placeholder = field.placeholder || '';
+                    if (field.value) input.value = field.value;
+                    group.appendChild(input);
+                }
+                
+                modalBody.appendChild(group);
+            });
+
+            function handleConfirm() {
+                const results = fields.map(function(field, index) {
+                    const el = document.getElementById('input_' + index);
+                    return el ? el.value : '';
+                });
+                modal.classList.remove('active');
+                resolve(results.length === 1 ? results[0] : results);
+            }
+
+            function handleCancel() {
+                modal.classList.remove('active');
+                resolve(null);
+            }
+
+            confirmBtn.onclick = handleConfirm;
+            cancelBtn.onclick = handleCancel;
+            closeBtn.onclick = handleCancel;
+            
+            modal.onclick = function(e) {
+                if (e.target === modal) handleCancel();
+            };
+
+            const firstInput = modalBody.querySelector('input, textarea');
+            if (firstInput) {
+                firstInput.focus();
+                firstInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleConfirm();
+                    }
+                });
+            }
+
+            modal.classList.add('active');
+        });
+    }
+
+    // ============================================================
+    // 2. ТЕМНАЯ / СВЕТЛАЯ ТЕМА
+    // ============================================================
+    var themeToggle = document.getElementById('themeToggle');
+    var body = document.body;
+
+    function applyTheme(isDark) {
+        if (isDark) {
+            body.classList.add('dark-theme');
+            localStorage.setItem('nullmarket-theme', 'dark');
+        } else {
+            body.classList.remove('dark-theme');
+            localStorage.setItem('nullmarket-theme', 'light');
+        }
+    }
+
+    var savedTheme = localStorage.getItem('nullmarket-theme');
+    if (savedTheme === 'dark') {
+        applyTheme(true);
+    } else if (savedTheme === 'light') {
+        applyTheme(false);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme(true);
+    } else {
+        applyTheme(false);
+    }
+
+    themeToggle.addEventListener('click', function() {
+        var isDark = !body.classList.contains('dark-theme');
+        applyTheme(isDark);
+    });
+
+    // ============================================================
+    // 3. TOAST-УВЕДОМЛЕНИЯ
+    // ============================================================
+    function showToast(title, message, type, duration) {
+        type = type || 'info';
+        duration = duration || 3000;
+        var container = document.getElementById('toastContainer');
+        var icons = {
+            success: '✓',
+            error: '✕',
+            info: '●'
+        };
+        var toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+            <div class="toast-icon ${type}">${icons[type]}</div>
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close">✕</button>
+        `;
+
+        toast.querySelector('.toast-close').addEventListener('click', function() {
+            removeToast(toast);
+        });
+
+        container.appendChild(toast);
+
+        var timeout = setTimeout(function() {
+            removeToast(toast);
+        }, duration);
+
+        toast.addEventListener('mouseenter', function() { clearTimeout(timeout); });
+        toast.addEventListener('mouseleave', function() {
+            setTimeout(function() { removeToast(toast); }, duration);
+        });
+
+        return toast;
+    }
+
+    function removeToast(toast) {
+        if (toast.classList.contains('hiding')) return;
+        toast.classList.add('hiding');
+        setTimeout(function() {
+            if (toast.parentNode) toast.remove();
+        }, 300);
+    }
+
+    // ============================================================
+    // 4. АВТОРИЗАЦИЯ
+    // ============================================================
+    var isAuthenticated = false;
+    var currentUser = null;
+
+    var authContainer = document.getElementById('authButtonContainer');
+
+    function showAuthButton() {
+        if (authContainer) {
+            authContainer.innerHTML = '<button class="btn-download" id="authBtn">Авторизация</button>';
+            var newBtn = document.getElementById('authBtn');
+            if (newBtn) {
+                newBtn.addEventListener('click', function() { window.location.href = '/auth'; });
+            }
+        }
+    }
+
+    function showUserMenu(user) {
+        var container = document.getElementById('authButtonContainer');
+        if (!container) return;
+
+        var userDiv = document.createElement('div');
+        userDiv.className = 'user-menu-container';
+        userDiv.innerHTML = `
+            <img src="${user.avatar}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=40&rounded=true'">
+            <span class="user-name">${user.name}</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="user-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-name">${user.name}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-balance">Баланс: ${user.balance || 0} ₽</div>
+                </div>
+                <div class="dropdown-item" data-action="purchases"><i class="fas fa-box"></i> Покупки</div>
+                <div class="dropdown-item" data-action="sales"><i class="fas fa-tag"></i> Продажи</div>
+                <div class="dropdown-item" data-action="messages"><i class="fas fa-envelope"></i> Сообщения</div>
+                <div class="dropdown-item" data-action="finance"><i class="fas fa-coins"></i> Финансы</div>
+                <div class="dropdown-item" data-action="profile" data-user-id="${user.user_id}"><i class="fas fa-user"></i> Профиль</div>
+                <div class="dropdown-item logout" data-action="logout"><i class="fas fa-right-from-bracket"></i> Выйти</div>
+            </div>
+        `;
+
+        container.innerHTML = '';
+        container.appendChild(userDiv);
+
+        var menuContainer = container.querySelector('.user-menu-container');
+        var dropdown = container.querySelector('.user-dropdown');
+
+        menuContainer.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function() {
+            dropdown.classList.remove('active');
+        });
+
+        container.querySelectorAll('.dropdown-item').forEach(function(item) {
+            item.addEventListener('click', async function(e) {
+                e.stopPropagation();
+                dropdown.classList.remove('active');
+                var action = item.dataset.action;
+                var userId = item.dataset.userId;
+
+                switch(action) {
+                    case 'logout':
+                        try {
+                            await fetch('/api/logout', { method: 'POST' });
+                            isAuthenticated = false;
+                            currentUser = null;
+                            showToast('Выход', 'Вы вышли из аккаунта', 'success');
+                            setTimeout(function() { window.location.reload(); }, 1000);
+                        } catch(e) {
+                            showToast('Ошибка', 'Не удалось выйти из аккаунта', 'error');
+                        }
+                        break;
+                    case 'profile':
+                        if (userId) window.location.href = '/user/' + userId;
+                        else window.location.href = '/profile';
+                        break;
+                    case 'purchases': showToast('Покупки', 'История покупок скоро появится', 'info'); break;
+                    case 'sales': showToast('Продажи', 'Ваши продажи будут здесь', 'info'); break;
+                    case 'messages': window.location.href = '/messages'; break;
+                    case 'finance': showToast('Финансы', 'Финансовые операции и вывод средств', 'info'); break;
+                    default: showToast('Раздел', '"' + item.innerText.trim() + '" в разработке', 'info');
+                }
+            });
+        });
+    }
+
+    async function checkAuth() {
+        try {
+            var response = await fetch('/api/me');
+            if (response.ok) {
+                isAuthenticated = true;
+                currentUser = await response.json();
+                showUserMenu(currentUser);
+            } else {
+                isAuthenticated = false;
+                showAuthButton();
+            }
+        } catch(e) {
+            console.log('Ошибка проверки авторизации:', e);
+            isAuthenticated = false;
+            showAuthButton();
+        }
+    }
+
+    // ============================================================
+    // 5. РАСШИРЕННЫЙ ПАРСЕР
+    // ============================================================
+    function parseMarkdown(text) {
+        if (!text) return '';
+
+        var depth = 0;
+        var MAX_DEPTH = 10;
+
+        function parseRecursive(input) {
+            if (depth > MAX_DEPTH) return input;
+            depth++;
+
+            var html = input;
+
+            var tempTags = [];
+            var processed = html;
+            var tagRegex = /<(i|div|a|br|strong|em|u|del|h[1-6]|ul|ol|li|p|span|figure|figcaption|table|thead|tbody|tr|th|td)(?:\s+[^>]*)?>[\s\S]*?<\/\1>|<(i|div|a|br|strong|em|u|del|h[1-6]|ul|ol|li|p|span|figure|figcaption|table|thead|tbody|tr|th|td)(?:\s+[^>]*)?\/?>/gi;
+            
+            processed = processed.replace(tagRegex, function(match) {
+                var id = '__TAG_' + tempTags.length + '__';
+                tempTags.push(match);
+                return id;
+            });
+
+            var result = processed
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            tempTags.forEach(function(tag, index) {
+                result = result.replace('__TAG_' + index + '__', tag);
+            });
+
+            result = result.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+            result = result.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+
+            result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            result = result.replace(/\/\/(.+?)\/\//g, '<em>$1</em>');
+            result = result.replace(/__(.+?)__/g, '<u>$1</u>');
+            result = result.replace(/~~(.+?)~~/g, '<del>$1</del>');
+            
+            result = result.replace(/\[B\]([\s\S]*?)\[\/B\]/g, '<strong>$1</strong>');
+            result = result.replace(/\[I\]([\s\S]*?)\[\/I\]/g, '<em>$1</em>');
+
+            result = result.replace(/\[URL=([^\]]+)\]([\s\S]*?)\[\/URL\]/g, '<a href="$1" target="_blank" rel="noopener">$2</a>');
+            result = result.replace(/\[COLOR=([^\]]+)\]([\s\S]*?)\[\/COLOR\]/g, '<span class="text-color" style="color: $1;">$2</span>');
+            result = result.replace(/\[SIZE=([^\]]+)\]([\s\S]*?)\[\/SIZE\]/g, '<span style="font-size: $1px;">$2</span>');
+            result = result.replace(/\[ALIGN=([^\]]+)\]([\s\S]*?)\[\/ALIGN\]/g, '<div style="text-align: $1;">$2</div>');
+
+            result = result.replace(/\[IMG\]([^\[]+?)\[\/IMG\]/g, function(match, url) {
+                return '<figure class="article-image">\n                    <img src="' + url.trim() + '" alt="Изображение" loading="lazy" onerror="this.style.display=\'none\'">\n                </figure>';
+            });
+            result = result.replace(/\[IMG=([^\]]+)\]([\s\S]*?)\[\/IMG\]/g, function(match, url, caption) {
+                return '<figure class="article-image">\n                    <img src="' + url.trim() + '" alt="' + caption.trim() + '" loading="lazy" onerror="this.style.display=\'none\'">\n                    <figcaption>' + caption.trim() + '</figcaption>\n                </figure>';
+            });
+
+            result = result.replace(/\[YOUTUBE\]([^\[]+?)\[\/YOUTUBE\]/g, function(match, id) {
+                var videoId = id.trim();
+                return '<div class="youtube-wrapper">\n                    <iframe src="https://www.youtube.com/embed/' + videoId + '" allowfullscreen loading="lazy"></iframe>\n                </div>';
+            });
+
+            result = result.replace(/\[CHECKLIST\]([\s\S]*?)\[\/CHECKLIST\]/g, function(match, content) {
+                var items = content.trim().split('\n').filter(function(line) { return line.trim(); });
+                var listHtml = '<ul class="checklist">';
+                items.forEach(function(item) {
+                    var isChecked = item.trim().startsWith('[x]') || item.trim().startsWith('[X]');
+                    var text = item.replace(/^\[[xX]\]\s*/, '').replace(/^\[ \]\s*/, '');
+                    listHtml += '<li class="' + (isChecked ? 'checked' : '') + '">' + parseRecursive(text) + '</li>';
+                });
+                listHtml += '</ul>';
+                return listHtml;
+            });
+
+            result = result.replace(/\[TABLE\]([\s\S]*?)\[\/TABLE\]/g, function(match, content) {
+                var rows = content.trim().split('\n').filter(function(line) { return line.trim(); });
+                var tableHtml = '<table class="article-table">';
+                rows.forEach(function(row, index) {
+                    var cells = row.split('|').map(function(c) { return c.trim(); }).filter(function(c) { return c; });
+                    if (index === 0) {
+                        tableHtml += '<thead><tr>' + cells.map(function(c) { return '<th>' + parseRecursive(c) + '</th>'; }).join('') + '</tr></thead><tbody>';
+                    } else {
+                        tableHtml += '<tr>' + cells.map(function(c) { return '<td>' + parseRecursive(c) + '</td>'; }).join('') + '</tr>';
+                    }
+                });
+                tableHtml += '</tbody></table>';
+                return tableHtml;
+            });
+
+            result = result.replace(/\[HIDDEN=\{([^\}]+)\}\]([\s\S]*?)\[\/HIDDEN\]/g, function(match, roleIds, content) {
+                var roles = roleIds.split('|').map(function(r) { return r.trim(); });
+                var hasAccess = false;
+                if (currentUser && currentUser.role) {
+                    if (roles.indexOf(currentUser.role) !== -1) {
+                        hasAccess = true;
+                    }
+                }
+                
+                if (!hasAccess && currentUser && currentUser.role) {
+                    var userLevel = getRoleLevel(currentUser.role);
+                    for (var i = 0; i < roles.length; i++) {
+                        var requiredLevel = getRoleLevel(roles[i]);
+                        if (userLevel >= requiredLevel) {
+                            hasAccess = true;
+                            break;
+                        }
+                    }
+                }
+                
+                if (hasAccess) {
+                    return '<div class="hidden-content">\n                        <div class="hidden-badge"><i class="fas fa-unlock hidden-lock"></i> ДОСТУП РАЗРЕШЁН</div>\n                        ' + parseRecursive(content.trim()) + '\n                    </div>';
+                } else {
+                    var roleNames = roles.map(function(r) { return getRoleName(r); }).join(', ');
+                    
+                    return '<div class="hidden-content">\n                        <div class="hidden-badge"><i class="fas fa-lock hidden-lock"></i> СКРЫТЫЙ КОНТЕНТ</div>\n                        <p style="color: #64748b; margin: 0;">Этот контент доступен только пользователям с ролью: <strong class="hidden-role">' + roleNames + '</strong></p>\n                    </div>';
+                }
+            });
+
+            result = result.replace(/^[\-\*•] (.+)$/gm, '<li>$1</li>');
+            result = result.replace(/(<li>.*<\/li>\n?)+/g, function(match) {
+                return '<ul>\n' + match + '</ul>\n';
+            });
+
+            result = result.replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>');
+            result = result.replace(/(<li>.*<\/li>\n?)+/g, function(match) {
+                return '<ol>\n' + match + '</ol>\n';
+            });
+
+            var blockTypes = ['bug', 'tip', 'warning', 'info', 'success', 'highlight', 'quote', 'code'];
+            blockTypes.forEach(function(type) {
+                var regex = new RegExp('\\[' + type + '\\]([\\s\\S]*?)\\[\\/' + type + '\\]', 'g');
+                result = result.replace(regex, function(match, content) {
+                    return '<div class="block-' + type + '">' + parseRecursive(content.trim()) + '</div>';
+                });
+            });
+
+            result = result.replace(/\[spoiler(?: title="([^"]*)")?\]([\s\S]*?)\[\/spoiler\]/g, function(match, title, content) {
+                var spoilerTitle = title || 'Спойлер';
+                return '<div class="block-spoiler" onclick="this.classList.toggle(\'active\')">\n                    <div class="spoiler-title">' + spoilerTitle + '</div>\n                    <div class="spoiler-content">' + parseRecursive(content.trim()) + '</div>\n                </div>';
+            });
+
+            result = result.replace(/\[collapse(?: title="([^"]*)")?\]([\s\S]*?)\[\/collapse\]/g, function(match, title, content) {
+                var collapseTitle = title || 'Подробнее';
+                return '<div class="block-collapse" onclick="this.classList.toggle(\'active\')">\n                    <div class="collapse-title">' + collapseTitle + '</div>\n                    <div class="collapse-content">' + parseRecursive(content.trim()) + '</div>\n                </div>';
+            });
+
+            result = result.split('\n\n').map(function(block) {
+                block = block.trim();
+                if (!block) return '';
+                if (/^<[huldoi]|^<div|^<table|^<figure|^<ul|^<ol|^<block/.test(block)) return block;
+                return '<p>' + block + '</p>';
+            }).join('\n');
+
+            result = result.replace(/([^>])\n([^<])/g, '$1<br>$2');
+
+            depth--;
+            return result;
+        }
+
+        return parseRecursive(text);
+    }
+
+    // ============================================================
+    // 6. ЗАГРУЗКА СТАТЬИ
+    // ============================================================
+    var slug = window.location.pathname.split('/').pop();
+    var articleData = null;
+    var isAuthor = false;
+
+    var editModal = document.getElementById('editModal');
+    var modalClose = document.getElementById('modalClose');
+    var editForm = document.getElementById('editArticleForm');
+    var editError = document.getElementById('editError');
+
+    var confirmModal = document.getElementById('confirmModal');
+    var confirmClose = document.getElementById('confirmClose');
+    var confirmCancel = document.getElementById('confirmCancel');
+    var confirmDelete = document.getElementById('confirmDelete');
+    var confirmArticleTitle = document.getElementById('confirmArticleTitle');
+
+    var hiddenModal = document.getElementById('hiddenModal');
+    var hiddenModalClose = document.getElementById('hiddenModalClose');
+    var insertHiddenBtn = document.getElementById('insertHiddenBtn');
+    var hiddenContent = document.getElementById('hiddenContent');
+    var hiddenPreview = document.getElementById('hiddenPreview');
+    var insertHiddenTag = document.getElementById('insertHiddenTag');
+
+    function openConfirmModal() {
+        if (!articleData) return;
+        confirmArticleTitle.textContent = '"' + articleData.title + '"';
+        confirmModal.classList.add('active');
+    }
+
+    confirmClose.addEventListener('click', function() { confirmModal.classList.remove('active'); });
+    confirmCancel.addEventListener('click', function() { confirmModal.classList.remove('active'); });
+    confirmModal.addEventListener('click', function(e) {
+        if (e.target === confirmModal) confirmModal.classList.remove('active');
+    });
+
+    // ============================================================
+    // 7. ЗАПОЛНЕНИЕ СПИСКА РОЛЕЙ В МОДАЛЬНОМ ОКНЕ
+    // ============================================================
+    function populateRoles() {
+        var container = document.getElementById('roleCheckboxes');
+        if (!container) {
+            console.error('roleCheckboxes container not found');
+            return;
+        }
+        var roles = getAllRoles();
+        container.innerHTML = '';
+        
+        if (!roles || roles.length === 0) {
+            container.innerHTML = '<p style="color: #ef4444;">Роли не найдены</p>';
+            return;
+        }
+        
+        roles.forEach(function(role) {
+            var label = document.createElement('label');
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = role.id;
+            
+            var roleLabel = document.createElement('span');
+            roleLabel.className = 'role-label';
+            roleLabel.innerHTML = '<span class="role-name">' + role.name + '</span><span class="role-desc">Уровень доступа: ' + role.level + '</span>';
+            
+            label.appendChild(checkbox);
+            label.appendChild(roleLabel);
+            container.appendChild(label);
+        });
+    }
+
+    // ============================================================
+    // 8. МОДАЛЬНОЕ ОКНО HIDDEN ТЕГА
+    // ============================================================
+    function openHiddenModal() {
+        populateRoles();
+        hiddenModal.classList.add('active');
+        updateHiddenPreview();
+    }
+
+    hiddenModalClose.addEventListener('click', function() { hiddenModal.classList.remove('active'); });
+    hiddenModal.addEventListener('click', function(e) {
+        if (e.target === hiddenModal) hiddenModal.classList.remove('active');
+    });
+
+    insertHiddenBtn.addEventListener('click', openHiddenModal);
+
+    function updateHiddenPreview() {
+        var content = hiddenContent.value.trim() || 'Введите содержимое...';
+        var previewHtml = content;
+        previewHtml = previewHtml.replace(/\n/g, '<br>');
+        previewHtml = previewHtml.replace(/\[IMG\]([^\[]+?)\[\/IMG\]/g, function(match, url) {
+            return '<img src="' + url.trim() + '" alt="Изображение" style="max-width:100%;border-radius:8px;margin:4px 0;">';
+        });
+        hiddenPreview.innerHTML = previewHtml || '<p style="color: #94a3b8; font-style: italic;">Предварительный просмотр...</p>';
+    }
+
+    hiddenContent.addEventListener('input', updateHiddenPreview);
+
+    insertHiddenTag.addEventListener('click', function() {
+        var checkboxes = document.querySelectorAll('#hiddenModal .role-checkboxes input[type="checkbox"]:checked');
+        if (checkboxes.length === 0) {
+            showToast('Ошибка', 'Выберите хотя бы одну группу', 'error');
+            return;
+        }
+
+        var roles = Array.from(checkboxes).map(function(cb) { return cb.value; });
+        var content = hiddenContent.value.trim();
+        
+        if (!content) {
+            showToast('Ошибка', 'Введите содержимое для скрытого блока', 'error');
+            return;
+        }
+
+        var tag = '[HIDDEN={' + roles.join('|') + '}]' + content + '[/HIDDEN]';
+        
+        var editContent = document.getElementById('editContent');
+        var start = editContent.selectionStart;
+        var end = editContent.selectionEnd;
+        var text = editContent.value;
+        editContent.value = text.substring(0, start) + tag + text.substring(end);
+        
+        hiddenModal.classList.remove('active');
+        hiddenContent.value = '';
+        document.querySelectorAll('#hiddenModal .role-checkboxes input[type="checkbox"]').forEach(function(cb) { cb.checked = false; });
+        updateHiddenPreview();
+        
+        showToast('Успех', 'Тег HIDDEN вставлен', 'success');
+    });
+
+    // ============================================================
+    // 9. ПАНЕЛЬ ИНСТРУМЕНТОВ РЕДАКТОРА
+    // ============================================================
+    document.querySelectorAll('.editor-toolbar .toolbar-btn').forEach(function(btn) {
+        btn.addEventListener('click', async function() {
+            var tag = btn.dataset.tag;
+            var editContent = document.getElementById('editContent');
+            var start = editContent.selectionStart;
+            var end = editContent.selectionEnd;
+            var selectedText = editContent.value.substring(start, end);
+            var text = editContent.value;
+
+            var wrapStart = '';
+            var wrapEnd = '';
+            var placeholder = '';
+
+            switch(tag) {
+                case 'bold':
+                    wrapStart = '**';
+                    wrapEnd = '**';
+                    placeholder = 'жирный текст';
+                    break;
+                case 'italic':
+                    wrapStart = '//';
+                    wrapEnd = '//';
+                    placeholder = 'курсив';
+                    break;
+                case 'underline':
+                    wrapStart = '__';
+                    wrapEnd = '__';
+                    placeholder = 'подчёркнутый текст';
+                    break;
+                case 'strike':
+                    wrapStart = '~~';
+                    wrapEnd = '~~';
+                    placeholder = 'зачёркнутый текст';
+                    break;
+                case 'url': {
+                    var result = await showInputModal('Вставка ссылки', [
+                        { label: 'URL', type: 'text', placeholder: 'https://example.com' },
+                        { label: 'Текст ссылки', type: 'text', placeholder: 'текст ссылки' }
+                    ]);
+                    if (result && result[0]) {
+                        wrapStart = '[URL=' + result[0] + ']';
+                        wrapEnd = '[/URL]';
+                        placeholder = result[1] || 'текст ссылки';
+                    } else return;
+                    break;
+                }
+                case 'img': {
+                    var result = await showInputModal('Вставка изображения', [
+                        { label: 'URL изображения', type: 'text', placeholder: 'https://example.com/image.jpg' },
+                        { label: 'Подпись (необязательно)', type: 'text', placeholder: 'описание изображения' }
+                    ]);
+                    if (result && result[0]) {
+                        if (result[1]) {
+                            wrapStart = '[IMG=' + result[0] + ']';
+                            wrapEnd = '[/IMG]';
+                            placeholder = result[1];
+                        } else {
+                            wrapStart = '[IMG]';
+                            wrapEnd = '[/IMG]';
+                            placeholder = result[0];
+                        }
+                    } else return;
+                    break;
+                }
+                case 'youtube': {
+                    var result = await showInputModal('Вставка YouTube видео', [
+                        { label: 'ID видео', type: 'text', placeholder: 'dQw4w9WgXcQ' }
+                    ]);
+                    if (result) {
+                        wrapStart = '[YOUTUBE]';
+                        wrapEnd = '[/YOUTUBE]';
+                        placeholder = result;
+                    } else return;
+                    break;
+                }
+                case 'h2':
+                    wrapStart = '## ';
+                    wrapEnd = '';
+                    placeholder = 'Заголовок H2';
+                    break;
+                case 'h3':
+                    wrapStart = '### ';
+                    wrapEnd = '';
+                    placeholder = 'Заголовок H3';
+                    break;
+                case 'list':
+                    wrapStart = '- ';
+                    wrapEnd = '';
+                    placeholder = 'пункт списка';
+                    break;
+                case 'checklist':
+                    wrapStart = '[CHECKLIST]\n- [ ] ';
+                    wrapEnd = '\n[/CHECKLIST]';
+                    placeholder = 'пункт чеклиста';
+                    break;
+                case 'table': {
+                    var result = await showInputModal('Создание таблицы', [
+                        { label: 'Количество колонок', type: 'number', placeholder: '3', value: '3' },
+                        { label: 'Количество строк', type: 'number', placeholder: '3', value: '3' }
+                    ]);
+                    if (result) {
+                        var cols = parseInt(result[0]) || 3;
+                        var rows = parseInt(result[1]) || 3;
+                        var tableContent = '';
+                        for (var r = 0; r < rows; r++) {
+                            var rowCells = [];
+                            for (var c = 0; c < cols; c++) {
+                                rowCells.push(r === 0 ? 'Заголовок ' + (c+1) : 'Ячейка ' + (r+1) + '-' + (c+1));
+                            }
+                            tableContent += rowCells.join(' | ') + '\n';
+                        }
+                        wrapStart = '[TABLE]\n';
+                        wrapEnd = '[/TABLE]';
+                        placeholder = tableContent.trim();
+                    } else return;
+                    break;
+                }
+                case 'spoiler': {
+                    var result = await showInputModal('Вставка спойлера', [
+                        { label: 'Заголовок (необязательно)', type: 'text', placeholder: 'Спойлер' }
+                    ]);
+                    if (result !== null) {
+                        if (result) {
+                            wrapStart = '[spoiler title="' + result + '"]';
+                        } else {
+                            wrapStart = '[spoiler]';
+                        }
+                        wrapEnd = '[/spoiler]';
+                        placeholder = 'скрытый текст';
+                    } else return;
+                    break;
+                }
+                case 'collapse': {
+                    var result = await showInputModal('Вставка сворачиваемого блока', [
+                        { label: 'Заголовок (необязательно)', type: 'text', placeholder: 'Подробнее' }
+                    ]);
+                    if (result !== null) {
+                        if (result) {
+                            wrapStart = '[collapse title="' + result + '"]';
+                        } else {
+                            wrapStart = '[collapse]';
+                        }
+                        wrapEnd = '[/collapse]';
+                        placeholder = 'содержимое';
+                    } else return;
+                    break;
+                }
+                case 'hidden':
+                    openHiddenModal();
+                    return;
+                case 'info':
+                    wrapStart = '[info]';
+                    wrapEnd = '[/info]';
+                    placeholder = 'информация';
+                    break;
+                case 'tip':
+                    wrapStart = '[tip]';
+                    wrapEnd = '[/tip]';
+                    placeholder = 'полезный совет';
+                    break;
+                case 'warning':
+                    wrapStart = '[warning]';
+                    wrapEnd = '[/warning]';
+                    placeholder = 'предупреждение';
+                    break;
+                case 'success':
+                    wrapStart = '[success]';
+                    wrapEnd = '[/success]';
+                    placeholder = 'успешное завершение';
+                    break;
+                case 'bug':
+                    wrapStart = '[bug]';
+                    wrapEnd = '[/bug]';
+                    placeholder = 'описание ошибки';
+                    break;
+                case 'quote':
+                    wrapStart = '[quote]\n';
+                    wrapEnd = '\n[/quote]';
+                    placeholder = 'цитата';
+                    break;
+                case 'code':
+                    wrapStart = '[code]\n';
+                    wrapEnd = '\n[/code]';
+                    placeholder = 'код программы';
+                    break;
+                default:
+                    return;
+            }
+
+            var insertText = selectedText || placeholder;
+            editContent.value = text.substring(0, start) + wrapStart + insertText + wrapEnd + text.substring(end);
+            
+            var newCursorPos = start + wrapStart.length + insertText.length;
+            editContent.setSelectionRange(newCursorPos, newCursorPos);
+            editContent.focus();
+        });
+    });
+
+    // ============================================================
+    // 10. ЗАГРУЗКА СТАТЬИ
+    // ============================================================
+    async function loadArticle() {
+        var container = document.getElementById('articleContainer');
+        try {
+            var res = await fetch('/api/media/articles/' + slug);
+            if (!res.ok) throw new Error('Статья не найдена');
+            articleData = await res.json();
+
+            if (currentUser && articleData.author_id === currentUser.id) {
+                isAuthor = true;
+            }
+
+            var date = new Date(articleData.created_at).toLocaleDateString('ru-RU', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
+            var avatarLetter = (articleData.author_name || 'А').charAt(0).toUpperCase();
+
+            document.title = articleData.title + ' — NULLMARKET Медиа';
+
+            var parsedContent = parseMarkdown(articleData.content);
+
+            var actionsHtml = '';
+            if (isAuthor) {
+                actionsHtml = '\n                    <div class="article-actions">\n                        <button class="btn-edit" id="editArticleBtn"><i class="fas fa-pen"></i> Редактировать</button>\n                        <button class="btn-delete" id="deleteArticleBtn"><i class="fas fa-trash-can"></i> Удалить</button>\n                    </div>\n                ';
+            }
+
+            container.innerHTML = '\n                <div class="article-hero">\n                    <span class="article-tag">' + (articleData.tag || 'Статья') + '</span>\n                    <h1>' + articleData.title + '</h1>\n                    <div class="article-meta">\n                        <span class="author">\n                            <span class="author-avatar">' + avatarLetter + '</span>\n                            ' + (articleData.author_name || 'Автор') + '\n                        </span>\n                        <span><i class="far fa-calendar-alt"></i> ' + date + '</span>\n                        <span><i class="far fa-eye"></i> ' + (articleData.views || 0) + ' просмотров</span>\n                    </div>\n                    ' + actionsHtml + '\n                </div>\n\n                <div class="article-body">\n                    <div class="content">' + parsedContent + '</div>\n                    <div class="views"><i class="far fa-eye"></i> ' + (articleData.views || 0) + ' просмотров</div>\n                </div>\n\n                <div class="article-footer">\n                    <a href="/media" class="back-link"><i class="fas fa-arrow-left"></i> Все статьи</a>\n                    <div class="share-links">\n                        <span>Поделиться:</span>\n                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>\n                        <a href="#"><i class="fab fa-telegram"></i> Telegram</a>\n                        <a href="#"><i class="fab fa-vk"></i> VK</a>\n                    </div>\n                </div>\n            ';
+
+            document.querySelectorAll('.block-spoiler, .block-collapse').forEach(function(block) {
+                block.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'A') return;
+                    this.classList.toggle('active');
+                });
+            });
+
+            var editBtn = document.getElementById('editArticleBtn');
+            if (editBtn) {
+                editBtn.addEventListener('click', openEditModal);
+            }
+
+            var deleteBtn = document.getElementById('deleteArticleBtn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', openConfirmModal);
+            }
+
+        } catch (e) {
+            console.error('Ошибка загрузки статьи:', e);
+            container.innerHTML = '\n                <div class="error-state">\n                    <h2><i class="far fa-frown"></i> Статья не найдена</h2>\n                    <p style="color: #64748b; margin-bottom: 20px;">Возможно, она была удалена или перемещена</p>\n                    <a href="/media" style="color: #4f46e5; text-decoration: none; font-weight: 600;"><i class="fas fa-arrow-left"></i> Вернуться к списку</a>\n                </div>\n            ';
+        }
+    }
+
+    // ============================================================
+    // 11. РЕДАКТИРОВАНИЕ
+    // ============================================================
+    function openEditModal() {
+        if (!articleData) return;
+
+        document.getElementById('editTitle').value = articleData.title;
+        document.getElementById('editTag').value = articleData.tag || 'Новости';
+        document.getElementById('editContent').value = articleData.content;
+        editError.classList.remove('show');
+        editModal.classList.add('active');
+    }
+
+    modalClose.addEventListener('click', function() { editModal.classList.remove('active'); });
+    editModal.addEventListener('click', function(e) {
+        if (e.target === editModal) editModal.classList.remove('active');
+    });
+
+    editForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var title = document.getElementById('editTitle').value.trim();
+        var tag = document.getElementById('editTag').value;
+        var content = document.getElementById('editContent').value.trim();
+
+        if (!title || !content) {
+            editError.textContent = 'Заполните заголовок и содержание';
+            editError.classList.add('show');
+            return;
+        }
+
+        try {
+            var res = await fetch('/api/media/articles/' + articleData.id, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: title, tag: tag, content: content })
+            });
+
+            if (!res.ok) {
+                var err = await res.json();
+                throw new Error(err.error || 'Ошибка обновления');
+            }
+
+            showToast('Успех!', 'Статья обновлена', 'success');
+            editModal.classList.remove('active');
+            loadArticle();
+        } catch (e) {
+            console.error('Ошибка обновления статьи:', e);
+            editError.textContent = e.message || 'Ошибка сервера';
+            editError.classList.add('show');
+            showToast('Ошибка', e.message || 'Не удалось обновить статью', 'error');
+        }
+    });
+
+    // ============================================================
+    // 12. УДАЛЕНИЕ
+    // ============================================================
+    confirmDelete.addEventListener('click', async function() {
+        if (!articleData) return;
+
+        try {
+            var res = await fetch('/api/media/articles/' + articleData.id, {
+                method: 'DELETE'
+            });
+
+            if (!res.ok) throw new Error('Ошибка удаления');
+
+            showToast('Успех!', 'Статья удалена', 'success');
+            confirmModal.classList.remove('active');
+            setTimeout(function() {
+                window.location.href = '/media';
+            }, 1500);
+        } catch (err) {
+            console.error('Ошибка удаления статьи:', err);
+            showToast('Ошибка', 'Не удалось удалить статью', 'error');
+            confirmModal.classList.remove('active');
+        }
+    });
+
+    // ============================================================
+    // 13. ЗАПУСК
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', async function() {
+        await checkAuth();
+        await loadArticle();
+    });
+</script>
+</body>
+</html>

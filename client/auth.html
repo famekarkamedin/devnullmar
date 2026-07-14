@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NULLID — вход в NULLMARKET</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f3f5fc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 24px;
+        }
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .blur-1 { width: 500px; height: 500px; background: radial-gradient(circle, #a78bfa, #3b82f6); top: -150px; left: -150px; }
+        .blur-2 { width: 600px; height: 600px; background: radial-gradient(circle, #f97316, #facc15); bottom: -250px; right: -200px; opacity: 0.4; }
+        .blur-3 { width: 400px; height: 400px; background: radial-gradient(circle, #2dd4bf, #14b8a6); top: 40%; left: 60%; opacity: 0.3; }
+        .auth-container { max-width: 460px; width: 100%; position: relative; z-index: 10; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2);
+            padding: 40px 36px;
+        }
+        .logo { font-size: 32px; font-weight: 800; background: linear-gradient(125deg, #0F2027, #203A43, #2C5364); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .nullid-badge { background: linear-gradient(105deg, #d9e3f0, #ffffff); padding: 5px 12px; border-radius: 60px; font-size: 12px; font-weight: 600; color: #1e2a47; margin-left: 8px; }
+        .title { font-size: 28px; font-weight: 700; text-align: center; background: linear-gradient(115deg, #111827, #2d3a5e); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 8px; }
+        .subtitle { text-align: center; color: #4b5563; font-size: 14px; margin-bottom: 32px; }
+        .input-group { margin-bottom: 20px; }
+        .input-label { display: block; font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px; }
+        .input-field {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e2e8f0;
+            border-radius: 28px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .input-field:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2); }
+        .input-field:disabled { opacity: 0.6; cursor: not-allowed; }
+        .password-wrapper { position: relative; }
+        .toggle-password { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); cursor: pointer; background: none; border: none; color: #6b7280; font-size: 12px; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin: 20px 0; }
+        .btn-primary {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 48px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { background: #1e293b; transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-secondary {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 48px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover { background: #4338ca; transform: translateY(-1px); }
+        .btn-secondary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-success {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 48px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .btn-success:hover { background: #059669; transform: translateY(-1px); }
+        .btn-success:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-outline {
+            background: transparent;
+            color: #4f46e5;
+            border: 1px solid #4f46e5;
+            padding: 14px 20px;
+            border-radius: 48px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { background: #4f46e5; color: white; }
+        .divider { display: flex; align-items: center; margin: 24px 0; color: #94a3b8; font-size: 12px; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
+        .divider span { margin: 0 12px; }
+        .social-buttons { display: flex; gap: 16px; }
+        .social-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #e2e8f0;
+            border-radius: 48px;
+            padding: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+        .footer-link { text-align: center; margin-top: 28px; font-size: 14px; }
+        .footer-link a { color: #4f46e5; text-decoration: none; font-weight: 600; cursor: pointer; }
+        .error-message { background: #fee2e2; border-radius: 32px; padding: 12px 18px; font-size: 13px; color: #b91c1c; margin-bottom: 20px; display: none; }
+        .success-message { background: #dcfce7; border-radius: 32px; padding: 12px 18px; font-size: 13px; color: #166534; margin-bottom: 20px; display: none; }
+        .info-message { background: #dbeafe; border-radius: 32px; padding: 12px 18px; font-size: 13px; color: #1e40af; margin-bottom: 20px; display: none; }
+        .loading-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 8px; }
+        .verification-container {
+            background: #f8fafc;
+            border-radius: 32px;
+            padding: 24px 20px;
+            margin: 16px 0 20px 0;
+            border: 1px solid #e2e8f0;
+            display: none;
+        }
+        .verification-container.active { display: block; }
+        .verification-container .title-sm { font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 6px; }
+        .verification-container .desc { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+        .code-input-group { display: flex; gap: 10px; align-items: center; }
+        .code-input-group .input-field { flex: 1; text-align: center; font-size: 24px; letter-spacing: 8px; }
+        .code-input-group .btn-secondary { flex: 0 0 auto; width: auto; padding: 14px 24px; }
+        .resend-link { text-align: center; margin-top: 12px; font-size: 13px; color: #6b7280; }
+        .resend-link a { color: #4f46e5; cursor: pointer; font-weight: 600; }
+        .timer-text { color: #6b7280; font-size: 13px; }
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #dcfce7;
+            color: #166534;
+            padding: 8px 16px;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 8px 0 16px 0;
+        }
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .step-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            background: #e2e8f0;
+            color: #94a3b8;
+            transition: all 0.3s;
+        }
+        .step-dot.active { background: #4f46e5; color: white; }
+        .step-dot.done { background: #10b981; color: white; }
+        .step-line {
+            width: 40px;
+            height: 2px;
+            background: #e2e8f0;
+            transition: all 0.3s;
+        }
+        .step-line.done { background: #10b981; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 520px) { .glass-card { padding: 32px 24px; } .code-input-group { flex-direction: column; } .code-input-group .btn-secondary { width: 100%; } }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+<div class="blur-object blur-3"></div>
+
+<div class="auth-container">
+    <div class="glass-card">
+        <div style="text-align: center; margin-bottom: 28px;">
+            <span class="logo">NULLMARKET</span>
+            <span class="nullid-badge">NULLID</span>
+        </div>
+
+        <!-- ЛОГИН -->
+        <div id="loginForm">
+            <div class="title">Вход в NULLID</div>
+            <div class="subtitle">Единый аккаунт для маркетплейса</div>
+            <div id="loginError" class="error-message"></div>
+            <div class="input-group">
+                <label class="input-label">Email, телефон или имя</label>
+                <input type="text" id="loginIdentifier" class="input-field" placeholder="example@mail.ru или @username">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Пароль</label>
+                <div class="password-wrapper">
+                    <input type="password" id="loginPassword" class="input-field" placeholder="......">
+                    <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">Показать</button>
+                </div>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="rememberMe">
+                <label style="font-size: 13px;">Запомнить меня</label>
+            </div>
+            <button class="btn-primary" id="doLoginBtn">Войти</button>
+            <div class="divider"><span>или</span></div>
+            <div class="social-buttons">
+                <button class="social-btn" id="socialGoogle">Google</button>
+                <button class="social-btn" id="socialTelegram">Telegram</button>
+                <button class="social-btn" id="socialVK">VK ID</button>
+            </div>
+            <div class="footer-link">Нет аккаунта? <a id="switchToRegister">Зарегистрироваться</a></div>
+            <div class="footer-link"><a id="forgotPassLink">Забыли пароль?</a></div>
+        </div>
+
+        <!-- РЕГИСТРАЦИЯ С ПОДТВЕРЖДЕНИЕМ EMAIL -->
+        <div id="registerForm" style="display: none;">
+            <div class="title">Регистрация NULLID</div>
+            <div class="subtitle">Создайте аккаунт для торговли</div>
+            
+            <!-- Шаги -->
+            <div class="step-indicator">
+                <div class="step-dot active" id="step1">1</div>
+                <div class="step-line" id="line1"></div>
+                <div class="step-dot" id="step2">2</div>
+                <div class="step-line" id="line2"></div>
+                <div class="step-dot" id="step3">3</div>
+            </div>
+            
+            <div id="registerError" class="error-message"></div>
+            <div id="registerSuccess" class="success-message"></div>
+            <div id="registerInfo" class="info-message"></div>
+
+            <!-- ШАГ 1: Ввод данных и отправка кода -->
+            <div id="step1Content">
+                <div class="input-group">
+                    <label class="input-label">Имя пользователя *</label>
+                    <input type="text" id="regName" class="input-field" placeholder="от 2 символов">
+                    <div id="nameCheck" style="font-size: 11px; margin-top: 4px;"></div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Email *</label>
+                    <input type="email" id="regEmail" class="input-field" placeholder="mail@example.com">
+                    <div id="emailCheck" style="font-size: 11px; margin-top: 4px;"></div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Телефон</label>
+                    <input type="tel" id="regPhone" class="input-field" placeholder="+7 900 123-45-67">
+                    <div id="phoneCheck" style="font-size: 11px; margin-top: 4px;"></div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Пароль *</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="regPassword" class="input-field" placeholder="минимум 6 символов">
+                        <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">Показать</button>
+                    </div>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agreeRules">
+                    <label style="font-size: 13px;">Я принимаю <a href="#" id="rulesLink" style="color:#4f46e5;">условия</a> использования</label>
+                </div>
+                <button class="btn-secondary" id="sendCodeBtn">Отправить код на email</button>
+                <div style="margin-top: 12px; text-align: center; font-size: 13px; color: #6b7280;">
+                    На указанный email будет отправлен 6-значный код подтверждения
+                </div>
+            </div>
+
+            <!-- ШАГ 2: Подтверждение кода -->
+            <div id="step2Content" style="display: none;">
+                <div class="verification-container active">
+                    <div class="title-sm">Подтверждение email</div>
+                    <div class="desc">Введите код, отправленный на <strong id="displayEmail">your@email.com</strong></div>
+                    <div class="code-input-group">
+                        <input type="text" id="verificationCode" class="input-field" placeholder="0 3 0 1 8 4" maxlength="6" style="text-align: center; font-size: 24px; letter-spacing: 8px;">
+                        <button class="btn-secondary" id="verifyCodeBtn">Проверить</button>
+                    </div>
+                    <div class="resend-link">
+                        Не пришёл код? <a id="resendCodeLink">Отправить снова</a>
+                        <span class="timer-text" id="timerText"></span>
+                    </div>
+                    <div style="margin-top: 12px; text-align: center; font-size: 13px; color: #6b7280;" id="verificationStatus"></div>
+                </div>
+            </div>
+
+            <!-- ШАГ 3: Завершение регистрации -->
+            <div id="step3Content" style="display: none;">
+                <div style="text-align: center; padding: 16px 0;">
+                    <div class="verified-badge">Email подтверждён</div>
+                    <p style="color: #4b5563; font-size: 14px; margin-top: 8px;">Теперь вы можете завершить регистрацию</p>
+                </div>
+                <button class="btn-success" id="doRegisterBtn">Создать аккаунт</button>
+            </div>
+
+            <div class="divider"><span>или</span></div>
+            <div class="social-buttons">
+                <button class="social-btn" id="socialGoogleReg">Google</button>
+                <button class="social-btn" id="socialTelegramReg">Telegram</button>
+                <button class="social-btn" id="socialVKReg">VK ID</button>
+            </div>
+            <div class="footer-link">Уже есть аккаунт? <a id="switchToLogin">Войти</a></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_BASE = '';
+    let verificationEmail = '';
+    let isEmailVerified = false;
+    let resendTimer = null;
+    let timerSeconds = 0;
+
+    function showLogin() {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registerForm').style.display = 'none';
+        clearErrors();
+        resetVerification();
+    }
+    
+    function showRegister() {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'block';
+        clearErrors();
+        resetVerification();
+        showStep(1);
+    }
+    
+    function resetVerification() {
+        verificationEmail = '';
+        isEmailVerified = false;
+        document.getElementById('verificationCode').value = '';
+        document.getElementById('verificationStatus').textContent = '';
+        document.getElementById('displayEmail').textContent = '';
+        if (resendTimer) {
+            clearInterval(resendTimer);
+            resendTimer = null;
+        }
+        document.getElementById('timerText').textContent = '';
+    }
+
+    function showStep(step) {
+        document.getElementById('step1Content').style.display = step === 1 ? 'block' : 'none';
+        document.getElementById('step2Content').style.display = step === 2 ? 'block' : 'none';
+        document.getElementById('step3Content').style.display = step === 3 ? 'block' : 'none';
+        
+        document.getElementById('step1').className = 'step-dot' + (step >= 1 ? ' active' : '');
+        document.getElementById('step2').className = 'step-dot' + (step >= 2 ? ' active' : '');
+        document.getElementById('step3').className = 'step-dot' + (step >= 3 ? ' active' : '');
+        
+        document.getElementById('line1').className = 'step-line' + (step >= 2 ? ' done' : '');
+        document.getElementById('line2').className = 'step-line' + (step >= 3 ? ' done' : '');
+        
+        if (step === 3) {
+            document.getElementById('step1').className = 'step-dot done';
+            document.getElementById('step2').className = 'step-dot done';
+            document.getElementById('step3').className = 'step-dot active';
+        }
+    }
+
+    function togglePassword(fieldId) {
+        const field = document.getElementById(fieldId);
+        field.type = field.type === 'password' ? 'text' : 'password';
+    }
+    
+    function clearErrors() {
+        ['loginError', 'registerError', 'registerInfo'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        });
+    }
+    
+    function setError(id, msg) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.innerText = msg;
+            el.style.display = 'block';
+        }
+    }
+    
+    function setSuccess(id, msg) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.innerText = msg;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 4000);
+        }
+    }
+    
+    function setInfo(id, msg) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.innerText = msg;
+            el.style.display = 'block';
+        }
+    }
+
+    function hideInfo(id) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    }
+
+    async function checkField(field, value) {
+        if (!value || value.length < 2) return;
+        try {
+            const res = await fetch(API_BASE + '/api/check-user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ field, value })
+            });
+            const data = await res.json();
+            return data.exists;
+        } catch(e) {
+            return false;
+        }
+    }
+
+    // Валидация полей
+    document.getElementById('regName')?.addEventListener('blur', async function() {
+        const val = this.value.trim();
+        const checkDiv = document.getElementById('nameCheck');
+        if (val.length < 2) {
+            checkDiv.innerHTML = '<span style="color:#eab308;">Минимум 2 символа</span>';
+        } else {
+            const exists = await checkField('name', val);
+            if (exists) checkDiv.innerHTML = '<span style="color:#ef4444;">Имя уже занято</span>';
+            else checkDiv.innerHTML = '<span style="color:#10b981;">Доступно</span>';
+        }
+    });
+    
+    document.getElementById('regEmail')?.addEventListener('blur', async function() {
+        const val = this.value.trim();
+        const checkDiv = document.getElementById('emailCheck');
+        if (!val.match(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)) {
+            checkDiv.innerHTML = '<span style="color:#eab308;">Некорректный email</span>';
+        } else {
+            const exists = await checkField('email', val);
+            if (exists) checkDiv.innerHTML = '<span style="color:#ef4444;">Email уже используется</span>';
+            else checkDiv.innerHTML = '<span style="color:#10b981;">Доступно</span>';
+        }
+    });
+    
+    document.getElementById('regPhone')?.addEventListener('blur', async function() {
+        const val = this.value.trim();
+        const checkDiv = document.getElementById('phoneCheck');
+        if (val && val.length > 5) {
+            const exists = await checkField('phone', val);
+            if (exists) checkDiv.innerHTML = '<span style="color:#ef4444;">Телефон уже используется</span>';
+            else checkDiv.innerHTML = '<span style="color:#10b981;">Доступен</span>';
+        } else if (val) {
+            checkDiv.innerHTML = '<span style="color:#eab308;">Введите полный номер</span>';
+        } else {
+            checkDiv.innerHTML = '';
+        }
+    });
+
+    // Отправка кода
+    document.getElementById('sendCodeBtn')?.addEventListener('click', async () => {
+        const btn = document.getElementById('sendCodeBtn');
+        const name = document.getElementById('regName').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const phone = document.getElementById('regPhone').value.trim();
+        const password = document.getElementById('regPassword').value;
+        const agree = document.getElementById('agreeRules').checked;
+        
+        let errors = [];
+        if (name.length < 2) errors.push('Имя должно быть минимум 2 символа');
+        if (!email.match(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/)) errors.push('Некорректный email');
+        if (password.length < 6) errors.push('Пароль должен быть минимум 6 символов');
+        if (!agree) errors.push('Примите условия использования');
+        
+        if (errors.length > 0) {
+            setError('registerError', errors.join('. '));
+            return;
+        }
+        
+        const nameExists = await checkField('name', name);
+        if (nameExists) {
+            setError('registerError', 'Имя уже занято');
+            return;
+        }
+        const emailExists = await checkField('email', email);
+        if (emailExists) {
+            setError('registerError', 'Email уже используется');
+            return;
+        }
+        
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loading-spinner"></span>Отправка...';
+        hideInfo('registerError');
+        
+        try {
+            const response = await fetch(API_BASE + '/api/send-verification', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Ошибка отправки');
+            }
+            
+            verificationEmail = email;
+            document.getElementById('displayEmail').textContent = email;
+            setSuccess('registerError', 'Код отправлен на ' + email);
+            
+            showStep(2);
+            document.getElementById('verificationCode').focus();
+            
+            startResendTimer();
+            
+        } catch(err) {
+            setError('registerError', err.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = 'Отправить код на email';
+        }
+    });
+
+    // Таймер
+    function startResendTimer() {
+        timerSeconds = 60;
+        document.getElementById('resendCodeLink').style.pointerEvents = 'none';
+        document.getElementById('resendCodeLink').style.opacity = '0.5';
+        
+        if (resendTimer) clearInterval(resendTimer);
+        
+        resendTimer = setInterval(() => {
+            timerSeconds--;
+            document.getElementById('timerText').textContent = ' (' + timerSeconds + 'с)';
+            
+            if (timerSeconds <= 0) {
+                clearInterval(resendTimer);
+                resendTimer = null;
+                document.getElementById('timerText').textContent = '';
+                document.getElementById('resendCodeLink').style.pointerEvents = 'auto';
+                document.getElementById('resendCodeLink').style.opacity = '1';
+            }
+        }, 1000);
+    }
+
+    // Проверка кода
+    document.getElementById('verifyCodeBtn')?.addEventListener('click', async () => {
+        const code = document.getElementById('verificationCode').value.trim();
+        const btn = document.getElementById('verifyCodeBtn');
+        const statusEl = document.getElementById('verificationStatus');
+        
+        if (!code || code.length !== 6) {
+            statusEl.innerHTML = '<span style="color:#ef4444;">Введите 6-значный код</span>';
+            return;
+        }
+        
+        if (!verificationEmail) {
+            statusEl.innerHTML = '<span style="color:#ef4444;">Ошибка: email не найден. Начните заново.</span>';
+            return;
+        }
+        
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loading-spinner"></span>Проверка...';
+        statusEl.innerHTML = '';
+        
+        try {
+            const response = await fetch(API_BASE + '/api/verify-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: verificationEmail, code })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Неверный код');
+            }
+            
+            isEmailVerified = true;
+            statusEl.innerHTML = '<span style="color:#10b981;">' + data.message + '</span>';
+            
+            setTimeout(() => {
+                showStep(3);
+                hideInfo('registerError');
+            }, 500);
+            
+        } catch(err) {
+            statusEl.innerHTML = '<span style="color:#ef4444;">' + err.message + '</span>';
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = 'Проверить';
+        }
+    });
+
+    // Повторная отправка
+    document.getElementById('resendCodeLink')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        
+        if (!verificationEmail) {
+            setError('registerError', 'Ошибка: email не найден. Начните заново.');
+            return;
+        }
+        
+        const link = document.getElementById('resendCodeLink');
+        link.style.pointerEvents = 'none';
+        link.style.opacity = '0.5';
+        link.textContent = 'Отправка...';
+        
+        try {
+            const response = await fetch(API_BASE + '/api/send-verification', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: verificationEmail })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Ошибка отправки');
+            }
+            
+            document.getElementById('verificationStatus').innerHTML = '<span style="color:#10b981;">Новый код отправлен!</span>';
+            startResendTimer();
+            
+        } catch(err) {
+            document.getElementById('verificationStatus').innerHTML = '<span style="color:#ef4444;">' + err.message + '</span>';
+        } finally {
+            link.textContent = 'Отправить снова';
+            link.style.pointerEvents = 'auto';
+            link.style.opacity = '1';
+        }
+    });
+
+    // Завершение регистрации
+    document.getElementById('doRegisterBtn')?.addEventListener('click', async () => {
+        if (!isEmailVerified || !verificationEmail) {
+            setError('registerError', 'Необходимо подтвердить email перед регистрацией');
+            return;
+        }
+        
+        const btn = document.getElementById('doRegisterBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loading-spinner"></span>Регистрация...';
+        
+        const name = document.getElementById('regName').value.trim();
+        const phone = document.getElementById('regPhone').value.trim();
+        const password = document.getElementById('regPassword').value;
+        const agree = document.getElementById('agreeRules').checked;
+        
+        try {
+            const response = await fetch(API_BASE + '/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    name, 
+                    email: verificationEmail, 
+                    phone: phone || null, 
+                    password, 
+                    agree,
+                    verification_code: document.getElementById('verificationCode').value.trim()
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Ошибка регистрации');
+            }
+            
+            setSuccess('registerError', data.message);
+            setTimeout(() => showLogin(), 1500);
+            
+        } catch(err) {
+            setError('registerError', err.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = 'Создать аккаунт';
+        }
+    });
+
+    // Авторизация
+    document.getElementById('doLoginBtn')?.addEventListener('click', async () => {
+        const btn = document.getElementById('doLoginBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loading-spinner"></span>Вход...';
+        
+        const identifier = document.getElementById('loginIdentifier').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const remember = document.getElementById('rememberMe').checked;
+        
+        try {
+            const response = await fetch(API_BASE + '/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ identifier, password, remember })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Ошибка входа');
+            }
+            
+            window.location.href = '/';
+        } catch(err) {
+            setError('loginError', err.message);
+            btn.disabled = false;
+            btn.innerHTML = 'Войти';
+        }
+    });
+
+    // Навигация
+    document.getElementById('switchToRegister')?.addEventListener('click', (e) => { e.preventDefault(); showRegister(); });
+    document.getElementById('switchToLogin')?.addEventListener('click', (e) => { e.preventDefault(); showLogin(); });
+    
+    document.getElementById('rulesLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Пользовательское соглашение NULLMARKET: защита сделок, комиссия 3%, запрещены читы и фишинг.');
+    });
+
+    document.getElementById('forgotPassLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Для восстановления пароля обратитесь в поддержку: support@nullmarket.com');
+    });
+
+    // Социальные кнопки
+    function socialAuth(provider) {
+        setError('loginError', 'Вход через ' + provider + ' будет доступен позже');
+    }
+    
+    document.getElementById('socialGoogle')?.addEventListener('click', () => socialAuth('Google'));
+    document.getElementById('socialTelegram')?.addEventListener('click', () => socialAuth('Telegram'));
+    document.getElementById('socialVK')?.addEventListener('click', () => socialAuth('VK ID'));
+    document.getElementById('socialGoogleReg')?.addEventListener('click', () => socialAuth('Google'));
+    document.getElementById('socialTelegramReg')?.addEventListener('click', () => socialAuth('Telegram'));
+    document.getElementById('socialVKReg')?.addEventListener('click', () => socialAuth('VK ID'));
+
+    // Enter для кода
+    document.getElementById('verificationCode')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            document.getElementById('verifyCodeBtn').click();
+        }
+        if (e.target.value.length >= 5 && e.key !== 'Backspace') {
+            setTimeout(() => {
+                if (document.getElementById('verificationCode').value.length === 6) {
+                    document.getElementById('verifyCodeBtn').click();
+                }
+            }, 300);
+        }
+    });
+
+    document.getElementById('verificationCode')?.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').slice(0, 6);
+    });
+</script>
+</body>
+</html>

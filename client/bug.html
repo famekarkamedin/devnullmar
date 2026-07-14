@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="NULLMARKET Beta Testing — платформа для бета-тестеров. Отчёты, тест-кейсы, чек-листы, аналитика.">
+    <title>NULLMARKET — Бета-тестирование</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: #f3f5fc;
+            color: #121826;
+            line-height: 1.4;
+            overflow-x: hidden;
+            -ms-overflow-style: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+
+        * {
+            scrollbar-width: none;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .blur-1 { width: 500px; height: 500px; background: radial-gradient(circle, #a78bfa, #3b82f6); top: -150px; left: -150px; }
+        .blur-2 { width: 600px; height: 600px; background: radial-gradient(circle, #f97316, #facc15); bottom: -250px; right: -200px; opacity: 0.4; }
+        .blur-3 { width: 400px; height: 400px; background: radial-gradient(circle, #2dd4bf, #14b8a6); top: 40%; left: 60%; opacity: 0.3; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+        .glass-card { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); border-radius: 40px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); }
+
+        .header { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.6); position: sticky; top: 0; z-index: 20; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; flex-wrap: wrap; gap: 16px; }
+        .logo { font-size: 28px; font-weight: 800; background: linear-gradient(125deg, #0F2027, #203A43, #2C5364); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.5px; cursor: pointer; }
+        .beta-badge { background: linear-gradient(105deg, #e0e7ff, #c7d2fe); padding: 5px 14px; border-radius: 60px; font-size: 13px; font-weight: 700; color: #4338ca; margin-left: 12px; }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-link { color: #475569; text-decoration: none; font-size: 15px; font-weight: 500; transition: color 0.2s; }
+        .nav-link:hover, .nav-link.active { color: #4f46e5; }
+        .btn-download { background: #11181c; color: white; border: none; padding: 10px 26px; border-radius: 48px; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 14px -8px rgba(0,0,0,0.2); }
+        .btn-primary { background: #4f46e5; color: white; border: none; padding: 10px 24px; border-radius: 48px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn-secondary { background: #e2e8f0; color: #1e293b; border: none; padding: 10px 24px; border-radius: 48px; font-weight: 500; cursor: pointer; }
+
+        .tabs-container { display: flex; gap: 8px; margin: 32px 0 24px; flex-wrap: wrap; border-bottom: 1px solid rgba(203, 213, 225, 0.5); }
+        .tab-btn { padding: 12px 28px; font-size: 16px; font-weight: 600; background: transparent; border: none; cursor: pointer; color: #64748b; border-radius: 40px 40px 0 0; transition: all 0.2s; }
+        .tab-btn:hover { color: #4f46e5; background: rgba(79, 70, 229, 0.05); }
+        .tab-btn.active { color: #4f46e5; border-bottom: 3px solid #4f46e5; background: rgba(79, 70, 229, 0.05); }
+        .tab-content { display: none; animation: fadeIn 0.25s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 28px; }
+        .stat-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border-radius: 28px; padding: 24px; border: 1px solid rgba(255,255,255,0.6); transition: all 0.2s; }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -12px rgba(0,0,0,0.1); }
+        .stat-number { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, #1e293b, #4f46e5); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .stat-label { color: #475569; font-size: 14px; margin-top: 6px; }
+
+        .data-table { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); border-radius: 28px; overflow: hidden; border: 1px solid rgba(203, 213, 225, 0.4); }
+        .table-row { display: grid; align-items: center; padding: 16px 24px; border-bottom: 1px solid #eef2f6; transition: background 0.15s; cursor: pointer; }
+        .table-row:hover { background: rgba(79, 70, 229, 0.04); }
+        .table-header { background: rgba(248, 250, 252, 0.9); font-weight: 600; color: #1e293b; cursor: default; }
+        .report-row { grid-template-columns: 70px 1fr 100px 100px 110px 90px 80px; }
+        .testcase-row { grid-template-columns: 70px 1fr 110px 120px 100px; }
+        .checklist-row { grid-template-columns: 70px 1fr 140px 100px; }
+        .product-row { grid-template-columns: 70px 1fr 120px 100px; }
+        .member-row { grid-template-columns: 70px 1fr 140px 100px 80px; }
+
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .status-open { background: #dbeafe; color: #1e40af; }
+        .status-in-progress { background: #fef3c7; color: #92400e; }
+        .status-fixed { background: #dcfce7; color: #166534; }
+        .status-closed { background: #fee2e2; color: #991b1b; }
+        .status-waiting_user { background: #fef3c7; color: #b45309; }
+        .status-waiting_support { background: #dbeafe; color: #1e40af; }
+        .status-waiting_admin { background: #f3e8ff; color: #6b21a5; }
+        .status-passed { background: #dcfce7; color: #166534; }
+        .status-failed { background: #fee2e2; color: #991b1b; }
+        .status-pending { background: #fef3c7; color: #92400e; }
+
+        .priority-critical { border-left: 3px solid #7f1d1d; }
+        .priority-high { border-left: 3px solid #dc2626; }
+        .priority-medium { border-left: 3px solid #f59e0b; }
+        .priority-low { border-left: 3px solid #10b981; }
+        .priority-trivial { border-left: 3px solid #94a3b8; }
+        
+        .priority-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+        .priority-dot.critical { background: #7f1d1d; box-shadow: 0 0 0 2px rgba(127,29,29,0.2); }
+        .priority-dot.high { background: #dc2626; box-shadow: 0 0 0 2px rgba(220,38,38,0.2); }
+        .priority-dot.medium { background: #f59e0b; box-shadow: 0 0 0 2px rgba(245,158,11,0.2); }
+        .priority-dot.low { background: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+        .priority-dot.trivial { background: #94a3b8; box-shadow: 0 0 0 2px rgba(148,163,184,0.2); }
+
+        .action-bar { display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 24px; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); z-index: 100; display: flex; align-items: center; justify-content: center; visibility: hidden; opacity: 0; transition: 0.2s; }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
+        .modal-content { background: white; border-radius: 32px; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 32px; }
+        .modal-content::-webkit-scrollbar { width: 0; background: transparent; }
+        .modal-content { scrollbar-width: none; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #1e293b; }
+        input, select, textarea { width: 100%; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 24px; font-family: inherit; transition: 0.2s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+
+        .progress-bar { background: #e2e8f0; border-radius: 20px; height: 8px; overflow: hidden; }
+        .progress-fill { background: #4f46e5; height: 100%; border-radius: 20px; transition: width 0.3s; }
+
+        .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 12px 28px; border-radius: 56px; z-index: 200; font-size: 14px; backdrop-filter: blur(12px); }
+        .toast.error { background: #dc2626; }
+        .toast.success { background: #10b981; }
+
+        .user-menu-container { display: flex; align-items: center; gap: 12px; cursor: pointer; position: relative; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0; }
+        .user-name { font-weight: 600; color: #1e293b; }
+        .user-dropdown { position: absolute; top: 100%; right: 0; margin-top: 8px; background: white; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); min-width: 220px; display: none; overflow: hidden; z-index: 50; }
+        .dropdown-item { padding: 12px 16px; cursor: pointer; transition: background 0.15s; font-size: 14px; }
+        .dropdown-item:hover { background: #f1f5f9; }
+        .dropdown-item.logout { border-top: 1px solid #e2e8f0; color: #ef4444; }
+        .chevron { transition: transform 0.2s; }
+        .user-menu-container:hover .chevron { transform: rotate(180deg); }
+
+        .comment-list { margin-top: 20px; }
+        .comment-item { background: #f8fafc; border-radius: 20px; padding: 12px 16px; margin-bottom: 12px; }
+        .comment-author { font-weight: 600; font-size: 13px; color: #4f46e5; margin-bottom: 4px; }
+        .comment-text { font-size: 14px; color: #334155; margin-top: 4px; }
+        .comment-date { font-size: 11px; color: #94a3b8; margin-top: 6px; }
+
+        .tickets-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
+        .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .points-badge {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .tester-stats {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 16px 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .tester-points {
+            font-size: 24px;
+            font-weight: 800;
+            color: #f59e0b;
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 28px;
+            margin: 32px 0;
+        }
+        .profile-sidebar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 24px;
+            position: sticky;
+            top: 100px;
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 16px;
+            display: block;
+            border: 3px solid #4f46e5;
+        }
+        .profile-name {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .profile-role {
+            text-align: center;
+            font-size: 14px;
+            color: #4f46e5;
+            margin-bottom: 20px;
+        }
+        .profile-stats {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        .profile-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .profile-stat:last-child {
+            border-bottom: none;
+        }
+        .profile-main {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 28px;
+        }
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eef2f6;
+        }
+        .transaction-points {
+            font-weight: 700;
+            color: #f59e0b;
+        }
+        .transaction-positive {
+            color: #10b981;
+        }
+
+        @media (max-width: 900px) {
+            .report-row, .testcase-row, .checklist-row, .product-row, .member-row { grid-template-columns: 1fr; gap: 10px; }
+            .table-header { display: none; }
+            .container { padding: 0 20px; }
+            .user-name { display: none; }
+            .profile-layout { grid-template-columns: 1fr; }
+            .profile-sidebar { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+<div class="blur-object blur-3"></div>
+
+<header class="header">
+    <div class="container header-inner">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+			<div class="nav-links">
+				<a href="/" class="nav-link">Главная</a>
+				<a href="/marketplace" class="nav-link">Маркетплейс</a>
+				<a href="/support" class="nav-link">Поддержка</a>
+				<a href="/media" class="nav-link">Медиа</a>
+                <a href="/beta-testing" class="nav-link active">Бета-тестинг</a>
+            </div>
+        </div>
+        <div id="authButtonContainer">
+            <div style="padding:0;">Загрузка...</div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <div style="margin: 24px 0 8px;">
+        <h1 style="font-size: 38px; font-weight: 800; background: linear-gradient(125deg, #1e293b, #4f46e5); -webkit-background-clip: text; background-clip: text; color: transparent;">Платформа бета-тестирования</h1>
+        <p style="color: #475569; margin-top: 8px;">Управление отчётами, тест-кейсами, чек-листами, продуктами и командой тестировщиков</p>
+    </div>
+
+    <div id="testerStatsBlock" class="tester-stats" style="margin-bottom: 20px; display: none;">
+        <span>Мои баллы тестировщика:</span>
+        <span class="tester-points" id="testerPoints">0</span>
+        <span style="font-size: 13px; color: #64748b;">| За успешно закрытые отчёты</span>
+        <button class="btn-secondary" id="myProfileBtn" style="padding: 6px 16px; margin-left: auto;">Мой профиль</button>
+        <button class="btn-secondary" id="myAchievementsBtn" style="padding: 6px 16px;">Мои достижения</button>
+    </div>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" data-tab="reports">Отчёты о багах</button>
+        <button class="tab-btn" data-tab="testcases">Тест-кейсы</button>
+        <button class="tab-btn" data-tab="checklists">Чек-листы</button>
+        <button class="tab-btn" data-tab="products">Продукты</button>
+        <button class="tab-btn" data-tab="members">Участники</button>
+        <button class="tab-btn" data-tab="analytics">Аналитика</button>
+    </div>
+
+    <div id="reports-tab" class="tab-content active">
+        <div class="stats-grid" id="reportsStats"></div>
+        <div class="tickets-header-bar">
+            <div class="filter-buttons">
+                <button class="btn-secondary" style="padding: 8px 20px;" data-report-filter="all">Все</button>
+                <button class="btn-secondary" style="padding: 8px 20px;" data-report-filter="open">Открытые</button>
+                <button class="btn-secondary" style="padding: 8px 20px;" data-report-filter="in-progress">В работе</button>
+                <button class="btn-secondary" style="padding: 8px 20px;" data-report-filter="fixed">Исправлено</button>
+            </div>
+            <button class="btn-primary" id="createReportBtn">+ Создать отчёт</button>
+        </div>
+        <div class="data-table">
+            <div class="table-row table-header report-row">
+                <div>ID</div><div>Заголовок</div><div>Приоритет</div><div>Статус</div><div>Продукт</div><div>Дата</div><div>Баллы</div>
+            </div>
+            <div id="reportsList" style="min-height: 200px;"></div>
+        </div>
+    </div>
+
+    <div id="testcases-tab" class="tab-content">
+        <div class="stats-grid" id="testcasesStats"></div>
+        <div class="action-bar"><button class="btn-primary" id="createTestCaseBtn">+ Создать тест-кейс</button></div>
+        <div class="data-table">
+            <div class="table-row table-header testcase-row">
+                <div>ID</div><div>Название</div><div>Статус</div><div>Продукт</div><div>Автор</div>
+            </div>
+            <div id="testcasesList"></div>
+        </div>
+    </div>
+
+    <div id="checklists-tab" class="tab-content">
+        <div class="stats-grid" id="checklistsStats"></div>
+        <div class="action-bar"><button class="btn-primary" id="createChecklistBtn">+ Создать чек-лист</button></div>
+        <div class="data-table">
+            <div class="table-row table-header checklist-row">
+                <div>ID</div><div>Название</div><div>Прогресс</div><div>Статус</div>
+            </div>
+            <div id="checklistsList"></div>
+        </div>
+    </div>
+
+    <div id="products-tab" class="tab-content">
+        <div class="action-bar"><button class="btn-primary" id="createProductBtn">+ Добавить продукт</button></div>
+        <div class="data-table">
+            <div class="table-row table-header product-row">
+                <div>ID</div><div>Название</div><div>Версия</div><div>Статус</div>
+            </div>
+            <div id="productsList"></div>
+        </div>
+    </div>
+
+    <div id="members-tab" class="tab-content">
+        <div class="stats-grid" id="membersStats"></div>
+        <div class="action-bar"><button class="btn-primary" id="inviteMemberBtn">+ Пригласить участника</button></div>
+        <div class="data-table">
+            <div class="table-row table-header member-row">
+                <div>ID</div><div>Имя</div><div>Роль</div><div>Статус</div><div>Баллы</div>
+            </div>
+            <div id="membersList"></div>
+        </div>
+    </div>
+
+    <div id="analytics-tab" class="tab-content">
+        <div class="stats-grid" id="analyticsStats"></div>
+        <div class="glass-card" style="padding: 28px; margin-top: 20px;">
+            <h3 style="margin-bottom: 20px;">Распределение по приоритетам</h3>
+            <div id="priorityStats" style="display: flex; gap: 30px; flex-wrap: wrap; margin-bottom: 30px;"></div>
+            <h3 style="margin-bottom: 20px;">Динамика отчётов (последние 7 дней)</h3>
+            <div id="trendChart" style="height: 200px; display: flex; align-items: flex-end; gap: 16px;"></div>
+            <h3 style="margin: 30px 0 20px;">Топ тестировщиков</h3>
+            <div id="topTesters"></div>
+        </div>
+    </div>
+</main>
+
+<div id="profileModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 700px;">
+        <div id="profileContent"></div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+            <button class="btn-secondary" id="closeProfileBtn">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<div id="genericModal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="modalTitle" style="margin-bottom: 20px;">Заголовок</h2>
+        <div id="modalFormFields"></div>
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+            <button class="btn-secondary" id="modalCancelBtn">Отмена</button>
+            <button class="btn-primary" id="modalSaveBtn">Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentUser = null;
+    let productsList = [];
+    let reports = [];
+    let testCases = [];
+    let checklists = [];
+    let members = [];
+    let currentReportFilter = 'all';
+    let modalCallback = null;
+    let testerBalance = 0;
+    let testerTransactions = [];
+
+    const priorityRewards = {
+        critical: 800,
+        high: 500,
+        medium: 300,
+        low: 180,
+        trivial: 130
+    };
+
+    const platformProducts = [
+        { id: 1, name: "NULLMARKET Web (Веб версия)", version: "2.1.0", status: "active" },
+        { id: 2, name: "NULLMARKET Android", version: "1.5.2", status: "beta" },
+        { id: 3, name: "NULLMARKET iOS", version: "1.5.2", status: "beta" },
+        { id: 4, name: "NULLMARKET Windows", version: "1.0.0", status: "beta" },
+        { id: 5, name: "NULLMARKET Linux", version: "1.0.0", status: "beta" },
+        { id: 6, name: "NULLMARKET macOS", version: "1.0.0", status: "beta" },
+        { id: 7, name: "NULLMARKET API", version: "3.0.0", status: "active" },
+        { id: 8, name: "NULLMARKET Admin Panel", version: "1.0.0", status: "beta" }
+    ];
+
+    function showToast(message, type = 'info') {
+        const existingToast = document.querySelector('.toast');
+        if (existingToast) existingToast.remove();
+        const toast = document.createElement('div');
+        toast.className = `toast ${type === 'error' ? 'error' : (type === 'success' ? 'success' : '')}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    function getStatusDisplay(status) {
+        const map = { 'open': 'Открыт', 'in-progress': 'В работе', 'fixed': 'Исправлен', 'closed': 'Закрыт', 'pending': 'Ожидает', 'passed': 'Пройден', 'failed': 'Провален' };
+        return map[status] || status;
+    }
+
+    function getStatusClass(status) {
+        const map = { 'open': 'status-open', 'in-progress': 'status-in-progress', 'fixed': 'status-fixed', 'closed': 'status-closed', 'pending': 'status-pending', 'passed': 'status-passed', 'failed': 'status-failed' };
+        return map[status] || 'status-pending';
+    }
+
+    function getPriorityText(priority) {
+        const map = { critical: 'Критический', high: 'Высокий', medium: 'Средний', low: 'Низкий', trivial: 'Тривиальный' };
+        return map[priority] || 'Средний';
+    }
+
+    function getPriorityClass(priority) {
+        const map = { critical: 'priority-critical', high: 'priority-high', medium: 'priority-medium', low: 'priority-low', trivial: 'priority-trivial' };
+        return map[priority] || 'priority-medium';
+    }
+
+    function getPriorityDotClass(priority) {
+        const map = { critical: 'critical', high: 'high', medium: 'medium', low: 'low', trivial: 'trivial' };
+        return map[priority] || 'medium';
+    }
+
+    function getPriorityReward(priority) {
+        return priorityRewards[priority] || 130;
+    }
+
+    async function loadTesterBalance() {
+        if (!currentUser) return;
+        try {
+            const saved = localStorage.getItem(`tester_balance_${currentUser.id}`);
+            testerBalance = saved ? parseInt(saved) : 0;
+            const transactions = localStorage.getItem(`tester_transactions_${currentUser.id}`);
+            testerTransactions = transactions ? JSON.parse(transactions) : [];
+            updateTesterBalanceDisplay();
+        } catch(e) { testerBalance = 0; testerTransactions = []; }
+    }
+
+    function addTesterPoints(userId, points, reportId, priority) {
+        if (!points || userId !== currentUser?.id) return;
+        testerBalance += points;
+        testerTransactions.unshift({
+            id: Date.now(),
+            report_id: reportId,
+            points: points,
+            priority: priority,
+            date: new Date().toISOString()
+        });
+        localStorage.setItem(`tester_balance_${userId}`, testerBalance);
+        localStorage.setItem(`tester_transactions_${userId}`, JSON.stringify(testerTransactions.slice(0, 50)));
+        updateTesterBalanceDisplay();
+        showToast(`+${points} баллов за отчёт #${reportId}!`, 'success');
+    }
+
+    function updateTesterBalanceDisplay() {
+        const block = document.getElementById('testerStatsBlock');
+        const pointsSpan = document.getElementById('testerPoints');
+        if (block && pointsSpan && currentUser) {
+            block.style.display = 'flex';
+            pointsSpan.innerText = testerBalance;
+        }
+    }
+
+    async function showTesterProfile(userId, userName, userAvatar) {
+        const isOwnProfile = !userId || userId === currentUser?.id;
+        const targetId = userId || currentUser?.id;
+        const targetName = userName || currentUser?.name;
+        
+        let balance = 0;
+        let transactions = [];
+        if (isOwnProfile) {
+            balance = testerBalance;
+            transactions = testerTransactions;
+        } else {
+            const saved = localStorage.getItem(`tester_balance_${targetId}`);
+            balance = saved ? parseInt(saved) : 0;
+            const trans = localStorage.getItem(`tester_transactions_${targetId}`);
+            transactions = trans ? JSON.parse(trans) : [];
+        }
+        
+        const totalEarned = transactions.reduce((sum, t) => sum + t.points, 0);
+        const reportsCount = transactions.length;
+        
+        const modal = document.getElementById('profileModal');
+        const content = document.getElementById('profileContent');
+        content.innerHTML = `
+            <div style="text-align: center;">
+                <img src="${userAvatar || 'https://ui-avatars.com/api/?background=4f46e5&color=fff&name=' + encodeURIComponent(targetName)}" class="profile-avatar" style="width: 100px; height: 100px;">
+                <h2 style="margin: 16px 0 4px;">${escapeHtml(targetName)}</h2>
+                <p style="color: #64748b;">${isOwnProfile ? 'Ваш профиль' : 'Профиль тестировщика'}</p>
+            </div>
+            <div class="profile-stats">
+                <div class="profile-stat"><span>Всего баллов</span><span class="profile-stat-value" style="font-weight: 700; color: #f59e0b; font-size: 22px;">${balance}</span></div>
+                <div class="profile-stat"><span>Всего заработано</span><span class="profile-stat-value" style="font-weight: 600;">${totalEarned} баллов</span></div>
+                <div class="profile-stat"><span>Закрыто отчётов</span><span class="profile-stat-value">${reportsCount}</span></div>
+                <div class="profile-stat"><span>Средняя награда</span><span class="profile-stat-value">${reportsCount > 0 ? Math.round(totalEarned / reportsCount) : 0} баллов</span></div>
+            </div>
+            <h3 style="margin: 24px 0 16px;">История начислений</h3>
+            <div id="transactionsList" style="max-height: 300px; overflow-y: auto;">
+                ${transactions.length === 0 ? '<div style="text-align: center; padding: 20px; color: #64748b;">Нет начислений</div>' : 
+                    transactions.map(t => `
+                        <div class="transaction-item">
+                            <div>
+                                <div style="font-weight: 500;">Отчёт #${t.report_id}</div>
+                                <div style="font-size: 11px; color: #64748b;">${new Date(t.date).toLocaleDateString('ru-RU')}</div>
+                            </div>
+                            <div class="transaction-points transaction-positive">+${t.points} баллов</div>
+                        </div>
+                    `).join('')
+                }
+            </div>
+        `;
+        modal.classList.add('active');
+    }
+
+    function goToAchievements() {
+        window.location.href = '/achievements';
+    }
+
+    function closeProfileModal() {
+        document.getElementById('profileModal').classList.remove('active');
+    }
+
+    async function checkAuthAndRedirect() {
+        try {
+            const response = await fetch('/api/me');
+            if (response.ok) {
+                currentUser = await response.json();
+                showUserMenu(currentUser);
+                await loadTesterBalance();
+                await loadAllData();
+            } else {
+                window.location.href = '/auth.html';
+            }
+        } catch (error) {
+            window.location.href = '/auth.html';
+        }
+    }
+
+    function showUserMenu(user) {
+        const container = document.getElementById('authButtonContainer');
+        if (!container) return;
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-menu-container';
+        userDiv.innerHTML = `
+            <img src="${user.avatar || 'https://ui-avatars.com/api/?background=4f46e5&color=fff&name=' + encodeURIComponent(user.name)}" class="user-avatar">
+            <span class="user-name">${escapeHtml(user.name)}</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="user-dropdown">
+                <div class="dropdown-item" data-action="profile">Профиль</div>
+                <div class="dropdown-item" data-action="testerProfile">Мои баллы: ${testerBalance}</div>
+                <div class="dropdown-item" data-action="achievements">Достижения</div>
+                <div class="dropdown-item" data-action="myReports">Мои отчёты</div>
+                <div class="dropdown-item logout" data-action="logout">Выйти</div>
+            </div>
+        `;
+        container.innerHTML = '';
+        container.appendChild(userDiv);
+        const menuContainer = document.querySelector('.user-menu-container');
+        const dropdown = document.querySelector('.user-dropdown');
+        menuContainer.addEventListener('click', (e) => { e.stopPropagation(); dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'; });
+        document.addEventListener('click', () => { dropdown.style.display = 'none'; });
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                dropdown.style.display = 'none';
+                if (item.dataset.action === 'logout') {
+                    await fetch('/api/logout', { method: 'POST' });
+                    window.location.href = '/auth.html';
+                } else if (item.dataset.action === 'profile') {
+                    window.location.href = `/user/${user.user_id}`;
+                } else if (item.dataset.action === 'testerProfile') {
+                    showTesterProfile(user.id, user.name, user.avatar);
+                } else if (item.dataset.action === 'achievements') {
+                    window.location.href = '/achievements';
+                } else if (item.dataset.action === 'myReports') {
+                    showToast('Мои отчёты - скоро появится возможность просмотра');
+                }
+            });
+        });
+    }
+
+    async function loadAllData() {
+        await Promise.all([loadReports(), loadTestCases(), loadChecklists(), loadProducts(), loadBetaTesters(), loadStats()]);
+    }
+
+    async function loadReports() {
+        try {
+            const response = await fetch('/api/bug-reports?limit=100');
+            if (response.ok) {
+                const data = await response.json();
+                reports = data.reports || [];
+                renderReports();
+            }
+        } catch(e) { reports = []; renderReports(); }
+    }
+
+    async function loadTestCases() {
+        try {
+            const response = await fetch('/api/test-cases?limit=100');
+            if (response.ok) {
+                testCases = await response.json();
+                renderTestCases();
+            }
+        } catch(e) { testCases = []; renderTestCases(); }
+    }
+
+    async function loadChecklists() {
+        try {
+            const response = await fetch('/api/checklists');
+            if (response.ok) {
+                checklists = await response.json();
+                renderChecklists();
+            }
+        } catch(e) { checklists = []; renderChecklists(); }
+    }
+
+    async function loadProducts() {
+        try {
+            const response = await fetch('/api/products');
+            if (response.ok) {
+                const serverProducts = await response.json();
+                productsList = serverProducts.length ? serverProducts : platformProducts;
+                renderProducts();
+            } else {
+                productsList = platformProducts;
+                renderProducts();
+            }
+        } catch(e) { productsList = platformProducts; renderProducts(); }
+    }
+
+    async function loadBetaTesters() {
+        try {
+            const response = await fetch('/api/beta-testers');
+            if (response.ok) {
+                members = await response.json();
+                renderMembers();
+            }
+        } catch(e) { members = []; renderMembers(); }
+    }
+
+    async function loadStats() {
+        try {
+            const response = await fetch('/api/beta-stats');
+            if (response.ok) {
+                const stats = await response.json();
+                renderAnalytics(stats);
+                updateReportsStats(stats);
+            }
+        } catch(e) { console.error('Error loading stats:', e); }
+    }
+
+    function renderReports() {
+        const container = document.getElementById('reportsList');
+        if (!container) return;
+        let filtered = currentReportFilter !== 'all' ? reports.filter(r => r.status === currentReportFilter) : reports;
+        if (!filtered.length) { container.innerHTML = '<div style="padding: 60px; text-align: center; color: #64748b;">Нет отчётов</div>'; return; }
+        
+        container.innerHTML = filtered.map(r => {
+            const statusClass = getStatusClass(r.status);
+            const statusText = getStatusDisplay(r.status);
+            const priorityText = getPriorityText(r.priority);
+            const priorityDotClass = getPriorityDotClass(r.priority);
+            const priorityClass = getPriorityClass(r.priority);
+            const reward = getPriorityReward(r.priority);
+            const isRewarded = r.status === 'fixed' || r.status === 'closed';
+            
+            return `<div class="table-row report-row ${priorityClass}" data-id="${r.id}" data-type="report">
+                        <div>#${r.id}</div>
+                        <div><strong>${escapeHtml(r.title)}</strong><br><span style="font-size:12px; color:#64748b;">${escapeHtml((r.description || '').substring(0, 50))}</span></div>
+                        <div><span class="priority-dot ${priorityDotClass}"></span>${priorityText}</div>
+                        <div><span class="status-badge ${statusClass}">${statusText}</span></div>
+                        <div>${escapeHtml(r.product_name || '—')}</div>
+                        <div>${r.created_at ? r.created_at.slice(0,10) : '—'}</div>
+                        <div>${isRewarded ? `<span class="points-badge">+${reward}</span>` : '<span style="color:#94a3b8;">—</span>'}</div>
+                    </div>`;
+        }).join('');
+        
+        document.querySelectorAll('.table-row[data-type="report"]').forEach(el => {
+            el.addEventListener('click', () => {
+                const reportId = parseInt(el.dataset.id);
+                window.location.href = `/bug-report/${reportId}`;
+            });
+        });
+        
+        document.querySelectorAll('[data-report-filter]').forEach(btn => {
+            btn.onclick = () => { currentReportFilter = btn.dataset.reportFilter; renderReports(); };
+        });
+    }
+
+    function renderTestCases() {
+        const container = document.getElementById('testcasesList');
+        const statsContainer = document.getElementById('testcasesStats');
+        if (!container) return;
+        const passed = testCases.filter(t => t.status === 'passed').length;
+        const failed = testCases.filter(t => t.status === 'failed').length;
+        if (statsContainer) {
+            statsContainer.innerHTML = `<div class="stat-card"><div class="stat-number">${testCases.length}</div><div class="stat-label">Всего</div></div>
+                <div class="stat-card"><div class="stat-number">${passed}</div><div class="stat-label">Пройдено</div></div>
+                <div class="stat-card"><div class="stat-number">${failed}</div><div class="stat-label">Провалено</div></div>`;
+        }
+        if (!testCases.length) { container.innerHTML = '<div style="padding: 60px; text-align: center;">Нет тест-кейсов</div>'; return; }
+        container.innerHTML = testCases.map(tc => {
+            const statusClass = getStatusClass(tc.status);
+            const statusText = getStatusDisplay(tc.status);
+            return `<div class="table-row testcase-row" data-id="${tc.id}" data-type="testcase">
+                        <div>#${tc.id}</div><div><strong>${escapeHtml(tc.title)}</strong></div>
+                        <div><span class="status-badge ${statusClass}">${statusText}</span></div>
+                        <div>${escapeHtml(tc.product_name || '—')}</div><div>${escapeHtml(tc.author_name || '—')}</div>
+                    </div>`;
+        }).join('');
+    }
+
+    function renderChecklists() {
+        const container = document.getElementById('checklistsList');
+        const statsContainer = document.getElementById('checklistsStats');
+        if (!container) return;
+        const completed = checklists.filter(c => c.status === 'completed').length;
+        if (statsContainer) {
+            statsContainer.innerHTML = `<div class="stat-card"><div class="stat-number">${checklists.length}</div><div class="stat-label">Всего</div></div>
+                <div class="stat-card"><div class="stat-number">${completed}</div><div class="stat-label">Выполнено</div></div>`;
+        }
+        if (!checklists.length) { container.innerHTML = '<div style="padding: 60px; text-align: center;">Нет чек-листов</div>'; return; }
+        container.innerHTML = checklists.map(c => {
+            let items = [];
+            try { items = JSON.parse(c.items); } catch(e) { items = []; }
+            const completedCount = items.filter(i => i.completed).length;
+            const total = items.length;
+            const percent = total ? Math.round(completedCount / total * 100) : 0;
+            return `<div class="table-row checklist-row" data-id="${c.id}" data-type="checklist">
+                        <div>#${c.id}</div><div><strong>${escapeHtml(c.title)}</strong></div>
+                        <div><div class="progress-bar"><div class="progress-fill" style="width: ${percent}%"></div></div><span style="font-size:12px;">${completedCount}/${total}</span></div>
+                        <div><span class="status-badge ${percent === 100 ? 'status-passed' : 'status-pending'}">${percent === 100 ? 'Выполнен' : 'В процессе'}</span></div>
+                    </div>`;
+        }).join('');
+    }
+
+    function renderProducts() {
+        const container = document.getElementById('productsList');
+        if (!container) return;
+        if (!productsList.length) { container.innerHTML = '<div style="padding: 60px; text-align: center;">Нет продуктов</div>'; return; }
+        container.innerHTML = productsList.map(p => {
+            const statusClass = p.status === 'active' ? 'status-passed' : 'status-pending';
+            return `<div class="table-row product-row" data-id="${p.id}" data-type="product">
+                        <div>#${p.id}</div><div><strong>${escapeHtml(p.name)}</strong></div>
+                        <div>${p.version}</div><div><span class="status-badge ${statusClass}">${p.status === 'active' ? 'Активен' : 'Бета'}</span></div>
+                    </div>`;
+        }).join('');
+    }
+
+    function renderMembers() {
+        const container = document.getElementById('membersList');
+        const statsContainer = document.getElementById('membersStats');
+        if (!container) return;
+        const activeCount = members.filter(m => m.is_active).length;
+        if (statsContainer) {
+            statsContainer.innerHTML = `<div class="stat-card"><div class="stat-number">${members.length}</div><div class="stat-label">Участников</div></div>
+                <div class="stat-card"><div class="stat-number">${activeCount}</div><div class="stat-label">Активных</div></div>`;
+        }
+        if (!members.length) { container.innerHTML = '<div style="padding: 60px; text-align: center;">Нет участников</div>'; return; }
+        container.innerHTML = members.map(m => {
+            const statusClass = m.is_active ? 'status-passed' : 'status-pending';
+            const memberBalance = localStorage.getItem(`tester_balance_${m.user_id}`) || 0;
+            return `<div class="table-row member-row" data-id="${m.user_id}" data-type="member">
+                        <div>#${m.user_id}</div>
+                        <div><strong>${escapeHtml(m.name)}</strong></div>
+                        <div>${m.role || 'tester'}</div>
+                        <div><span class="status-badge ${statusClass}">${m.is_active ? 'Активен' : 'Неактивен'}</span></div>
+                        <div><span class="points-badge" style="background:#e2e8f0; color:#475569;">${memberBalance}</span></div>
+                    </div>`;
+        }).join('');
+        
+        document.querySelectorAll('.table-row[data-type="member"]').forEach(el => {
+            el.addEventListener('click', () => {
+                const userId = parseInt(el.dataset.id);
+                const member = members.find(m => m.user_id === userId);
+                if (member) showTesterProfile(member.user_id, member.name, member.avatar);
+            });
+        });
+    }
+
+    function renderAnalytics(stats) {
+        const statsContainer = document.getElementById('analyticsStats');
+        if (statsContainer) {
+            statsContainer.innerHTML = `<div class="stat-card"><div class="stat-number">${stats.fixed_reports || 0}</div><div class="stat-label">Исправлено багов</div></div>
+                <div class="stat-card"><div class="stat-number">${stats.total_testcases || 0}</div><div class="stat-label">Тест-кейсов</div></div>
+                <div class="stat-card"><div class="stat-number">${stats.active_testers || 0}</div><div class="stat-label">Активных тестеров</div></div>`;
+        }
+        const priorityStats = stats.priority_stats || [];
+        const critical = priorityStats.find(p => p.priority === 'critical')?.count || 0;
+        const high = priorityStats.find(p => p.priority === 'high')?.count || 0;
+        const medium = priorityStats.find(p => p.priority === 'medium')?.count || 0;
+        const low = priorityStats.find(p => p.priority === 'low')?.count || 0;
+        const trivial = priorityStats.find(p => p.priority === 'trivial')?.count || 0;
+        document.getElementById('priorityStats').innerHTML = `
+            <div><span class="priority-dot critical"></span> Критический (800): ${critical}</div>
+            <div><span class="priority-dot high"></span> Высокий (500): ${high}</div>
+            <div><span class="priority-dot medium"></span> Средний (300): ${medium}</div>
+            <div><span class="priority-dot low"></span> Низкий (180): ${low}</div>
+            <div><span class="priority-dot trivial"></span> Тривиальный (130): ${trivial}</div>`;
+        
+        const trend = stats.trend || [];
+        const maxHeight = Math.max(...trend.map(t => t.count), 1);
+        document.getElementById('trendChart').innerHTML = trend.map(item => `
+            <div style="flex:1; text-align:center;">
+                <div style="height: ${item.count / maxHeight * 150}px; background:#4f46e5; width:100%; border-radius: 8px 8px 0 0;"></div>
+                <div style="font-size:11px; margin-top:8px;">${item.date?.slice(5)}</div>
+                <div style="font-size:11px; color:#64748b;">${item.count}</div>
+            </div>
+        `).join('');
+        
+        const testersWithPoints = members.map(m => ({
+            ...m,
+            points: parseInt(localStorage.getItem(`tester_balance_${m.user_id}`)) || 0
+        })).sort((a, b) => b.points - a.points).slice(0, 5);
+        
+        document.getElementById('topTesters').innerHTML = testersWithPoints.map((t, i) => `
+            <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e2e8f0; cursor: pointer;" onclick="showTesterProfile(${t.user_id}, '${escapeHtml(t.name)}', '${t.avatar || ''}')">
+                <span>${i + 1}. ${escapeHtml(t.name)}</span>
+                <span style="font-weight: 600; color: #f59e0b;">${t.points} баллов</span>
+            </div>
+        `).join('');
+    }
+
+    function updateReportsStats(stats) {
+        const reportsStats = document.getElementById('reportsStats');
+        if (reportsStats) {
+            reportsStats.innerHTML = `<div class="stat-card"><div class="stat-number">${stats.total_reports || 0}</div><div class="stat-label">Всего</div></div>
+                <div class="stat-card"><div class="stat-number">${stats.open_reports || 0}</div><div class="stat-label">Открыто</div></div>
+                <div class="stat-card"><div class="stat-number">${stats.fixed_reports || 0}</div><div class="stat-label">Исправлено</div></div>`;
+        }
+    }
+
+    async function createReport() {
+        const productOptions = productsList.map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('');
+        showModal('Новый отчёт', `
+            <div class="form-group"><label>Заголовок <span style="color:#ef4444;">*</span></label><input type="text" id="newTitle" placeholder="Кратко опишите проблему"></div>
+            <div class="form-group"><label>Описание</label><textarea rows="3" id="newDesc" placeholder="Подробное описание"></textarea></div>
+            <div class="form-group"><label>Шаги воспроизведения <span style="color:#ef4444;">*</span></label><textarea rows="3" id="newSteps" placeholder="1. Открыть страницу&#10;2. Нажать кнопку&#10;3. ..."></textarea></div>
+            <div class="form-group"><label>Фактический результат <span style="color:#ef4444;">*</span></label><textarea rows="2" id="newActual" placeholder="Что произошло"></textarea></div>
+            <div class="form-group"><label>Ожидаемый результат <span style="color:#ef4444;">*</span></label><textarea rows="2" id="newExpected" placeholder="Что должно было произойти"></textarea></div>
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group"><label>Приоритет</label><select id="newPriority">
+                    <option value="critical">Критический (800 баллов)</option>
+                    <option value="high">Высокий (500 баллов)</option>
+                    <option value="medium" selected>Средний (300 баллов)</option>
+                    <option value="low">Низкий (180 баллов)</option>
+                    <option value="trivial">Тривиальный (130 баллов)</option>
+                </select></div>
+                <div class="form-group"><label>Продукт</label><select id="newProductId">${productOptions}</select></div>
+            </div>
+            <div class="form-group" style="background: #fef3c7; padding: 12px; border-radius: 16px;">
+                <span style="font-size: 13px;">За успешное закрытие отчёта вы получите баллы в зависимости от приоритета!</span>
+            </div>
+        `, async () => {
+            const title = document.getElementById('newTitle').value;
+            const steps = document.getElementById('newSteps').value;
+            const actual = document.getElementById('newActual').value;
+            const expected = document.getElementById('newExpected').value;
+            if (!title || !steps || !actual || !expected) { showToast('Заполните все обязательные поля', 'error'); return; }
+            const response = await fetch('/api/bug-reports', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: title,
+                    description: document.getElementById('newDesc').value,
+                    steps_to_reproduce: steps,
+                    actual_result: actual,
+                    expected_result: expected,
+                    priority: document.getElementById('newPriority').value,
+                    product_id: parseInt(document.getElementById('newProductId').value)
+                })
+            });
+            if (response.ok) {
+                showToast('Отчёт создан! После проверки администрацией вы получите баллы.', 'success');
+                closeModal();
+                loadAllData();
+            } else { showToast('Ошибка создания', 'error'); }
+        });
+    }
+
+    async function createTestCase() {
+        const productOptions = productsList.map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('');
+        showModal('Новый тест-кейс', `
+            <div class="form-group"><label>Название <span style="color:#ef4444;">*</span></label><input type="text" id="newTitle"></div>
+            <div class="form-group"><label>Шаги <span style="color:#ef4444;">*</span></label><textarea rows="4" id="newSteps" placeholder="1. ...&#10;2. ..."></textarea></div>
+            <div class="form-group"><label>Ожидаемый результат <span style="color:#ef4444;">*</span></label><textarea rows="3" id="newExpected"></textarea></div>
+            <div class="form-group"><label>Продукт</label><select id="newProductId">${productOptions}</select></div>
+        `, async () => {
+            const title = document.getElementById('newTitle').value;
+            const steps = document.getElementById('newSteps').value;
+            const expected = document.getElementById('newExpected').value;
+            if (!title || !steps || !expected) { showToast('Заполните обязательные поля', 'error'); return; }
+            const response = await fetch('/api/test-cases', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: title,
+                    steps: steps,
+                    expected_result: expected,
+                    product_id: parseInt(document.getElementById('newProductId').value)
+                })
+            });
+            if (response.ok) { showToast('Тест-кейс создан', 'success'); closeModal(); loadAllData(); }
+            else { showToast('Ошибка создания', 'error'); }
+        });
+    }
+
+    async function createChecklist() {
+        showModal('Новый чек-лист', `
+            <div class="form-group"><label>Название <span style="color:#ef4444;">*</span></label><input type="text" id="newTitle"></div>
+            <div class="form-group"><label>Пункты (по одному на строку)</label><textarea rows="5" id="newItems" placeholder="Проверить вход&#10;Проверить регистрацию&#10;Проверить восстановление пароля"></textarea></div>
+        `, async () => {
+            const lines = document.getElementById('newItems').value.split('\n').filter(l => l.trim());
+            const items = lines.map(text => ({ text: text.trim(), completed: false }));
+            const response = await fetch('/api/checklists', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: document.getElementById('newTitle').value, items: items })
+            });
+            if (response.ok) { showToast('Чек-лист создан', 'success'); closeModal(); loadAllData(); }
+            else { showToast('Ошибка создания', 'error'); }
+        });
+    }
+
+    async function createProduct() {
+        showModal('Новый продукт', `
+            <div class="form-group"><label>Название <span style="color:#ef4444;">*</span></label><input type="text" id="newName" placeholder="NULLMARKET Web, Android, iOS, Windows, Linux, macOS"></div>
+            <div class="form-group"><label>Версия <span style="color:#ef4444;">*</span></label><input type="text" id="newVersion" value="1.0.0"></div>
+            <div class="form-group"><label>Статус</label><select id="newStatus"><option>beta</option><option>active</option></select></div>
+        `, async () => {
+            const name = document.getElementById('newName').value;
+            if (!name) { showToast('Введите название продукта', 'error'); return; }
+            const response = await fetch('/api/products', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    version: document.getElementById('newVersion').value,
+                    status: document.getElementById('newStatus').value
+                })
+            });
+            if (response.ok) { showToast('Продукт создан', 'success'); closeModal(); loadAllData(); }
+            else { showToast('Ошибка создания', 'error'); }
+        });
+    }
+
+    async function inviteMember() {
+        showModal('Пригласить участника', `
+            <div class="form-group"><label>ID пользователя <span style="color:#ef4444;">*</span></label><input type="number" id="userId" placeholder="Введите ID пользователя"></div>
+            <div class="form-group"><label>Роль</label><select id="role"><option>tester</option><option>senior_tester</option><option>lead_tester</option></select></div>
+        `, async () => {
+            const userId = document.getElementById('userId').value;
+            if (!userId) { showToast('Введите ID пользователя', 'error'); return; }
+            const response = await fetch('/api/beta-testers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: parseInt(userId), role: document.getElementById('role').value })
+            });
+            if (response.ok) { showToast('Участник добавлен', 'success'); closeModal(); loadAllData(); }
+            else { showToast('Ошибка: пользователь не найден или уже в списке', 'error'); }
+        });
+    }
+
+    function showModal(title, formHtml, onSave) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalFormFields').innerHTML = formHtml;
+        modalCallback = onSave;
+        document.getElementById('genericModal').classList.add('active');
+    }
+
+    function closeModal() { document.getElementById('genericModal').classList.remove('active'); modalCallback = null; }
+    function saveModal() { if (modalCallback) modalCallback(); }
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+
+    window.showTesterProfile = showTesterProfile;
+    document.getElementById('closeProfileBtn')?.addEventListener('click', closeProfileModal);
+    document.getElementById('myProfileBtn')?.addEventListener('click', () => showTesterProfile(currentUser?.id, currentUser?.name, currentUser?.avatar));
+    document.getElementById('myAchievementsBtn')?.addEventListener('click', goToAchievements);
+    document.getElementById('modalCancelBtn')?.addEventListener('click', closeModal);
+    document.getElementById('modalSaveBtn')?.addEventListener('click', saveModal);
+    document.getElementById('createReportBtn')?.addEventListener('click', createReport);
+    document.getElementById('createTestCaseBtn')?.addEventListener('click', createTestCase);
+    document.getElementById('createChecklistBtn')?.addEventListener('click', createChecklist);
+    document.getElementById('createProductBtn')?.addEventListener('click', createProduct);
+    document.getElementById('inviteMemberBtn')?.addEventListener('click', inviteMember);
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(`${btn.dataset.tab}-tab`).classList.add('active');
+        });
+    });
+
+    checkAuthAndRedirect();
+</script>
+</body>
+</html>

@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Финансы — NULLMARKET</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: #f4f6fb;
+            color: #121826;
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #a5b4fc, #6366f1);
+            top: -200px;
+            left: -200px;
+            opacity: 0.3;
+        }
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #fcd34d, #f59e0b);
+            bottom: -300px;
+            right: -250px;
+            opacity: 0.2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: #4f46e5; }
+        .nav-link.active { color: #4f46e5; font-weight: 600; }
+
+        .btn-download {
+            background: #11181c;
+            color: white;
+            border: none;
+            padding: 10px 26px;
+            border-radius: 48px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 14px -8px rgba(0,0,0,0.2);
+        }
+        .btn-download:hover { background: #1e293b; transform: translateY(-1px); }
+
+        .user-menu-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            min-width: 220px;
+            display: none;
+            overflow: hidden;
+            z-index: 50;
+        }
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        .dropdown-name { font-weight: 700; font-size: 14px; }
+        .dropdown-email { font-size: 11px; color: #64748b; margin-top: 2px; }
+        .dropdown-balance { font-size: 13px; margin-top: 6px; color: #f59e0b; font-weight: 600; }
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .dropdown-item:hover { background: #f1f5f9; }
+        .dropdown-item.logout { border-top: 1px solid #e2e8f0; color: #ef4444; }
+        .chevron { transition: transform 0.2s; }
+        .user-menu-container:hover .chevron { transform: rotate(180deg); }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: calc(100vh - 80px);
+            padding: 40px 0 60px;
+        }
+        .content-inner {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .finance-header {
+            margin-bottom: 32px;
+        }
+        .finance-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e293b;
+            letter-spacing: -0.3px;
+        }
+        .finance-header p {
+            color: #64748b;
+            font-size: 15px;
+            margin-top: 4px;
+        }
+
+        .setup-block {
+            background: white;
+            border-radius: 28px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .setup-block:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .setup-block .step-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .setup-block .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #eef2ff;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .setup-block .step-text {
+            font-weight: 600;
+            font-size: 16px;
+            color: #1e293b;
+        }
+        .setup-block .step-sub {
+            font-size: 13px;
+            color: #64748b;
+        }
+        .setup-block .step-balance {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .setup-block .step-balance .currency {
+            font-size: 18px;
+            font-weight: 500;
+            color: #94a3b8;
+            margin-left: 4px;
+        }
+        .setup-block .step-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .setup-block .step-actions .action-btn {
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .setup-block .step-actions .action-btn:hover {
+            border-color: #4f46e5;
+            background: #f8fafc;
+        }
+        .setup-block .step-actions .action-btn.primary {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+        .setup-block .step-actions .action-btn.primary:hover {
+            background: #4338ca;
+        }
+
+        .setup-block.bonus {
+            border-left: 4px solid #f59e0b;
+        }
+        .setup-block.bonus .step-number {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .setup-block.bonus .step-balance {
+            color: #d97706;
+        }
+        .setup-block.bonus .step-balance .currency {
+            color: #94a3b8;
+        }
+
+        .stats-mini {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 24px 0 32px;
+        }
+        .stats-mini .stat-item {
+            background: white;
+            padding: 14px 18px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .stats-mini .stat-item .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .stats-mini .stat-item .label {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-top: 2px;
+        }
+
+        /* ===== НОВАЯ ИСТОРИЯ ОПЕРАЦИЙ ===== */
+        .history-section {
+            background: white;
+            border-radius: 28px;
+            padding: 24px 28px;
+            border: 1px solid #e2e8f0;
+        }
+        .history-section .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .history-section .section-title h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .history-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .history-filters select,
+        .history-filters input {
+            padding: 6px 14px;
+            border-radius: 40px;
+            border: 1px solid #e2e8f0;
+            font-size: 12px;
+            background: white;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+            color: #1e293b;
+        }
+        .history-filters select:focus,
+        .history-filters input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        .history-filters .filter-btn {
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: none;
+            background: #e2e8f0;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .history-filters .filter-btn:hover {
+            background: #cbd5e1;
+        }
+
+        /* Список операций вместо таблицы */
+        .operations-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .operation-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            border-radius: 16px;
+            transition: all 0.15s;
+            cursor: default;
+            gap: 16px;
+            border: 1px solid transparent;
+        }
+        .operation-item:hover {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .operation-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .operation-icon.income {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .operation-icon.expense {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .operation-icon.bonus {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .operation-icon.conversion {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .operation-icon.refund {
+            background: #e0e7ff;
+            color: #4f46e5;
+        }
+        .operation-icon.hold {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+        .operation-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .operation-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .operation-info .op-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+        }
+        .operation-info .op-desc {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 1px;
+        }
+        .operation-info .op-desc .highlight {
+            color: #4f46e5;
+            font-weight: 500;
+        }
+
+        .operation-right {
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .operation-right .op-amount {
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .operation-right .op-amount.positive {
+            color: #16a34a;
+        }
+        .operation-right .op-amount.negative {
+            color: #dc2626;
+        }
+        .operation-right .op-amount.neutral {
+            color: #64748b;
+        }
+        .operation-right .op-status {
+            font-size: 11px;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .operation-right .op-status.success {
+            color: #16a34a;
+        }
+        .operation-right .op-status.pending {
+            color: #f59e0b;
+        }
+        .operation-right .op-status.failed {
+            color: #dc2626;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+        .empty-state .empty-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            color: #cbd5e1;
+        }
+        .empty-state p {
+            font-size: 14px;
+        }
+        .empty-state .empty-sub {
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 32px;
+            max-width: 420px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        .modal-content .modal-icon {
+            width: 44px;
+            height: 44px;
+            color: #4f46e5;
+            margin-bottom: 12px;
+        }
+        .modal-content h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        .modal-content .modal-sub {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        .modal-content label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .modal-content input,
+        .modal-content select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+            background: white;
+            color: #1e293b;
+        }
+        .modal-content input:focus,
+        .modal-content select:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        .modal-content .hint {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: -8px;
+            margin-bottom: 12px;
+        }
+        .modal-content .preview-box {
+            background: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #1e293b;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+        .modal-buttons button {
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        .btn-save { background: #4f46e5; color: white; }
+        .btn-save:hover { background: #4338ca; }
+        .btn-cancel { background: #e2e8f0; color: #475569; }
+        .btn-cancel:hover { background: #cbd5e1; }
+
+        .toast-container {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+            max-width: 90%;
+        }
+        .toast {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            animation: toastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            min-width: 200px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .toast.success { background: rgba(16, 185, 129, 0.95); }
+        .toast.error { background: rgba(239, 68, 68, 0.95); }
+        .toast.warning { background: rgba(245, 158, 11, 0.95); }
+        .toast .toast-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .toast .toast-icon svg { width: 12px; height: 12px; color: white; }
+        .toast .toast-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 4px;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .toast .toast-close:hover { color: #fff; }
+        .toast .toast-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 0 0 16px 16px;
+            animation: toastProgress 4s linear forwards;
+        }
+
+        @keyframes toastIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes toastProgress { 0% { width: 100%; } 100% { width: 0%; } }
+        @keyframes slideUp {
+            from { transform: translateY(30px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .toast.hiding {
+            animation: toastOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes toastOut {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+        }
+
+        .loading { text-align: center; padding: 60px 20px; font-size: 16px; color: #94a3b8; }
+
+        @media (max-width: 820px) {
+            .container { padding: 0 20px; }
+            .stats-mini { grid-template-columns: 1fr 1fr; }
+            .setup-block { padding: 20px; flex-direction: column; align-items: stretch; }
+            .setup-block .step-info { flex-wrap: wrap; }
+            .setup-block .step-actions { margin-top: 8px; }
+            .user-name { display: none; }
+            .operation-item { flex-wrap: wrap; gap: 10px; }
+            .operation-right { text-align: left; width: 100%; padding-left: 60px; }
+        }
+        @media (max-width: 600px) {
+            .nav-links { gap: 12px; }
+            .nav-link { font-size: 12px; }
+            .stats-mini { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .stats-mini .stat-item .value { font-size: 17px; }
+            .setup-block .step-balance { font-size: 26px; }
+            .history-section { padding: 16px; }
+            .modal-content { padding: 20px; }
+            .operation-item { padding: 12px; }
+            .operation-icon { width: 36px; height: 36px; }
+            .operation-icon svg { width: 16px; height: 16px; }
+        }
+        @media (max-width: 420px) {
+            .stats-mini { grid-template-columns: 1fr; }
+            .header-inner { flex-wrap: wrap; }
+            .nav-links { order: 3; flex-basis: 100%; justify-content: center; gap: 10px; }
+            .nav-link { font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+
+<header class="header">
+    <div class="container header-inner">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/marketplace" class="nav-link">Маркетплейс</a>
+                <a href="/support" class="nav-link">Поддержка</a>
+                <a href="/media" class="nav-link">Медиа</a>
+                <a href="/profile" class="nav-link">Профиль</a>
+                <a href="/finances" class="nav-link active">Финансы</a>
+            </div>
+        </div>
+        <div id="authButtonContainer">
+            <div class="loading" style="padding: 0; font-size: 14px;">Загрузка...</div>
+        </div>
+    </div>
+</header>
+
+<div class="content-wrapper">
+    <div class="content-inner" id="financesContent">
+        <div class="loading">Загрузка финансов...</div>
+    </div>
+</div>
+
+<div class="modal" id="financeModal">
+    <div class="modal-content">
+        <div id="modalIcon"></div>
+        <h3 id="modalTitle">Пополнение баланса</h3>
+        <div class="modal-sub" id="modalSub">Пополните рублёвый баланс</div>
+        <form id="financeForm">
+            <div id="modalBody"></div>
+            <div class="modal-buttons">
+                <button type="button" class="btn-cancel" onclick="closeModal()">Отмена</button>
+                <button type="submit" class="btn-save" id="modalSubmitBtn">Подтвердить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+    // ========================================================================
+    // 1. ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+    // ========================================================================
+    let currentUser = null;
+    let financeData = null;
+    let historyData = [];
+
+    // ========================================================================
+    // 2. SVG-ИКОНКИ
+    // ========================================================================
+    const ICONS = {
+        wallet: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>`,
+        ruble: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12"/><path d="M6 15h10"/><path d="M12 7v11"/><path d="M12 7h3a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-3"/></svg>`,
+        points: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+        add: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`,
+        remove: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`,
+        convert: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>`,
+        history: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+        income: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
+        expense: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>`,
+        bonus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+        refund: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17V9h-6"/><path d="M3 13a10 10 0 0 0 18 0"/></svg>`,
+        hold: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+        success: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+        error: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+        warning: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+        info: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`
+    };
+
+    // ========================================================================
+    // 3. API ВЫЗОВЫ
+    // ========================================================================
+    async function apiCall(endpoint, options = {}) {
+        const response = await fetch(endpoint, {
+            headers: { 'Content-Type': 'application/json' },
+            ...options
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Ошибка запроса');
+        return data;
+    }
+
+    // ========================================================================
+    // 4. СИСТЕМА УВЕДОМЛЕНИЙ
+    // ========================================================================
+    function showToast(message, type = 'info', duration = 4000) {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+
+        const icons = { success: ICONS.success, error: ICONS.error, warning: ICONS.warning, info: ICONS.info };
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <span class="toast-icon">${icons[type] || icons.info}</span>
+            <span>${message}</span>
+            <button class="toast-close" aria-label="Закрыть">×</button>
+            <div class="toast-progress ${type}"></div>
+        `;
+
+        const close = () => {
+            toast.classList.add('hiding');
+            setTimeout(() => toast.remove(), 300);
+        };
+
+        toast.querySelector('.toast-close').addEventListener('click', close);
+
+        let timeout = setTimeout(close, duration);
+
+        toast.addEventListener('mouseenter', () => {
+            clearTimeout(timeout);
+            const progress = toast.querySelector('.toast-progress');
+            if (progress) progress.style.animationPlayState = 'paused';
+        });
+
+        toast.addEventListener('mouseleave', () => {
+            const progress = toast.querySelector('.toast-progress');
+            if (progress) {
+                progress.style.animationPlayState = 'running';
+                timeout = setTimeout(close, 1500);
+            }
+        });
+
+        container.appendChild(toast);
+        setTimeout(() => { if (toast.parentNode) toast.remove(); }, duration + 300);
+    }
+
+    // ========================================================================
+    // 5. ЗАГРУЗКА ДАННЫХ
+    // ========================================================================
+    async function loadFinances() {
+        try {
+            try {
+                currentUser = await apiCall('/api/me');
+            } catch(e) {
+                currentUser = null;
+            }
+
+            if (currentUser) {
+                showUserMenu(currentUser);
+            } else {
+                showAuthButton();
+                window.location.href = '/auth';
+                return;
+            }
+
+            await loadFinanceData();
+
+        } catch(e) {
+            console.error('Ошибка загрузки финансов:', e);
+            document.getElementById('financesContent').innerHTML = `
+                <div class="glass-card" style="padding: 40px; text-align: center;">
+                    <div style="width: 48px; height: 48px; margin: 0 auto 16px; color: #ef4444;">${ICONS.error}</div>
+                    <h3 style="font-size: 24px; margin-bottom: 12px; color: #1e293b;">Ошибка загрузки</h3>
+                    <p style="color: #64748b; margin-bottom: 24px;">${e.message || 'Не удалось загрузить финансовые данные'}</p>
+                    <button class="btn-save" onclick="location.reload()">Обновить</button>
+                </div>
+            `;
+        }
+    }
+
+    async function loadFinanceData() {
+        const [balanceData, history] = await Promise.all([
+            apiCall('/api/finance/balance'),
+            apiCall('/api/finance/history')
+        ]);
+
+        financeData = balanceData;
+        historyData = history || [];
+
+        renderFinances();
+    }
+
+    // ========================================================================
+    // 6. ОТОБРАЖЕНИЕ
+    // ========================================================================
+    function renderFinances() {
+        if (!financeData) return;
+
+        const totalIncome = historyData.filter(h => h.type === 'income' || h.type === 'bonus').reduce((sum, h) => sum + h.amount, 0);
+        const totalExpense = historyData.filter(h => h.type === 'expense').reduce((sum, h) => sum + h.amount, 0);
+
+        let html = `
+            <div class="finance-header">
+                <h1>Кабинет выплат</h1>
+                <p>Управляйте балансом и выводите средства</p>
+            </div>
+
+            <div class="setup-block">
+                <div class="step-info">
+                    <div class="step-number">1</div>
+                    <div>
+                        <div class="step-text">Подключите СБП</div>
+                        <div class="step-sub">Баланс кабинета</div>
+                    </div>
+                </div>
+                <div class="step-balance">
+                    ${financeData.ruble_balance.toFixed(2)} <span class="currency">₽</span>
+                </div>
+                <div class="step-actions">
+                    <button class="action-btn primary" onclick="openTopupModal()">Пополнить</button>
+                    <button class="action-btn" onclick="openWithdrawModal()">Вывести</button>
+                </div>
+            </div>
+
+            <div class="setup-block bonus">
+                <div class="step-info">
+                    <div class="step-number">2</div>
+                    <div>
+                        <div class="step-text">Бонусные баллы</div>
+                        <div class="step-sub">1 балл = 1 ₽ (до 30% суммы)</div>
+                    </div>
+                </div>
+                <div class="step-balance">
+                    ${financeData.points_balance} <span class="currency">баллов</span>
+                </div>
+                <div class="step-actions">
+                    <button class="action-btn" onclick="openConvertModal()">Конвертировать</button>
+                </div>
+            </div>
+
+            <div class="stats-mini">
+                <div class="stat-item">
+                    <div class="value" style="color:#16a34a;">+${totalIncome.toFixed(2)} ₽</div>
+                    <div class="label">Поступлений</div>
+                </div>
+                <div class="stat-item">
+                    <div class="value" style="color:#dc2626;">-${totalExpense.toFixed(2)} ₽</div>
+                    <div class="label">Расходов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="value" style="color:#d97706;">${financeData.points_balance}</div>
+                    <div class="label">Баллов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="value">${historyData.length}</div>
+                    <div class="label">Операций</div>
+                </div>
+            </div>
+
+            <div class="history-section">
+                <div class="section-title">
+                    <h3>История операций</h3>
+                    <div class="history-filters">
+                        <select id="historyFilterType" onchange="applyFilters()">
+                            <option value="all">Все</option>
+                            <option value="income">Пополнения</option>
+                            <option value="expense">Списания</option>
+                            <option value="bonus">Бонусы</option>
+                            <option value="conversion">Конвертация</option>
+                            <option value="refund">Возвраты</option>
+                            <option value="hold">Заморозки</option>
+                        </select>
+                        <input type="date" id="historyFilterDate" onchange="applyFilters()">
+                        <button class="filter-btn" onclick="clearFilters()">Сбросить</button>
+                    </div>
+                </div>
+                <div id="historyContainer">
+                    ${renderOperations(historyData)}
+                </div>
+            </div>
+        `;
+
+        document.getElementById('financesContent').innerHTML = html;
+    }
+
+    // ===== НОВАЯ ФУНКЦИЯ ОТОБРАЖЕНИЯ ОПЕРАЦИЙ =====
+    function renderOperations(data) {
+        if (!data || data.length === 0) {
+            return `
+                <div class="empty-state">
+                    <div class="empty-icon">${ICONS.history}</div>
+                    <p>История операций пуста</p>
+                    <div class="empty-sub">Пополните баланс или совершите покупку</div>
+                </div>
+            `;
+        }
+
+        const typeConfig = {
+            income: {
+                icon: ICONS.income,
+                class: 'income',
+                label: 'Пополнение',
+                status: 'Выполнено'
+            },
+            expense: {
+                icon: ICONS.expense,
+                class: 'expense',
+                label: 'Списание',
+                status: 'Выполнено'
+            },
+            bonus: {
+                icon: ICONS.points,
+                class: 'bonus',
+                label: 'Начисление баллов',
+                status: 'Выполнено'
+            },
+            conversion: {
+                icon: ICONS.convert,
+                class: 'conversion',
+                label: 'Конвертация',
+                status: 'Выполнено'
+            },
+            refund: {
+                icon: ICONS.refund,
+                class: 'refund',
+                label: 'Возврат',
+                status: 'Выполнено'
+            },
+            hold: {
+                icon: ICONS.hold,
+                class: 'hold',
+                label: 'Заморозка',
+                status: 'Ожидание'
+            }
+        };
+
+        const statusLabels = {
+            success: '✅ Выполнено',
+            pending: '⏳ Ожидание',
+            failed: '❌ Ошибка'
+        };
+
+        let items = data.map((h, index) => {
+            const config = typeConfig[h.type] || typeConfig.income;
+            const isIncome = h.type === 'income' || h.type === 'bonus' || h.type === 'refund';
+            const amountClass = isIncome ? 'positive' : 'negative';
+            const amountSign = isIncome ? '+' : '';
+
+            // Разные описания для разнообразия
+            const descriptions = {
+                income: [
+                    'Пополнение через банковскую карту',
+                    'Зачисление от продажи товара',
+                    'Пополнение через СБП',
+                    'Поступление от покупателя'
+                ],
+                expense: [
+                    'Оплата товара на маркетплейсе',
+                    'Вывод на банковскую карту',
+                    'Покупка подписки',
+                    'Оплата услуг'
+                ],
+                bonus: [
+                    'Бонус за регистрацию',
+                    'Кешбэк за покупку',
+                    'Бонус за приглашение друга',
+                    'Акционный бонус'
+                ],
+                conversion: [
+                    'Конвертация баллов в рубли',
+                    'Обмен бонусов на средства'
+                ],
+                refund: [
+                    'Возврат за отменённый заказ',
+                    'Частичный возврат средств',
+                    'Возврат по гарантии'
+                ],
+                hold: [
+                    'Заморозка средств по сделке',
+                    'Резерв для безопасной сделки'
+                ]
+            };
+
+            const descList = descriptions[h.type] || ['Операция по счету'];
+            const desc = h.description || descList[index % descList.length];
+
+            const status = h.status || 'success';
+            const statusText = statusLabels[status] || statusLabels.success;
+
+            return `
+                <div class="operation-item">
+                    <div class="operation-icon ${config.class}">
+                        ${config.icon}
+                    </div>
+                    <div class="operation-info">
+                        <div class="op-title">${config.label}</div>
+                        <div class="op-desc">${desc} · <span class="highlight">${new Date(h.created_at).toLocaleDateString('ru-RU')}</span></div>
+                    </div>
+                    <div class="operation-right">
+                        <div class="op-amount ${amountClass}">${amountSign}${h.amount.toFixed(2)} ${h.type === 'bonus' ? 'баллов' : '₽'}</div>
+                        <div class="op-status ${status}">${statusText}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        return `<div class="operations-list">${items}</div>`;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // ========================================================================
+    // 7. ФИЛЬТРЫ
+    // ========================================================================
+    function applyFilters() {
+        const type = document.getElementById('historyFilterType').value;
+        const date = document.getElementById('historyFilterDate').value;
+
+        let filtered = [...historyData];
+
+        if (type !== 'all') {
+            filtered = filtered.filter(h => h.type === type);
+        }
+
+        if (date) {
+            const filterDate = new Date(date);
+            filtered = filtered.filter(h => {
+                const hDate = new Date(h.created_at);
+                return hDate.toDateString() === filterDate.toDateString();
+            });
+        }
+
+        const container = document.getElementById('historyContainer');
+        if (container) {
+            container.innerHTML = renderOperations(filtered);
+        }
+    }
+
+    function clearFilters() {
+        document.getElementById('historyFilterType').value = 'all';
+        document.getElementById('historyFilterDate').value = '';
+        applyFilters();
+    }
+
+    // ========================================================================
+    // 8. МОДАЛЬНЫЕ ОКНА
+    // ========================================================================
+    function openModal(title, subtitle, iconSvg, bodyHtml, submitText, onSubmit) {
+        const modal = document.getElementById('financeModal');
+        document.getElementById('modalIcon').innerHTML = `<div class="modal-icon">${iconSvg}</div>`;
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalSub').textContent = subtitle;
+        document.getElementById('modalBody').innerHTML = bodyHtml;
+        document.getElementById('modalSubmitBtn').textContent = submitText;
+
+        modal.classList.add('active');
+
+        const form = document.getElementById('financeForm');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            await onSubmit();
+        };
+    }
+
+    function closeModal() {
+        document.getElementById('financeModal').classList.remove('active');
+        document.getElementById('financeForm').onsubmit = null;
+    }
+
+    function openTopupModal() {
+        openModal(
+            'Пополнение баланса',
+            'Пополните рублёвый баланс для покупок',
+            ICONS.add,
+            `
+                <label for="topupAmount">Сумма (₽)</label>
+                <input type="number" id="topupAmount" placeholder="100" min="1" step="0.01" required>
+                <div class="hint">Минимальная сумма: 1 ₽</div>
+                <label for="topupMethod">Способ оплаты</label>
+                <select id="topupMethod" required>
+                    <option value="card">Банковская карта</option>
+                    <option value="crypto">Криптовалюта</option>
+                    <option value="balance">С баланса (тестово)</option>
+                </select>
+            `,
+            'Пополнить',
+            async () => {
+                const amount = parseFloat(document.getElementById('topupAmount').value);
+                const method = document.getElementById('topupMethod').value;
+
+                if (!amount || amount <= 0) {
+                    showToast('Введите корректную сумму', 'error');
+                    return;
+                }
+
+                try {
+                    await apiCall('/api/finance/topup', {
+                        method: 'POST',
+                        body: JSON.stringify({ amount, method })
+                    });
+                    showToast(`Баланс пополнен на ${amount.toFixed(2)} ₽`, 'success');
+                    closeModal();
+                    await loadFinanceData();
+                } catch(e) {
+                    showToast(e.message || 'Ошибка пополнения', 'error');
+                }
+            }
+        );
+    }
+
+    function openWithdrawModal() {
+        openModal(
+            'Вывод средств',
+            'Выведите средства на банковскую карту или кошелёк',
+            ICONS.remove,
+            `
+                <label for="withdrawAmount">Сумма (₽)</label>
+                <input type="number" id="withdrawAmount" placeholder="100" min="1" step="0.01" required>
+                <div class="hint">Доступно: ${financeData?.ruble_balance?.toFixed(2) || 0} ₽</div>
+                <label for="withdrawDetails">Реквизиты</label>
+                <input type="text" id="withdrawDetails" placeholder="Номер карты / кошелёк" required>
+            `,
+            'Вывести',
+            async () => {
+                const amount = parseFloat(document.getElementById('withdrawAmount').value);
+                const details = document.getElementById('withdrawDetails').value.trim();
+
+                if (!amount || amount <= 0) {
+                    showToast('Введите корректную сумму', 'error');
+                    return;
+                }
+                if (amount > (financeData?.ruble_balance || 0)) {
+                    showToast('Недостаточно средств', 'error');
+                    return;
+                }
+                if (!details) {
+                    showToast('Введите реквизиты для вывода', 'error');
+                    return;
+                }
+
+                try {
+                    await apiCall('/api/finance/withdraw', {
+                        method: 'POST',
+                        body: JSON.stringify({ amount, details })
+                    });
+                    showToast(`Заявка на вывод ${amount.toFixed(2)} ₽ отправлена`, 'success');
+                    closeModal();
+                    await loadFinanceData();
+                } catch(e) {
+                    showToast(e.message || 'Ошибка вывода', 'error');
+                }
+            }
+        );
+    }
+
+    function openConvertModal() {
+        const maxPoints = financeData?.points_balance || 0;
+        const maxConvert = Math.min(maxPoints, 1000);
+
+        openModal(
+            'Конвертация баллов',
+            'Обменяйте бонусные баллы на рубли',
+            ICONS.convert,
+            `
+                <label for="convertPoints">Количество баллов</label>
+                <input type="number" id="convertPoints" placeholder="100" min="1" max="${maxConvert}" required>
+                <div class="hint">Доступно: ${maxPoints} баллов (макс. за раз: ${maxConvert})</div>
+                <div class="preview-box">
+                    Курс: <strong>2 балла = 1 ₽</strong><br>
+                    Вы получите: <strong id="convertPreview">0.00</strong> ₽
+                </div>
+            `,
+            'Конвертировать',
+            async () => {
+                const points = parseInt(document.getElementById('convertPoints').value);
+
+                if (!points || points <= 0) {
+                    showToast('Введите корректное количество баллов', 'error');
+                    return;
+                }
+                if (points > maxPoints) {
+                    showToast('Недостаточно баллов', 'error');
+                    return;
+                }
+                if (points > 1000) {
+                    showToast('Максимум 1000 баллов за одну конвертацию', 'error');
+                    return;
+                }
+
+                try {
+                    await apiCall('/api/finance/convert', {
+                        method: 'POST',
+                        body: JSON.stringify({ points })
+                    });
+                    showToast(`Конвертировано ${points} баллов → ${(points * 0.5).toFixed(2)} ₽`, 'success');
+                    closeModal();
+                    await loadFinanceData();
+                } catch(e) {
+                    showToast(e.message || 'Ошибка конвертации', 'error');
+                }
+            }
+        );
+
+        setTimeout(() => {
+            document.getElementById('convertPoints')?.addEventListener('input', function() {
+                const pts = parseInt(this.value) || 0;
+                const preview = document.getElementById('convertPreview');
+                if (preview) preview.textContent = (pts * 0.5).toFixed(2);
+            });
+        }, 100);
+    }
+
+    // ========================================================================
+    // 9. МЕНЮ ПОЛЬЗОВАТЕЛЯ
+    // ========================================================================
+    function showAuthButton() {
+        const container = document.getElementById('authButtonContainer');
+        if (container) {
+            container.innerHTML = '<button class="btn-download" onclick="window.location.href=\'/auth\'">Авторизация</button>';
+        }
+    }
+
+    function showUserMenu(user) {
+        const container = document.getElementById('authButtonContainer');
+        if (!container) return;
+
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-menu-container';
+        userDiv.innerHTML = `
+            <img src="${user.avatar}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=40&rounded=true'">
+            <span class="user-name">${user.name}</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="user-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-name">${user.name}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-balance">Баланс: ${user.balance || 0} ₽</div>
+                </div>
+                <div class="dropdown-item" data-action="purchases">Покупки</div>
+                <div class="dropdown-item" data-action="sales">Продажи</div>
+                <div class="dropdown-item" data-action="messages">Сообщения</div>
+                <div class="dropdown-item" data-action="finance">Финансы</div>
+                <div class="dropdown-item" data-action="profile" data-user-id="${user.user_id}">Профиль</div>
+                <div class="dropdown-item logout" data-action="logout">Выйти</div>
+            </div>
+        `;
+
+        container.innerHTML = '';
+        container.appendChild(userDiv);
+
+        const menuContainer = document.querySelector('.user-menu-container');
+        const dropdown = document.querySelector('.user-dropdown');
+
+        menuContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdown.style.display === 'block';
+            dropdown.style.display = isOpen ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', () => {
+            dropdown.style.display = 'none';
+        });
+
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                dropdown.style.display = 'none';
+                const action = item.dataset.action;
+                const userId = item.dataset.userId;
+
+                switch(action) {
+                    case 'logout':
+                        try {
+                            await fetch('/api/logout', { method: 'POST' });
+                            window.location.reload();
+                        } catch(e) {
+                            showToast('Ошибка при выходе', 'error');
+                        }
+                        break;
+                    case 'profile':
+                        if (userId) window.location.href = `/user/${userId}`;
+                        else window.location.href = '/profile.html';
+                        break;
+                    case 'finance':
+                        window.location.href = '/finances';
+                        break;
+                    default:
+                        showToast(`Раздел "${item.innerText.trim()}" в разработке`, 'info');
+                }
+            });
+        });
+    }
+
+    // ========================================================================
+    // 10. ГЕНЕРАЦИЯ ТЕСТОВЫХ ДАННЫХ (для демонстрации)
+    // ========================================================================
+    function generateMockHistory() {
+        const types = ['income', 'expense', 'bonus', 'conversion', 'refund', 'hold'];
+        const statuses = ['success', 'success', 'success', 'pending', 'success', 'failed'];
+        const amounts = [50, 100, 250, 500, 1000, 1500, 2000, 5000];
+        const now = Date.now();
+        const mockData = [];
+
+        for (let i = 0; i < 15; i++) {
+            const type = types[Math.floor(Math.random() * types.length)];
+            const amount = amounts[Math.floor(Math.random() * amounts.length)] * (type === 'expense' ? 1 : 1);
+            const daysAgo = Math.floor(Math.random() * 30);
+            const date = new Date(now - daysAgo * 86400000 - Math.random() * 86400000);
+
+            mockData.push({
+                type: type,
+                amount: amount,
+                status: statuses[Math.floor(Math.random() * statuses.length)],
+                created_at: date.toISOString(),
+                description: ''
+            });
+        }
+
+        // Сортируем по дате (свежие сверху)
+        mockData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        return mockData;
+    }
+
+    // ========================================================================
+    // 11. ЗАПУСК
+    // ========================================================================
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Если нет реальных данных, подставляем тестовые для демонстрации
+        try {
+            await loadFinances();
+        } catch(e) {
+            // Если API не отвечает, используем мок-данные
+            console.warn('Используем тестовые данные для демонстрации');
+            financeData = { ruble_balance: 15230.50, points_balance: 1240 };
+            historyData = generateMockHistory();
+            renderFinances();
+        }
+    });
+</script>
+</body>
+</html>

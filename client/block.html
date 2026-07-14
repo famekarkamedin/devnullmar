@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Аккаунт заблокирован — NULLMARKET</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: #f3f5fc;
+            color: #121826;
+            line-height: 1.4;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #a78bfa, #3b82f6);
+            top: -150px;
+            left: -150px;
+        }
+
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f97316, #facc15);
+            bottom: -250px;
+            right: -200px;
+            opacity: 0.4;
+        }
+
+        .blur-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2dd4bf, #14b8a6);
+            top: 40%;
+            left: 60%;
+            opacity: 0.3;
+        }
+
+        .blocked-container {
+            max-width: 740px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2);
+            padding: 48px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blocked-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #dc2626, #f87171);
+            border-radius: 48px 48px 0 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+
+        .badge-blocked {
+            background: #fee2e2;
+            color: #dc2626;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 18px;
+            border-radius: 60px;
+            border: 1px solid #fecaca;
+        }
+
+        .blocked-icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .blocked-icon svg {
+            width: 72px;
+            height: 72px;
+            color: #dc2626;
+        }
+
+        .blocked-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 6px;
+            background: linear-gradient(115deg, #111827, #2d3a5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .blocked-title .username {
+            color: #dc2626;
+            background: none;
+            -webkit-text-fill-color: #dc2626;
+        }
+
+        .blocked-subtitle {
+            text-align: center;
+            color: #4b5563;
+            font-size: 15px;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .reason-box {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 20px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+
+        .reason-box .label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #991b1b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reason-box .text {
+            font-size: 15px;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .reason-box .text strong {
+            color: #dc2626;
+        }
+
+        .log-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+
+        .log-box .log-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 10px;
+        }
+
+        .log-box .log-content {
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            color: #1e293b;
+            background: #ffffff;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.7;
+        }
+
+        .log-box .log-content .highlight {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .log-box .log-content .timestamp {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .staff-comment {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+
+        .staff-comment .staff-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #166534;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .staff-comment .staff-text {
+            font-size: 14px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .finance-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+        }
+
+        .finance-box .finance-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .finance-box .finance-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 14px;
+            color: #1f2937;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .finance-box .finance-row:last-child {
+            border-bottom: none;
+        }
+
+        .finance-box .finance-row .label {
+            color: #6b7280;
+        }
+
+        .finance-box .finance-row .value {
+            font-weight: 600;
+        }
+
+        .finance-box .finance-row .value.negative {
+            color: #dc2626;
+        }
+
+        .finance-box .finance-note {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        .btn-support {
+            display: block;
+            width: 100%;
+            padding: 14px 20px;
+            background: #0f172a;
+            color: #ffffff;
+            border: none;
+            border-radius: 48px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-support:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .btn-support:active {
+            transform: scale(0.98);
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 13px;
+            color: #9ca3af;
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #4f46e5;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            text-align: center;
+            color: #dc2626;
+            padding: 20px;
+            font-size: 15px;
+        }
+
+        @media (max-width: 640px) {
+            .blocked-container {
+                padding: 32px 20px;
+                border-radius: 32px;
+            }
+
+            .blocked-title {
+                font-size: 20px;
+            }
+
+            .reason-box {
+                padding: 16px;
+            }
+
+            .log-box .log-content {
+                font-size: 12px;
+                padding: 10px 12px;
+            }
+
+            .finance-box {
+                padding: 16px;
+            }
+
+            .header .logo {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+<div class="blur-object blur-3"></div>
+
+<div class="blocked-container" id="blockedContainer">
+    <div class="header">
+        <div class="logo" onclick="window.location.href='/'">NULLMARKET</div>
+        <div class="badge-blocked">Заблокирован</div>
+    </div>
+
+    <div id="blockedContent">
+        <div class="loader" id="loader">
+            <div class="loader-spinner"></div>
+        </div>
+
+        <div class="error-message" id="errorMessage" style="display: none;"></div>
+
+        <div id="mainContent" style="display: none;">
+            <div class="blocked-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+            </div>
+
+            <h1 class="blocked-title">
+                Аккаунт <span class="username" id="userNameDisplay">@username</span> заблокирован
+            </h1>
+            <p class="blocked-subtitle" id="blockedSubtitle">
+                Ваш аккаунт был заблокирован за нарушение правил платформы.
+            </p>
+
+            <div class="reason-box">
+                <div class="label">Причина блокировки</div>
+                <div class="text" id="reasonText">
+                    Загрузка причины...
+                </div>
+            </div>
+
+            <div class="staff-comment" id="staffCommentBox" style="display: none;">
+                <div class="staff-label">Комментарий сотрудника</div>
+                <div class="staff-text" id="staffCommentText"></div>
+            </div>
+
+            <div class="log-box" id="logBox" style="display: none;">
+                <div class="log-label">Лог нарушения</div>
+                <div class="log-content" id="logContent"></div>
+            </div>
+
+            <div class="finance-box" id="financeBox" style="display: none;">
+                <div class="finance-title">Финансы</div>
+                <div id="financeRows"></div>
+                <div class="finance-note" id="financeNote">Денежные средства по операциям, не предусмотренным в процессе выполнения, не отображаются.</div>
+            </div>
+
+            <a href="#" class="btn-support" id="supportBtn">Написать в поддержку</a>
+
+            <p class="footer-note" id="footerNote">
+                Обычно отвечаем за 2 дня, но постараемся быстрее.<br>
+                Просим вас не писать отзывов и не начинать публичное обсуждение до окончания разбирательства.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function loadBlockedData() {
+        const loader = document.getElementById('loader');
+        const errorMessage = document.getElementById('errorMessage');
+        const mainContent = document.getElementById('mainContent');
+
+        try {
+            const statusResponse = await fetch('/api/user-status');
+            
+            if (!statusResponse.ok) {
+                if (statusResponse.status === 401) {
+                    window.location.href = '/auth';
+                    return;
+                }
+                throw new Error('Ошибка проверки статуса');
+            }
+
+            const statusData = await statusResponse.json();
+            
+            if (statusData.status !== 'blocked') {
+                window.location.href = '/';
+                return;
+            }
+
+            const response = await fetch('/api/blocked-info');
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error || 'Ошибка загрузки данных');
+            }
+
+            const data = await response.json();
+
+            loader.style.display = 'none';
+            mainContent.style.display = 'block';
+
+            renderBlockedPage(data);
+
+        } catch (error) {
+            console.error('Ошибка загрузки данных о блокировке:', error);
+            loader.style.display = 'none';
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = error.message || 'Не удалось загрузить данные о блокировке. Попробуйте позже или обратитесь в поддержку.';
+        }
+    }
+
+    function renderBlockedPage(data) {
+        const username = data.username || 'Пользователь';
+        document.getElementById('userNameDisplay').textContent = '@' + username;
+
+        document.getElementById('reasonText').innerHTML = data.reason || 'Причина блокировки не указана.';
+
+        const staffCommentBox = document.getElementById('staffCommentBox');
+        const staffCommentText = document.getElementById('staffCommentText');
+        if (data.staff_comment && data.staff_comment.trim()) {
+            staffCommentBox.style.display = 'block';
+            staffCommentText.textContent = data.staff_comment;
+        } else {
+            staffCommentBox.style.display = 'none';
+        }
+
+        const logBox = document.getElementById('logBox');
+        const logContent = document.getElementById('logContent');
+        if (data.log && data.log.trim()) {
+            logBox.style.display = 'block';
+            let logHtml = data.log.replace(/\n/g, '<br>');
+            const usernameRegex = new RegExp(`(${data.username}|@${data.username})`, 'g');
+            logHtml = logHtml.replace(usernameRegex, '<span class="highlight">$1</span>');
+            logContent.innerHTML = logHtml;
+        } else {
+            logBox.style.display = 'none';
+        }
+
+        const financeBox = document.getElementById('financeBox');
+        const financeRows = document.getElementById('financeRows');
+        if (data.finance) {
+            financeBox.style.display = 'block';
+            const f = data.finance;
+            const rows = [
+                { label: 'Максимальный срок задержки средств', value: (f.hold_days || 180) + ' календарных дней' },
+                { label: 'Дата рассмотрения', value: f.review_date || 'Не указана' },
+                { label: 'Текущий остаток', value: (f.balance || 0).toFixed(2) + ' ' + (f.currency || 'RUB'), className: 'negative' }
+            ];
+
+            financeRows.innerHTML = rows.map(row => `
+                <div class="finance-row">
+                    <span class="label">${row.label}</span>
+                    <span class="value ${row.className || ''}">${row.value}</span>
+                </div>
+            `).join('');
+
+            if (data.finance_note) {
+                document.getElementById('financeNote').textContent = data.finance_note;
+            }
+        } else {
+            financeBox.style.display = 'none';
+        }
+
+        const supportBtn = document.getElementById('supportBtn');
+        supportBtn.href = data.support_url || '/support';
+        supportBtn.textContent = data.support_button_text || 'Написать в поддержку';
+
+        if (data.footer_note) {
+            document.getElementById('footerNote').innerHTML = data.footer_note;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadBlockedData);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Роли и значки — NULLMARKET</title>
+    <!-- Font Awesome 6 (бесплатные иконки) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f5f7fc 0%, #eef2f8 100%);
+            color: #121826;
+            line-height: 1.5;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #818cf8, #4f46e5);
+            top: -150px;
+            left: -150px;
+        }
+
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f97316, #facc15);
+            bottom: -250px;
+            right: -200px;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #4f46e5;
+        }
+
+        .nav-link.active {
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        .btn-download {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .btn-download:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .user-menu-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            min-width: 200px;
+            display: none;
+            overflow: hidden;
+            z-index: 50;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        
+        .dropdown-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .dropdown-email {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        
+        .dropdown-balance {
+            font-size: 12px;
+            margin-top: 6px;
+            color: #f59e0b;
+            font-weight: 600;
+        }
+        
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 14px;
+        }
+        
+        .dropdown-item:hover {
+            background: #f1f5f9;
+        }
+        
+        .dropdown-item.logout {
+            border-top: 1px solid #e2e8f0;
+            color: #ef4444;
+        }
+
+        .page-wrapper {
+            padding: 40px 0 60px;
+        }
+
+        .page-header {
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .section-title i {
+            color: #4f46e5;
+            margin-right: 10px;
+        }
+
+        .section-count {
+            font-size: 14px;
+            font-weight: 500;
+            color: #94a3b8;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 20px;
+        }
+
+        /* ===== ВЕРТИКАЛЬНЫЕ КАРТОЧКИ РОЛЕЙ ===== */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .role-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 20px 18px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .role-card:hover {
+            border-color: #4f46e5;
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            cursor: default;
+            border-radius: 24px;
+            white-space: nowrap;
+            justify-content: center;
+            margin-bottom: 12px;
+            min-width: 160px;
+        }
+
+        .role-badge i {
+            font-size: 14px;
+        }
+
+        .role-card:hover .role-badge {
+            transform: scale(1.03);
+        }
+
+        .role-info {
+            width: 100%;
+        }
+
+        .role-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .role-desc {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .role-meta {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .role-level {
+            font-size: 11px;
+            color: #94a3b8;
+            background: #f1f5f9;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .role-tag {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .role-tag.staff { background: #f1f5f9; color: #475569; }
+        .role-tag.support { background: #dcfce7; color: #166534; }
+        .role-tag.marketing { background: #fef3c7; color: #92400e; }
+        .role-tag.moderation { background: #fee2e2; color: #991b1b; }
+        .role-tag.leadership { background: #e0e7ff; color: #3730a3; }
+        .role-tag.admin { background: #f3e8ff; color: #6b21a5; }
+        .role-tag.user { background: #f1f5f9; color: #64748b; }
+        .role-tag.beta { background: #ede9fe; color: #5b21b6; }
+
+        /* ===== ВСЕ РОЛИ ===== */
+        .role-user {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+
+        .role-beta_tester {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+
+        .role-beta_tester_active {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(124, 58, 237, 0.25);
+        }
+
+        .role-beta_tester_senior {
+            background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(109, 40, 217, 0.25);
+        }
+
+        .role-beta_tester_lead {
+            background: linear-gradient(135deg, #4c1d95 0%, #3b0764 100%);
+            color: #fff;
+            box-shadow: 0 2px 20px rgba(79, 70, 229, 0.35);
+        }
+
+        .role-support_trainee {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #fff;
+        }
+
+        .role-tech_support {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: #1a3a2a;
+        }
+
+        .role-pro_support {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: #5a2d3a;
+        }
+
+        .role-recruiter {
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            color: #3d2a5a;
+        }
+
+        .role-smm_manager {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+        }
+
+        .role-pr_manager {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #fff;
+        }
+
+        .role-senior_pr_manager {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #5a3a1a;
+        }
+
+        .role-content_label_moderator {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #2d5a5a;
+        }
+
+        .role-content_moderator {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            color: #4a2d5a;
+        }
+
+        .role-senior_content_label_moderator {
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            color: #1a2a5a;
+        }
+
+        .role-senior_content_moderator {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            color: #3a2a5a;
+        }
+
+        .role-head_beta_testers {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+        }
+
+        .role-head_cooperation {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #fff;
+        }
+
+        .role-head_marketing {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #3a2a1a;
+        }
+
+        .role-head_support {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #2a4a4a;
+        }
+
+        .role-head_moderation {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            color: #3a2a4a;
+        }
+
+        .role-tech_admin {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: #fff;
+        }
+
+        .role-developer {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #fff;
+        }
+
+        .role-tech_lead {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+        }
+
+        .role-ciso {
+            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+            color: #fff;
+        }
+
+        .role-ceo {
+            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+            color: #3a2a0a;
+        }
+
+        .role-board_of_directors {
+            background: linear-gradient(135deg, #450a0a 0%, #b91c1c 60%, #dc2626 100%);
+            color: #fecaca;
+        }
+
+        /* ===== ЗНАЧКИ ===== */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .badge-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .badge-card:hover {
+            border-color: #4f46e5;
+            box-shadow: 0 4px 16px rgba(79, 70, 229, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .badge-icon {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            font-size: 22px;
+            color: #4f46e5;
+            transition: all 0.2s;
+        }
+
+        .badge-card:hover .badge-icon {
+            background: #eef2ff;
+            border-color: #4f46e5;
+        }
+
+        .badge-icon.verified { color: #6b7280; }
+        .badge-icon.business { color: #2563eb; }
+        .badge-icon.partner { color: #f59e0b; }
+        .badge-icon.ambassador { color: #059669; }
+        .badge-icon.premium { color: #7c3aed; }
+        .badge-icon.trusted { color: #0891b2; }
+        .badge-icon.veteran { color: #dc2626; }
+        .badge-icon.early { color: #d97706; }
+        .badge-icon.seller { color: #f97316; }
+        .badge-icon.reviewer { color: #8b5cf6; }
+        .badge-icon.active { color: #22c55e; }
+        .badge-icon.contributor { color: #ec4899; }
+        .badge-icon.booster { color: #f472b6; }
+        .badge-icon.creator { color: #fbbf24; }
+        .badge-icon.legend { color: #ef4444; }
+        .badge-icon.supporter { color: #14b8a6; }
+        .badge-icon.nitro { color: #4f46e5; }
+        .badge-icon.bughunter { color: #f97316; }
+        .badge-icon.moderator_program { color: #059669; }
+
+        .badge-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .badge-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+
+        .badge-desc {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .badge-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .badge-howto {
+            font-size: 12px;
+            color: #4f46e5;
+            background: #eef2ff;
+            padding: 2px 12px;
+            border-radius: 12px;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .badge-status {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 12px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .badge-status.available {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-status.legacy {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-status.limited {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-status.manual {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .badge-status.hidden {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .color-preview {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .color-preview .dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+
+        .footer-note {
+            margin-top: 48px;
+            padding: 24px 0;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .footer-note p {
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 760px) {
+            .container { padding: 0 20px; }
+            .page-title { font-size: 28px; }
+            .roles-grid { grid-template-columns: 1fr 1fr; }
+            .badges-grid { grid-template-columns: 1fr; }
+            .badge-card { flex-direction: column; align-items: stretch; }
+            .badge-icon { align-self: center; }
+            .user-name { display: none; }
+            .section-header { flex-direction: column; gap: 8px; }
+            .role-badge { min-width: auto; white-space: normal; font-size: 12px; padding: 6px 14px; }
+        }
+
+        @media (max-width: 480px) {
+            .roles-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+
+<header class="header">
+    <div class="container header-inner">
+        <div style="display: flex; align-items: center; gap: 32px;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+			<div class="nav-links">
+				<a href="/" class="nav-link">Главная</a>
+				<a href="/marketplace" class="nav-link">Маркетплейс</a>
+				<a href="/support" class="nav-link">Поддержка</a>
+				<a href="/media" class="nav-link">Медиа</a>
+                <a href="/roles" class="nav-link active">Роли и значки</a>
+            </div>
+        </div>
+        <div id="authButtonContainer">
+            <div class="loading" style="padding: 0; font-size: 14px;">Загрузка...</div>
+        </div>
+    </div>
+</header>
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Роли и значки NULLMARKET</h1>
+            <p class="page-subtitle">Полная иерархия должностей и коллекция значков платформы</p>
+        </div>
+
+        <!-- ===== РАЗДЕЛ: ПОЛЬЗОВАТЕЛИ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-users"></i>Пользователи</h2>
+                <span class="section-count">5 ролей</span>
+            </div>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <span class="role-badge role-user"><i class="fas fa-user"></i> Пользователь</span>
+                    <div class="role-info">
+                        <div class="role-name">Базовая роль</div>
+                        <div class="role-desc">Стандартная роль для всех зарегистрированных пользователей платформы. Доступ к основному функционалу.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 0</span>
+                            <span class="role-tag user">Базовая</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-beta_tester"><i class="fas fa-flask"></i> Бета-Тестер</span>
+                    <div class="role-info">
+                        <div class="role-name">Начальный уровень тестирования</div>
+                        <div class="role-desc">Участвует в тестировании новых функций до релиза, помогает находить баги и улучшать качество продукта.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 20</span>
+                            <span class="role-tag beta">Тестирование</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-beta_tester_active"><i class="fas fa-vial"></i> Активный Бета-Тестер</span>
+                    <div class="role-info">
+                        <div class="role-name">Продвинутый уровень</div>
+                        <div class="role-desc">Активно тестирует, регулярно сообщает о багах, помогает воспроизводить сложные ошибки и проверяет исправления.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 21</span>
+                            <span class="role-tag beta">Активный</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-beta_tester_senior"><i class="fas fa-star"></i> Старший Бета-Тестер</span>
+                    <div class="role-info">
+                        <div class="role-name">Экспертный уровень</div>
+                        <div class="role-desc">Опытный тестер с большим стажем. Координирует младших, проверяет качество баг-репортов и обучает новичков.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 24</span>
+                            <span class="role-tag beta">Старший</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-beta_tester_lead"><i class="fas fa-crown"></i> Ведущий Бета-Тестер</span>
+                    <div class="role-info">
+                        <div class="role-name">Лидерский уровень</div>
+                        <div class="role-desc">Лидер команды бета-тестеров. Отвечает за стратегию тестирования, качество релизов и взаимодействие с разработкой.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 28</span>
+                            <span class="role-tag beta">Ведущий</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== РАЗДЕЛ: ПОДДЕРЖКА ===== -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-headset"></i>Поддержка</h2>
+                <span class="section-count">3 роли</span>
+            </div>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <span class="role-badge role-support_trainee"><i class="fas fa-graduation-cap"></i> Стажер Поддержки</span>
+                    <div class="role-info">
+                        <div class="role-name">Начальный этап</div>
+                        <div class="role-desc">Проходит обучение и стажировку, работает с простыми запросами пользователей под руководством опытных коллег.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 30</span>
+                            <span class="role-tag support">Стажёр</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-tech_support"><i class="fas fa-microchip"></i> Техническая Поддержка</span>
+                    <div class="role-info">
+                        <div class="role-name">Специализированный уровень</div>
+                        <div class="role-desc">Решение технических проблем, помощь с функционалом платформы, диагностика ошибок и их эскалация в разработку.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 35</span>
+                            <span class="role-tag support">Техподдержка</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-pro_support"><i class="fas fa-star"></i> Профессиональная Поддержка</span>
+                    <div class="role-info">
+                        <div class="role-name">Экспертный уровень</div>
+                        <div class="role-desc">Сложные запросы, эскалация проблем, сопровождение ключевых клиентов и участие в улучшении процессов поддержки.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 40</span>
+                            <span class="role-tag support">Экспертная</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== РАЗДЕЛ: HR И МАРКЕТИНГ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i>HR и маркетинг</h2>
+                <span class="section-count">4 роли</span>
+            </div>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <span class="role-badge role-recruiter"><i class="fas fa-user-plus"></i> Рекрутер (HR)</span>
+                    <div class="role-info">
+                        <div class="role-name">HR-специалист</div>
+                        <div class="role-desc">Поиск и найм сотрудников, проведение собеседований, онбординг и адаптация новичков в команде.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 60</span>
+                            <span class="role-tag marketing">HR</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-smm_manager"><i class="fas fa-share-alt"></i> SMM Менеджер</span>
+                    <div class="role-info">
+                        <div class="role-name">Специалист по соцсетям</div>
+                        <div class="role-desc">Ведение социальных сетей, создание контента, взаимодействие с аудиторией и анализ эффективности публикаций.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 70</span>
+                            <span class="role-tag marketing">SMM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-pr_manager"><i class="fas fa-bullhorn"></i> PR Менеджер</span>
+                    <div class="role-info">
+                        <div class="role-name">Связи с общественностью</div>
+                        <div class="role-desc">Работа с партнёрами, медиа и СМИ, управление репутацией и внешние коммуникации.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 75</span>
+                            <span class="role-tag marketing">PR</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-senior_pr_manager"><i class="fas fa-trophy"></i> Старший PR Менеджер</span>
+                    <div class="role-info">
+                        <div class="role-name">Стратегический PR</div>
+                        <div class="role-desc">Стратегическое управление PR-коммуникациями, развитие ключевых партнёрств и формирование имиджа платформы.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 80</span>
+                            <span class="role-tag marketing">Старший PR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== РАЗДЕЛ: МОДЕРАЦИЯ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-gavel"></i>Модерация</h2>
+                <span class="section-count">4 роли</span>
+            </div>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <span class="role-badge role-content_label_moderator"><i class="fas fa-tags"></i> Модератор разметки контента</span>
+                    <div class="role-info">
+                        <div class="role-name">Специалист по разметке</div>
+                        <div class="role-desc">Категоризация и разметка контента согласно правилам платформы. Обеспечение корректного отображения данных.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 86</span>
+                            <span class="role-tag moderation">Разметка</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-content_moderator"><i class="fas fa-eye"></i> Модератор контента</span>
+                    <div class="role-info">
+                        <div class="role-name">Специалист по контенту</div>
+                        <div class="role-desc">Проверка объявлений на соответствие правилам, разрешение споров и контроль порядка на платформе.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 87</span>
+                            <span class="role-tag moderation">Контент</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-senior_content_label_moderator"><i class="fas fa-layer-group"></i> Старший модератор разметки</span>
+                    <div class="role-info">
+                        <div class="role-name">Руководство разметкой</div>
+                        <div class="role-desc">Управление командой модераторов разметки, контроль качества, обучение и разработка методик разметки.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 88</span>
+                            <span class="role-tag moderation">Старший</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-senior_content_moderator"><i class="fas fa-shield-alt"></i> Старший модератор контента</span>
+                    <div class="role-info">
+                        <div class="role-name">Руководство модерацией</div>
+                        <div class="role-desc">Управление командой модераторов контента, решение сложных кейсов и участие в разработке правил платформы.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 89</span>
+                            <span class="role-tag moderation">Старший</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== РАЗДЕЛ: РУКОВОДИТЕЛИ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-chess-king"></i>Руководители</h2>
+                <span class="section-count">5 ролей</span>
+            </div>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <span class="role-badge role-head_beta_testers"><i class="fas fa-vial"></i> Руководитель Бета-Тестеров</span>
+                    <div class="role-info">
+                        <div class="role-name">Управление тестированием</div>
+                        <div class="role-desc">Координация работы бета-тестеров, приоритезация багов и обратная связь с командой разработки.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 90</span>
+                            <span class="role-tag leadership">Руководитель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-head_cooperation"><i class="fas fa-handshake"></i> Руководитель Сотрудничеств</span>
+                    <div class="role-info">
+                        <div class="role-name">Управление партнёрствами</div>
+                        <div class="role-desc">Управление партнёрскими программами, внешними интеграциями и развитие отношений с ключевыми партнёрами.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 91</span>
+                            <span class="role-tag leadership">Руководитель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-head_marketing"><i class="fas fa-chart-pie"></i> Руководитель Маркетинга и PR</span>
+                    <div class="role-info">
+                        <div class="role-name">Маркетинговая стратегия</div>
+                        <div class="role-desc">Стратегия продвижения, брендинг и управление PR-коммуникациями. Формирование имиджа платформы.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 92</span>
+                            <span class="role-tag leadership">Руководитель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-head_support"><i class="fas fa-headset"></i> Руководитель Поддержки</span>
+                    <div class="role-info">
+                        <div class="role-name">Управление поддержкой</div>
+                        <div class="role-desc">Организация работы службы поддержки, обучение персонала и контроль качества обслуживания.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 93</span>
+                            <span class="role-tag leadership">Руководитель</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-head_moderation"><i class="fas fa-balance-scale"></i> Руководитель Модерации</span>
+                    <div class="role-info">
+                        <div class="role-name">Управление модерацией</div>
+                        <div class="role-desc">Разработка правил, управление модераторами и политика платформы. Решение спорных вопросов.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 94</span>
+                            <span class="role-tag leadership">Руководитель</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== РАЗДЕЛ: АДМИНИСТРАЦИЯ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-crown"></i>Администрация</h2>
+                <span class="section-count">6 ролей</span>
+            </div>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <span class="role-badge role-tech_admin"><i class="fas fa-server"></i> Технический Администратор</span>
+                    <div class="role-info">
+                        <div class="role-name">Управление инфраструктурой</div>
+                        <div class="role-desc">Управление инфраструктурой, администрирование серверов и обеспечение технической стабильности.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 95</span>
+                            <span class="role-tag admin">Администратор</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-developer"><i class="fas fa-code"></i> Разработчик</span>
+                    <div class="role-info">
+                        <div class="role-name">Разработка функционала</div>
+                        <div class="role-desc">Создание нового функционала, исправление багов и оптимизация кода. Участие в планировании решений.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 96</span>
+                            <span class="role-tag admin">Разработка</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-tech_lead"><i class="fas fa-sitemap"></i> Ведущий разработчик</span>
+                    <div class="role-info">
+                        <div class="role-name">Техническое лидерство</div>
+                        <div class="role-desc">Архитектура решений, код-ревью и техническое лидерство в команде. Определение технологической стратегии.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 97</span>
+                            <span class="role-tag admin">Ведущий</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-ciso"><i class="fas fa-shield-halved"></i> Глава Безопасности</span>
+                    <div class="role-info">
+                        <div class="role-name">Информационная безопасность</div>
+                        <div class="role-desc">Защита данных, информационная безопасность и аудит систем. Предотвращение угроз безопасности.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 98</span>
+                            <span class="role-tag admin">Безопасность</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-ceo"><i class="fas fa-building"></i> Исполнительный Директор</span>
+                    <div class="role-info">
+                        <div class="role-name">Операционное управление</div>
+                        <div class="role-desc">Операционное управление, стратегия и общее руководство компанией. Представление интересов компании.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 99</span>
+                            <span class="role-tag admin">Высшее руководство</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="role-card">
+                    <span class="role-badge role-board_of_directors"><i class="fas fa-landmark"></i> Совет Директоров</span>
+                    <div class="role-info">
+                        <div class="role-name">Высший орган управления</div>
+                        <div class="role-desc">Высший орган управления. Стратегическое развитие и принятие ключевых решений для платформы.</div>
+                        <div class="role-meta">
+                            <span class="role-level">Уровень 100</span>
+                            <span class="role-tag admin">Высший орган</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== РАЗДЕЛ: ОСНОВНЫЕ ЗНАЧКИ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i>Основные значки верификации</h2>
+                <span class="section-count">8 значков</span>
+            </div>
+            <div class="badges-grid">
+                <div class="badge-card">
+                    <div class="badge-icon verified"><i class="fas fa-user-check"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Подтверждённый аккаунт</div>
+                        <div class="badge-desc">Базовый уровень доверия. Аккаунт подтверждён через почту и телефон.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Подтвердите почту и телефон</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#6b7280;"></span> Серый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon business"><i class="fas fa-building"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Бизнес аккаунт</div>
+                        <div class="badge-desc">Повышенный уровень доверия для бизнес-аккаунтов с подтверждёнными реквизитами.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Подтвердите юридическое лицо</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#2563eb;"></span> Синий</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon partner"><i class="fas fa-handshake"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Партнёр NULLMARKET</div>
+                        <div class="badge-desc">Официальный партнёр платформы. Развивает сообщество и создаёт контент.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Участие в партнёрской программе</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#f59e0b;"></span> Золотой</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon ambassador"><i class="fas fa-star"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Амбассадор NULLMARKET</div>
+                        <div class="badge-desc">Представитель платформы, помогает новым пользователям и развивает сообщество.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Активность и помощь сообществу</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#059669;"></span> Зелёный</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon premium"><i class="fas fa-crown"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Премиум NULLMARKET</div>
+                        <div class="badge-desc">Владелец премиум-подписки с расширенными возможностями платформы.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Оформление премиум-подписки</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#7c3aed;"></span> Фиолетовый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon trusted"><i class="fas fa-shield-virus"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Проверенный продавец</div>
+                        <div class="badge-desc">Продавец с высокой репутацией и положительными отзывами. Прошёл верификацию.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Высокий рейтинг и верификация</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#0891b2;"></span> Бирюзовый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon veteran"><i class="fas fa-medal"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Ветеран NULLMARKET</div>
+                        <div class="badge-desc">Пользователь, который активно участвует в жизни платформы более 3 лет.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Быть на платформе более 3 лет</span>
+                            <span class="badge-status limited">Ограниченно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#dc2626;"></span> Красный</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon early"><i class="fas fa-clock"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Ранний участник</div>
+                        <div class="badge-desc">Поддержал платформу в первый год её существования. Наследственный значок.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Быть зарегистрированным в первый год</span>
+                            <span class="badge-status legacy">Наследственный</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#d97706;"></span> Янтарный</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== РАЗДЕЛ: ПОЛЬЗОВАТЕЛЬСКИЕ ДОСТИЖЕНИЯ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-trophy"></i>Пользовательские достижения</h2>
+                <span class="section-count">6 значков</span>
+            </div>
+            <div class="badges-grid">
+                <div class="badge-card">
+                    <div class="badge-icon seller"><i class="fas fa-store"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Активный продавец</div>
+                        <div class="badge-desc">Продавец с более чем 50 успешными сделками на платформе.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">50+ успешных продаж</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#f97316;"></span> Оранжевый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon reviewer"><i class="fas fa-pen-fancy"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Активный рецензент</div>
+                        <div class="badge-desc">Оставляет качественные отзывы и помогает другим пользователям с выбором.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">50+ полезных отзывов</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#8b5cf6;"></span> Фиолетовый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon active"><i class="fas fa-fire"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Завсегдатай</div>
+                        <div class="badge-desc">Активно участвует в жизни сообщества: общается, помогает, создаёт обсуждения.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Активность в сообществе</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#22c55e;"></span> Зелёный</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon contributor"><i class="fas fa-code-branch"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Контрибьютор</div>
+                        <div class="badge-desc">Внёс вклад в развитие платформы: помог с переводом, дизайном или документацией.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Вклад в развитие</span>
+                            <span class="badge-status manual">Выдаётся вручную</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#ec4899;"></span> Розовый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon booster"><i class="fas fa-rocket"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Бустер сообщества</div>
+                        <div class="badge-desc">Активно поддерживает сообщество, помогает другим пользователям и создаёт позитивную атмосферу.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Помощь другим пользователям</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#f472b6;"></span> Розовый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon creator"><i class="fas fa-paint-brush"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Креатор контента</div>
+                        <div class="badge-desc">Создаёт уникальный контент о платформе: гайды, обзоры, видео, скриншоты.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Создание полезного контента</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#fbbf24;"></span> Золотой</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== РАЗДЕЛ: ЭКСКЛЮЗИВНЫЕ ЗНАЧКИ ===== -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-gem"></i>Эксклюзивные значки</h2>
+                <span class="section-count">5 значков</span>
+            </div>
+            <div class="badges-grid">
+                <div class="badge-card">
+                    <div class="badge-icon legend"><i class="fas fa-chess-queen"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Легенда NULLMARKET</div>
+                        <div class="badge-desc">Высшая степень признания. Присуждается за выдающийся вклад в развитие платформы.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Исключительный вклад</span>
+                            <span class="badge-status limited">Ограниченно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#ef4444;"></span> Алый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon supporter"><i class="fas fa-hands-helping"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Суппортер сообщества</div>
+                        <div class="badge-desc">Всегда готов помочь, отвечает на вопросы и решает проблемы других пользователей.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Помощь в сообществе</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#14b8a6;"></span> Бирюзовый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon nitro"><i class="fas fa-bolt"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">NULLMARKET Nitro</div>
+                        <div class="badge-desc">Оформлена подписка Nitro. Даёт доступ к эксклюзивным функциям платформы.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Оформить Nitro</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#4f46e5;"></span> Индиго</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon bughunter"><i class="fas fa-bug"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Bug Hunter</div>
+                        <div class="badge-desc">Присуждается активным участникам сообщества тестировщиков за поиск багов.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Участие в программе тестирования</span>
+                            <span class="badge-status available">Доступно</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#f97316;"></span> Оранжевый</div>
+                    </div>
+                </div>
+
+                <div class="badge-card">
+                    <div class="badge-icon moderator_program"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="badge-info">
+                        <div class="badge-name">Модератор-выпускник</div>
+                        <div class="badge-desc">Выдавался выпускникам Академии модераторов до декабря 2022 года.</div>
+                        <div class="badge-meta">
+                            <span class="badge-howto">Программа модерации (завершена)</span>
+                            <span class="badge-status legacy">Наследственный</span>
+                        </div>
+                        <div class="color-preview"><span class="dot" style="background:#059669;"></span> Зелёный</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <p>Значки профиля не подлежат передаче и не могут быть перенесены в другую учётную запись.</p>
+            <p>Информация актуальна на момент публикации. Некоторые значки являются экспериментальными.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentUser = null;
+
+    async function apiCall(endpoint, options = {}) {
+        const response = await fetch(endpoint, {
+            headers: { 'Content-Type': 'application/json' },
+            ...options
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Ошибка запроса');
+        return data;
+    }
+
+    function showAuthButton() {
+        const container = document.getElementById('authButtonContainer');
+        if (container) {
+            container.innerHTML = '<button class="btn-download" onclick="window.location.href=\'/auth\'">Авторизация</button>';
+        }
+    }
+
+    function showUserMenu(user) {
+        const container = document.getElementById('authButtonContainer');
+        
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-menu-container';
+        userDiv.innerHTML = `
+            <img src="${user.avatar || 'https://ui-avatars.com/api/?background=4f46e5&color=fff&name=' + encodeURIComponent(user.name) + '&size=38&rounded=true'}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=38&rounded=true'">
+            <span class="user-name">${user.name}</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="user-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-name">${user.name}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-balance">Баланс: ${user.balance || 0} ₽</div>
+                </div>
+                <div class="dropdown-item" data-action="purchases">Покупки</div>
+                <div class="dropdown-item" data-action="sales">Продажи</div>
+                <div class="dropdown-item" data-action="messages">Сообщения</div>
+                <div class="dropdown-item" data-action="finance">Финансы</div>
+                <div class="dropdown-item" data-action="profile" data-user-id="${user.user_id}">Профиль</div>
+                <div class="dropdown-item logout" data-action="logout">Выйти</div>
+            </div>
+        `;
+        
+        container.innerHTML = '';
+        container.appendChild(userDiv);
+        
+        const menuContainer = document.querySelector('.user-menu-container');
+        const dropdown = document.querySelector('.user-dropdown');
+        
+        if (menuContainer) {
+            menuContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+        
+        document.addEventListener('click', () => {
+            if (dropdown) dropdown.style.display = 'none';
+        });
+        
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                dropdown.style.display = 'none';
+                const action = item.dataset.action;
+                const userId = item.dataset.userId;
+                
+                if (action === 'logout') {
+                    await fetch('/api/logout', { method: 'POST' });
+                    window.location.href = '/';
+                } else if (action === 'profile' && userId) {
+                    window.location.href = `/user/${userId}`;
+                }
+            });
+        });
+    }
+
+    async function loadUser() {
+        try {
+            currentUser = await apiCall('/api/me');
+            if (currentUser) {
+                showUserMenu(currentUser);
+            } else {
+                showAuthButton();
+            }
+        } catch(e) {
+            showAuthButton();
+        }
+    }
+
+    loadUser();
+</script>
+</body>
+</html>

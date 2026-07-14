@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Маркетплейс — NULLMARKET</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f5f7fc 0%, #eef2f8 100%);
+            color: #121826;
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #818cf8, #4f46e5);
+            top: -150px;
+            left: -150px;
+        }
+
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f97316, #facc15);
+            bottom: -250px;
+            right: -200px;
+            opacity: 0.3;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #4f46e5;
+        }
+
+        .btn-download {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-download:hover {
+            background: #1e293b;
+        }
+
+        /* User Menu */
+        .user-menu-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            min-width: 200px;
+            display: none;
+            overflow: hidden;
+            z-index: 50;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        
+        .dropdown-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .dropdown-email {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        
+        .dropdown-balance {
+            font-size: 12px;
+            margin-top: 6px;
+            color: #f59e0b;
+            font-weight: 600;
+        }
+        
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 14px;
+        }
+        
+        .dropdown-item:hover {
+            background: #f1f5f9;
+        }
+        
+        .dropdown-item.logout {
+            border-top: 1px solid #e2e8f0;
+            color: #ef4444;
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 28px;
+            display: flex;
+            gap: 32px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Sidebar */
+        .games-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: white;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            align-self: start;
+            position: sticky;
+            top: 80px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .sidebar-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 700;
+            font-size: 16px;
+            background: #fafbfc;
+        }
+
+        .games-list {
+            max-height: calc(100vh - 160px);
+            overflow-y: auto;
+        }
+
+        .game-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            color: #475569;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid transparent;
+        }
+
+        .game-item:hover {
+            background: #f8fafc;
+            color: #4f46e5;
+        }
+
+        .game-item.active {
+            background: #eef2ff;
+            border-left-color: #4f46e5;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        .game-count {
+            font-size: 11px;
+            color: #94a3b8;
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        /* Content */
+        .content-area {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .create-item-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .create-item-btn:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+
+        /* Search */
+        .search-bar {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+            font-size: 14px;
+            background: white;
+            font-family: inherit;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .search-btn {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Categories Bar */
+        .categories-bar {
+            background: white;
+            border-radius: 60px;
+            padding: 8px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            border: 1px solid #e2e8f0;
+        }
+
+        .category-chip {
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8fafc;
+            color: #475569;
+        }
+
+        .category-chip:hover {
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .category-chip.active {
+            background: #4f46e5;
+            color: white;
+        }
+
+        /* Sort Bar */
+        .sort-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .sort-tabs {
+            display: flex;
+            gap: 8px;
+            background: white;
+            padding: 4px;
+            border-radius: 48px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .sort-tab {
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #64748b;
+        }
+
+        .sort-tab:hover {
+            background: #f8fafc;
+        }
+
+        .sort-tab.active {
+            background: #0f172a;
+            color: white;
+        }
+
+        .items-count {
+            color: #64748b;
+            font-size: 13px;
+            background: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Items List */
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item-row {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            padding: 16px 20px;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .item-row:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
+        }
+
+        .item-info {
+            flex: 2;
+            min-width: 200px;
+        }
+
+        .item-game {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .item-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .item-desc {
+            font-size: 12px;
+            color: #64748b;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .item-price-block {
+            text-align: right;
+            min-width: 120px;
+        }
+
+        .item-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: #f59e0b;
+        }
+
+        .item-old-price {
+            font-size: 12px;
+            color: #94a3b8;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        .item-seller {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 150px;
+        }
+
+        .seller-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .seller-info {
+            font-size: 13px;
+        }
+
+        .seller-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .seller-rating {
+            font-size: 11px;
+            color: #f59e0b;
+            margin-top: 2px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 32px;
+        }
+        
+        .page-btn {
+            padding: 8px 14px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        .page-btn:hover {
+            background: #f8fafc;
+        }
+        
+        .page-btn.active {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        .modal-content h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .modal-content input,
+        .modal-content textarea,
+        .modal-content select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        .modal-content input:focus,
+        .modal-content textarea:focus,
+        .modal-content select:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+        
+        .modal-buttons button {
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        
+        .btn-save {
+            background: #4f46e5;
+            color: white;
+        }
+        
+        .btn-cancel {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #64748b;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 20px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 1000px) {
+            .main-container { padding: 20px; gap: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .games-sidebar { display: none; }
+            .user-name { display: none; }
+            .action-buttons { flex-direction: column; align-items: stretch; }
+            .search-bar { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+
+<header class="header">
+    <div class="header-inner">
+        <div style="display: flex; align-items: center; gap: 32px;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+			<div class="nav-links">
+				<a href="/" class="nav-link">Главная</a>
+				<a href="/marketplace" class="nav-link active">Маркетплейс</a>
+				<a href="/support" class="nav-link">Поддержка</a>
+				<a href="/media" class="nav-link">Медиа</a>
+            </div>
+        </div>
+        <div id="authButtonContainer">
+            <div class="loading" style="padding: 0; font-size: 14px;">Загрузка...</div>
+        </div>
+    </div>
+</header>
+
+<div class="main-container">
+    <!-- Левая панель: Игры -->
+    <div class="games-sidebar">
+        <div class="sidebar-header">Категории игр</div>
+        <div class="games-list" id="gamesList">
+            <div class="loading">Загрузка...</div>
+        </div>
+    </div>
+
+    <!-- Центральная область -->
+    <div class="content-area">
+        <!-- Кнопка создания товара и поиск -->
+        <div class="action-buttons">
+            <button class="create-item-btn" id="createItemBtn">+ Создать товар</button>
+            <div class="search-bar">
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск товаров...">
+                <button class="search-btn" id="searchBtn">Найти</button>
+            </div>
+        </div>
+
+        <!-- Категории товаров -->
+        <div class="categories-bar" id="categoriesBar">
+            <div class="loading" style="padding: 8px;">Выберите игру</div>
+        </div>
+
+        <!-- Сортировка -->
+        <div class="sort-bar">
+            <div class="sort-tabs">
+                <div class="sort-tab active" data-sort="new">Новинки</div>
+                <div class="sort-tab" data-sort="price_asc">Дешевле</div>
+                <div class="sort-tab" data-sort="price_desc">Дороже</div>
+                <div class="sort-tab" data-sort="popular">Популярные</div>
+            </div>
+            <div class="items-count" id="itemsCount">0 товаров</div>
+        </div>
+
+        <!-- Список товаров -->
+        <div id="itemsContainer">
+            <div class="loading">Загрузка товаров...</div>
+        </div>
+
+        <!-- Пагинация -->
+        <div id="pagination" class="pagination"></div>
+    </div>
+</div>
+
+<script>
+    let currentUser = null;
+    let currentGame = null;
+    let currentCategory = null;
+    let currentSort = 'new';
+    let currentPage = 1;
+    let totalPages = 1;
+    let gamesData = [];
+
+    async function apiCall(endpoint, options = {}) {
+        const response = await fetch(endpoint, {
+            headers: { 'Content-Type': 'application/json' },
+            ...options
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Ошибка запроса');
+        return data;
+    }
+
+    function notice(msg, isError = false) {
+        let div = document.createElement('div');
+        div.innerText = msg;
+        div.style.position = 'fixed';
+        div.style.bottom = '28px';
+        div.style.left = '50%';
+        div.style.transform = 'translateX(-50%)';
+        div.style.backgroundColor = isError ? '#dc2626' : '#181e2c';
+        div.style.color = '#f0f3fa';
+        div.style.padding = '12px 28px';
+        div.style.borderRadius = '56px';
+        div.style.fontSize = '14px';
+        div.style.fontWeight = '500';
+        div.style.zIndex = '9999';
+        div.style.backdropFilter = 'blur(12px)';
+        div.style.border = '1px solid rgba(255,255,255,0.2)';
+        document.body.appendChild(div);
+        setTimeout(() => div.remove(), 2600);
+    }
+
+    // Авторизация
+    async function checkAuth() {
+        try {
+            const response = await fetch('/api/me');
+            if (response.ok) {
+                currentUser = await response.json();
+                showUserMenu(currentUser);
+            } else {
+                showAuthButton();
+            }
+        } catch(e) {
+            showAuthButton();
+        }
+    }
+    
+    function showAuthButton() {
+        const container = document.getElementById('authButtonContainer');
+        if (container) {
+            container.innerHTML = '<button class="btn-download" onclick="window.location.href=\'/auth\'">Авторизация</button>';
+        }
+    }
+    
+    function showUserMenu(user) {
+        const container = document.getElementById('authButtonContainer');
+        
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-menu-container';
+        userDiv.innerHTML = `
+            <img src="${user.avatar}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=38&rounded=true'">
+            <span class="user-name">${user.name}</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="user-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-name">${user.name}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-balance">Баланс: ${user.balance || 0} ₽</div>
+                </div>
+                <div class="dropdown-item" data-action="profile" data-user-id="${user.user_id}">Мой профиль</div>
+                <div class="dropdown-item logout" data-action="logout">Выйти</div>
+            </div>
+        `;
+        
+        container.innerHTML = '';
+        container.appendChild(userDiv);
+        
+        const menuContainer = document.querySelector('.user-menu-container');
+        const dropdown = document.querySelector('.user-dropdown');
+        
+        if (menuContainer) {
+            menuContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+        
+        document.addEventListener('click', () => {
+            if (dropdown) dropdown.style.display = 'none';
+        });
+        
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                dropdown.style.display = 'none';
+                const action = item.dataset.action;
+                const userId = item.dataset.userId;
+                
+                if (action === 'logout') {
+                    await fetch('/api/logout', { method: 'POST' });
+                    window.location.reload();
+                } else if (action === 'profile' && userId) {
+                    window.location.href = `/user/${userId}`;
+                }
+            });
+        });
+    }
+
+    // Загрузка игр
+    async function loadGames() {
+        try {
+            gamesData = await apiCall('/api/games');
+            renderGamesList();
+            if (gamesData.length > 0 && !currentGame) {
+                selectGame(gamesData[0].name);
+            }
+        } catch(e) {
+            console.error(e);
+            document.getElementById('gamesList').innerHTML = '<div class="loading">Ошибка загрузки</div>';
+        }
+    }
+
+    function renderGamesList() {
+        const container = document.getElementById('gamesList');
+        if (!gamesData.length) {
+            container.innerHTML = '<div class="loading">Нет категорий</div>';
+            return;
+        }
+        
+        container.innerHTML = gamesData.map(game => `
+            <div class="game-item ${currentGame === game.name ? 'active' : ''}" onclick="selectGame('${escapeHtml(game.name).replace(/'/g, "\\'")}')">
+                <span>${escapeHtml(game.name)}</span>
+                <span class="game-count">${game.categories.length}</span>
+            </div>
+        `).join('');
+    }
+
+    window.selectGame = function(gameName) {
+        currentGame = gameName;
+        currentCategory = null;
+        currentPage = 1;
+        renderGamesList();
+        renderCategories();
+        loadItems();
+    };
+
+    function renderCategories() {
+        const container = document.getElementById('categoriesBar');
+        const game = gamesData.find(g => g.name === currentGame);
+        
+        if (!game) {
+            container.innerHTML = '<div class="loading" style="padding: 8px;">Выберите игру</div>';
+            return;
+        }
+        
+        container.innerHTML = `
+            <div class="category-chip ${!currentCategory ? 'active' : ''}" onclick="selectCategory(null)">Все товары</div>
+            ${game.categories.map(cat => `
+                <div class="category-chip ${currentCategory === cat.name ? 'active' : ''}" onclick="selectCategory('${escapeHtml(cat.name).replace(/'/g, "\\'")}')">
+                    ${escapeHtml(cat.name)}
+                </div>
+            `).join('')}
+        `;
+    }
+
+    window.selectCategory = function(categoryName) {
+        currentCategory = categoryName;
+        currentPage = 1;
+        renderCategories();
+        loadItems();
+    };
+
+    // Загрузка товаров
+    async function loadItems() {
+        const itemsContainer = document.getElementById('itemsContainer');
+        itemsContainer.innerHTML = '<div class="loading">Загрузка товаров...</div>';
+        
+        try {
+            let url = `/api/items?sort=${currentSort}&page=${currentPage}&limit=15`;
+            if (currentGame) url += `&game=${encodeURIComponent(currentGame)}`;
+            if (currentCategory) url += `&category=${encodeURIComponent(currentCategory)}`;
+            
+            const data = await apiCall(url);
+            const total = data.total;
+            totalPages = Math.ceil(total / 15);
+            
+            document.getElementById('itemsCount').innerHTML = `${total} товаров`;
+            
+            if (!data.items || data.items.length === 0) {
+                itemsContainer.innerHTML = '<div class="empty-state"><p>Товаров не найдено</p><p style="font-size:13px; margin-top:8px;">Попробуйте выбрать другую категорию</p></div>';
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            
+            renderItems(data.items);
+            renderPagination();
+        } catch(e) {
+            console.error(e);
+            itemsContainer.innerHTML = '<div class="empty-state">Ошибка загрузки товаров</div>';
+        }
+    }
+
+    function renderItems(items) {
+        const itemsContainer = document.getElementById('itemsContainer');
+        
+        itemsContainer.innerHTML = `
+            <div class="items-list">
+                ${items.map(item => `
+                    <div class="item-row" onclick="showItemModal(${item.id})">
+                        <div class="item-info">
+                            <div class="item-game">${escapeHtml(item.game_name)} / ${escapeHtml(item.category_name)}</div>
+                            <div class="item-title">${escapeHtml(item.title)}</div>
+                            ${item.description ? `<div class="item-desc">${escapeHtml(item.description.substring(0, 100))}${item.description.length > 100 ? '...' : ''}</div>` : ''}
+                        </div>
+                        <div class="item-price-block">
+                            <div class="item-price">
+                                ${item.price} ₽
+                                ${item.old_price ? `<span class="item-old-price">${item.old_price} ₽</span>` : ''}
+                            </div>
+                        </div>
+                        <div class="item-seller">
+                            <img src="${item.seller_avatar}" class="seller-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(item.seller_name)}&size=36'">
+                            <div class="seller-info">
+                                <div class="seller-name">${escapeHtml(item.seller_name)}</div>
+                                <div class="seller-rating">⭐ ${item.seller_reviews || 0} отзывов</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    function renderPagination() {
+        const paginationDiv = document.getElementById('pagination');
+        if (totalPages <= 1) {
+            paginationDiv.innerHTML = '';
+            return;
+        }
+        
+        let html = '';
+        for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+            html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+        }
+        paginationDiv.innerHTML = html;
+    }
+
+    window.goToPage = function(page) {
+        currentPage = page;
+        loadItems();
+    };
+
+    // Создание товара
+    function openCreateItemModal() {
+        if (!currentUser) {
+            notice('Авторизуйтесь для создания товара', true);
+            setTimeout(() => window.location.href = '/auth', 1500);
+            return;
+        }
+        
+        if (!currentGame) {
+            notice('Сначала выберите игру из списка слева', true);
+            return;
+        }
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h3>Создание товара</h3>
+                <div style="background: #f8fafc; padding: 12px; border-radius: 16px; margin-bottom: 16px;">
+                    <div style="font-size: 12px; color: #64748b;">Выбранная игра</div>
+                    <div style="font-weight: 600;">${escapeHtml(currentGame)}</div>
+                </div>
+                <input type="text" id="itemTitle" placeholder="Название товара *">
+                <textarea id="itemDesc" placeholder="Описание" rows="4"></textarea>
+                <input type="number" id="itemPrice" placeholder="Цена *" step="0.01">
+                <select id="itemCategory">
+                    <option value="">Выберите категорию</option>
+                    ${gamesData.find(g => g.name === currentGame)?.categories.map(cat => `
+                        <option value="${escapeHtml(cat.name)}">${escapeHtml(cat.name)}</option>
+                    `).join('') || ''}
+                </select>
+                <div class="modal-buttons">
+                    <button class="btn-cancel" onclick="this.closest('.modal').remove()">Отмена</button>
+                    <button class="btn-save" onclick="createItem()">Создать</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    async function createItem() {
+        const title = document.getElementById('itemTitle').value.trim();
+        const description = document.getElementById('itemDesc').value.trim();
+        const price = parseFloat(document.getElementById('itemPrice').value);
+        const category = document.getElementById('itemCategory').value;
+        
+        if (!title) {
+            notice('Введите название товара', true);
+            return;
+        }
+        if (!price || isNaN(price) || price <= 0) {
+            notice('Введите корректную цену', true);
+            return;
+        }
+        if (!category) {
+            notice('Выберите категорию', true);
+            return;
+        }
+        
+        try {
+            await apiCall('/api/items/create', {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    game_name: currentGame, 
+                    category_name: category, 
+                    title, 
+                    description, 
+                    price 
+                })
+            });
+            document.querySelector('.modal').remove();
+            notice('Товар успешно создан');
+            loadItems();
+        } catch(e) {
+            notice(e.message, true);
+        }
+    }
+
+    // Просмотр товара
+    window.showItemModal = async function(itemId) {
+        try {
+            const item = await apiCall(`/api/items/${itemId}`);
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'flex';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h3>${escapeHtml(item.title)}</h3>
+                    <div style="color: #94a3b8; font-size: 13px; margin-bottom: 16px;">${escapeHtml(item.game_name)} / ${escapeHtml(item.category_name)}</div>
+                    <div style="font-size: 32px; font-weight: 800; color: #f59e0b; margin-bottom: 16px;">${item.price} ₽</div>
+                    ${item.description ? `<div style="color: #475569; margin-bottom: 20px; line-height: 1.5;">${escapeHtml(item.description)}</div>` : ''}
+                    <div style="display: flex; align-items: center; gap: 12px; padding: 16px 0; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px;">
+                        <img src="${item.seller_avatar}" style="width: 48px; height: 48px; border-radius: 50%;" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(item.seller_name)}&size=48'">
+                        <div>
+                            <div style="font-weight: 700;">${escapeHtml(item.seller_name)}</div>
+                            <div style="font-size: 12px; color: #64748b;">⭐ ${item.seller_reviews || 0} отзывов</div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="btn-cancel" onclick="this.closest('.modal').remove()">Закрыть</button>
+                        <button class="btn-save" onclick="buyItem(${item.id})">Купить</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        } catch(e) {
+            notice('Ошибка загрузки товара', true);
+        }
+    };
+
+    window.buyItem = async function(itemId) {
+        if (!currentUser) {
+            notice('Авторизуйтесь для покупки', true);
+            setTimeout(() => window.location.href = '/auth', 1500);
+            return;
+        }
+        notice('Покупка временно недоступна. Функция в разработке.', true);
+    };
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Сортировка
+    document.querySelectorAll('.sort-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.sort-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentSort = tab.dataset.sort;
+            currentPage = 1;
+            loadItems();
+        });
+    });
+
+    // Поиск
+    document.getElementById('searchBtn')?.addEventListener('click', async () => {
+        const query = document.getElementById('searchInput').value.trim();
+        if (!query || query.length < 2) {
+            notice('Введите минимум 2 символа для поиска', true);
+            return;
+        }
+        
+        currentGame = null;
+        currentCategory = null;
+        
+        const itemsContainer = document.getElementById('itemsContainer');
+        itemsContainer.innerHTML = '<div class="loading">Поиск...</div>';
+        
+        try {
+            const data = await apiCall(`/api/search?q=${encodeURIComponent(query)}`);
+            document.getElementById('itemsCount').innerHTML = `Найдено ${data.items.length} товаров`;
+            
+            if (data.items.length === 0) {
+                itemsContainer.innerHTML = '<div class="empty-state"><p>Ничего не найдено</p></div>';
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            
+            renderItems(data.items);
+            document.getElementById('pagination').innerHTML = '';
+            renderGamesList();
+            renderCategories();
+        } catch(e) {
+            itemsContainer.innerHTML = '<div class="empty-state">Ошибка поиска</div>';
+        }
+    });
+
+    document.getElementById('searchInput')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') document.getElementById('searchBtn').click();
+    });
+
+    // Кнопка создания товара
+    document.getElementById('createItemBtn')?.addEventListener('click', openCreateItemModal);
+
+    // Инициализация
+    async function init() {
+        await checkAuth();
+        await loadGames();
+    }
+    
+    init();
+</script>
+</body>
+</html>

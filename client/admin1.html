@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Админ-панель — NULLMARKET</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f3f5fc 0%, #e8eaf6 100%);
+            color: #121826;
+            line-height: 1.4;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .blur-1 { width: 500px; height:500px; background: radial-gradient(circle, #a78bfa, #3b82f6); top: -150px; left: -150px; }
+        .blur-2 { width: 600px; height:600px; background: radial-gradient(circle, #f97316, #facc15); bottom: -250px; right: -200px; opacity: 0.4; }
+
+        .container { max-width: 1600px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+
+        .header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-links { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+        .nav-link { color: #475569; text-decoration: none; font-size: 15px; font-weight: 500; transition: color 0.2s; }
+        .nav-link:hover { color: #4f46e5; }
+
+        .user-menu-container { display: flex; align-items: center; gap: 12px; cursor: pointer; position: relative; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0; }
+        .user-name { font-weight: 600; color: #1e293b; }
+        .user-dropdown { position: absolute; top: 100%; right: 0; margin-top: 8px; background: white; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); min-width: 220px; display: none; overflow: hidden; z-index: 50; }
+        .dropdown-header { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+        .dropdown-name { font-weight: 700; font-size: 14px; }
+        .dropdown-email { font-size: 11px; color: #64748b; margin-top: 2px; }
+        .dropdown-item { padding: 12px 16px; cursor: pointer; transition: background 0.15s; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .dropdown-item:hover { background: #f1f5f9; }
+        .dropdown-item.logout { border-top: 1px solid #e2e8f0; color: #ef4444; }
+        .dropdown-icon { width: 18px; height: 18px; }
+
+        .admin-layout {
+            display: flex;
+            gap: 28px;
+            margin: 32px 0;
+            min-height: calc(100vh - 160px);
+        }
+
+        .admin-sidebar {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.6);
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+
+        .sidebar-title { 
+            font-size: 18px; 
+            font-weight: 700; 
+            margin-bottom: 20px; 
+            color: #1e293b; 
+            padding-bottom: 12px; 
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .admin-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .admin-menu-item { 
+            padding: 12px 16px; 
+            border-radius: 14px; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            font-size: 14px; 
+            font-weight: 500; 
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .admin-menu-item:hover { background: rgba(79, 70, 229, 0.08); color: #4f46e5; }
+        .admin-menu-item.active { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; box-shadow: 0 4px 12px rgba(79,70,229,0.3); }
+        .menu-icon { width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; }
+        .menu-icon svg { width: 100%; height: 100%; stroke: currentColor; stroke-width: 1.8; fill: none; }
+
+        .admin-main { flex: 1; min-width: 0; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 32px; }
+        .stat-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-radius: 24px; border: 1px solid rgba(255,255,255,0.5); padding: 24px; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.05); }
+        .stat-value { font-size: 36px; font-weight: 800; color: #4f46e5; margin-bottom: 8px; }
+        .stat-label { font-size: 14px; color: #64748b; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+
+        .data-table { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-radius: 24px; border: 1px solid rgba(255,255,255,0.5); overflow: hidden; margin-bottom: 32px; }
+        .table-header { padding: 20px 24px; border-bottom: 1px solid rgba(0,0,0,0.08); font-weight: 700; font-size: 18px; background: rgba(255,255,255,0.6); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .search-input { padding: 10px 18px; border: 1px solid #e2e8f0; border-radius: 40px; font-size: 14px; width: 260px; background: white; }
+        .search-input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 16px 20px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        th { font-weight: 600; color: #475569; font-size: 13px; background: rgba(248, 250, 252, 0.8); }
+        td { font-size: 14px; color: #1e293b; }
+        tr:hover { background: rgba(79, 70, 229, 0.04); }
+
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .status-active { background: #dcfce7; color: #166534; }
+        .status-blocked { background: #fee2e2; color: #b91c1c; }
+        .status-pending { background: #fed7aa; color: #9b3412; }
+        .status-approved { background: #dcfce7; color: #166534; }
+        .status-rejected { background: #fee2e2; color: #b91c1c; }
+        .status-review { background: #dbeafe; color: #1e40af; }
+        .status-open { background: #dbeafe; color: #1e40af; }
+        .status-waiting_support { background: #dbeafe; color: #1e40af; }
+        .status-waiting_user { background: #fef3c7; color: #b45309; }
+        .status-waiting_admin { background: #f3e8ff; color: #6b21a5; }
+        .status-in_progress { background: #fed7aa; color: #9b3412; }
+        .status-closed { background: #e2e8f0; color: #475569; }
+        .status-completed { background: #dcfce7; color: #166534; }
+        
+        .priority-high { background: #fee2e2; color: #dc2626; }
+        .priority-medium { background: #fed7aa; color: #ea580c; }
+        .priority-low { background: #dcfce7; color: #16a34a; }
+        .priority-urgent { background: #dc2626; color: white; }
+
+        .role-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .role-owner { background: #fef3c7; color: #b45309; }
+        .role-co_owner { background: #f3f4f6; color: #4b5563; }
+        .role-project_leadership { background: #fee2e2; color: #b91c1c; }
+        .role-developer { background: #dbeafe; color: #1e40af; }
+        .role-tech_admin { background: #d1fae5; color: #065f46; }
+        .role-admin { background: #fecaca; color: #991b1b; }
+        .role-junior_admin { background: #fed7aa; color: #9a3412; }
+        .role-community_manager { background: #dcfce7; color: #166534; }
+        .role-curator { background: #f3e8ff; color: #6b21a5; }
+        .role-recruiter { background: #ccfbf1; color: #115e59; }
+        .role-pro_support { background: #e0e7ff; color: #3730a3; }
+        .role-tech_support { background: #e2e8f0; color: #334155; }
+        .role-support_trainee { background: #fef3c7; color: #92400e; }
+        .role-user { background: #f1f5f9; color: #475569; }
+
+        .btn-action { padding: 6px 14px; border-radius: 24px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; margin: 0 4px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-edit { background: #dbeafe; color: #1e40af; }
+        .btn-edit:hover { background: #bfdbfe; transform: scale(1.02); }
+        .btn-delete { background: #fee2e2; color: #b91c1c; }
+        .btn-delete:hover { background: #fecaca; }
+        .btn-block { background: #fed7aa; color: #9b3412; }
+        .btn-view { background: #e0e7ff; color: #4338ca; }
+        .btn-reply { background: #4f46e5; color: white; }
+        .btn-reply:hover { background: #4338ca; }
+        .btn-success { background: #dcfce7; color: #166534; }
+        .btn-success:hover { background: #bbf7d0; }
+        .btn-warning { background: #fed7aa; color: #9b3412; }
+        .btn-primary { background: #4f46e5; color: white; }
+        .btn-primary:hover { background: #4338ca; }
+        .btn-promote { background: #8b5cf6; color: white; }
+        .btn-promote:hover { background: #7c3aed; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 32px; max-width: 750px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 32px; position: relative; }
+        .modal-header { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #1e293b; display: flex; align-items: center; gap: 12px; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+        .btn-save { background: #4f46e5; color: white; border: none; padding: 10px 24px; border-radius: 40px; font-weight: 600; cursor: pointer; }
+        .btn-cancel { background: #e2e8f0; color: #475569; border: none; padding: 10px 24px; border-radius: 40px; font-weight: 600; cursor: pointer; }
+
+        .form-group { margin-bottom: 18px; }
+        .form-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #1e293b; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 16px; font-size: 14px; font-family: inherit; transition: all 0.2s; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+
+        .message-item { padding: 16px; border-radius: 16px; margin-bottom: 16px; background: #f8fafc; }
+        .message-item.staff { background: linear-gradient(135deg, #e0e7ff, #ede9fe); margin-left: 20px; }
+        .message-author { font-weight: 700; font-size: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .message-role { font-size: 11px; padding: 2px 10px; border-radius: 20px; background: #e2e8f0; color: #475569; }
+        .message-role.staff { background: #4f46e5; color: white; }
+        .message-text { font-size: 14px; color: #1e293b; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+        .message-date { font-size: 11px; color: #94a3b8; margin-top: 8px; }
+
+        .loading { text-align: center; padding: 60px; color: #64748b; }
+        .access-denied { text-align: center; padding: 60px; color: #ef4444; background: rgba(255,255,255,0.9); border-radius: 28px; font-size: 18px; }
+
+        .tabs { display: flex; gap: 8px; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px; }
+        .tab { padding: 10px 20px; cursor: pointer; border-radius: 12px 12px 0 0; transition: all 0.2s; font-weight: 500; }
+        .tab:hover { background: #f1f5f9; }
+        .tab.active { background: #4f46e5; color: white; }
+
+        .report-card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        .report-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: #1e293b; }
+        .report-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 20px; }
+        .report-stat { text-align: center; padding: 12px; background: #f8fafc; border-radius: 16px; }
+        .report-stat-value { font-size: 24px; font-weight: 800; color: #4f46e5; }
+        .report-stat-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+        .collaboration-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+        .collaboration-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .collaboration-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .type-partnership { background: #dbeafe; color: #1e40af; }
+        .type-advertising { background: #fef3c7; color: #92400e; }
+        .type-event { background: #dcfce7; color: #166534; }
+        .type-other { background: #f3e8ff; color: #6b21a5; }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .promotion-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            max-width: 350px;
+            cursor: pointer;
+            animation: slideInRight 0.3s ease-out;
+        }
+        
+        .promotion-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #92400e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .promotion-badge:hover { transform: scale(1.05); }
+
+        @media (max-width: 1000px) {
+            .admin-layout { flex-direction: column; }
+            .admin-sidebar { width: 100%; position: static; }
+            .user-name { display: none; }
+            .table-header { flex-direction: column; }
+            .search-input { width: 100%; }
+            th, td { padding: 12px; font-size: 12px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { gap: 12px; }
+        }
+        
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .container { padding: 0 16px; }
+        }
+        
+        .chart-container { background: white; border-radius: 20px; padding: 20px; margin-bottom: 24px; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .mt-4 { margin-top: 16px; }
+        .mb-4 { margin-bottom: 16px; }
+        .text-center { text-align: center; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; }
+        
+        .criteria-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-left: 3px solid #cbd5e1;
+            transition: all 0.2s;
+        }
+        .criteria-card.met {
+            border-left-color: #22c55e;
+            background: #f0fdf4;
+        }
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+
+<header class="header">
+    <div class="header-inner">
+        <div style="display: flex; align-items: center; gap: 32px; flex-wrap: wrap;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/marketplace" class="nav-link">Маркетплейс</a>
+                <a href="/my/tickets" class="nav-link">Поддержка</a>
+                <a href="/admin/dashboard" class="nav-link" id="adminNavLink">Админ-панель</a>
+            </div>
+        </div>
+        <div id="authButtonContainer"><div class="loading">Загрузка...</div></div>
+    </div>
+</header>
+
+<main class="container">
+    <div class="admin-layout">
+        <div class="admin-sidebar">
+            <div class="sidebar-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 22v-4M19.07 19.07l-2.83-2.83M22 12h-4M19.07 4.93l-2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>
+                Управление
+            </div>
+            <div class="admin-menu" id="adminMenu"></div>
+        </div>
+
+        <div class="admin-main" id="adminContent">
+            <div id="contentContainer">Загрузка...</div>
+        </div>
+    </div>
+</main>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header" id="modalTitle"></div>
+        <div id="modalBody"></div>
+        <div class="modal-footer">
+            <button class="btn-cancel" onclick="closeModal()">Отмена</button>
+            <button class="btn-save" id="modalSaveBtn">Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentUser = null;
+    let currentUserRole = null;
+    let currentUserPermissions = {};
+    let currentSection = 'dashboard';
+    let promotionCheckInterval = null;
+
+    const roleHierarchy = {
+        'user': 0,
+        'support_trainee': 1, 'tech_support': 2, 'pro_support': 3, 'recruiter': 4,
+        'curator': 5, 'community_manager': 6, 'junior_admin': 7, 'admin': 8,
+        'tech_admin': 9, 'developer': 10, 'project_leadership': 11,
+        'co_owner': 12, 'owner': 13
+    };
+
+    const roleList = [
+        { value: 'user', name: 'Пользователь', level: 0 },
+        { value: 'support_trainee', name: 'Стажер поддержки', level: 1 },
+        { value: 'tech_support', name: 'Тех. поддержка', level: 2 },
+        { value: 'pro_support', name: 'Проф. поддержка', level: 3 },
+        { value: 'recruiter', name: 'Рекрутер', level: 4 },
+        { value: 'curator', name: 'Куратор', level: 5 },
+        { value: 'community_manager', name: 'Community Manager', level: 6 },
+        { value: 'junior_admin', name: 'Мл. Администратор', level: 7 },
+        { value: 'admin', name: 'Администратор', level: 8 },
+        { value: 'tech_admin', name: 'Тех. Администратор', level: 9 },
+        { value: 'developer', name: 'Разработчик', level: 10 },
+        { value: 'project_leadership', name: 'Руководство проекта', level: 11 },
+        { value: 'co_owner', name: 'Со-Владелец', level: 12 },
+        { value: 'owner', name: 'Владелец', level: 13 }
+    ];
+
+    // Определяем следующую роль для повышения (строгая последовательность)
+    function getNextRoleByCurrent(currentRole) {
+        const levels = roleList.sort((a,b) => a.level - b.level);
+        const currentIdx = levels.findIndex(r => r.value === currentRole);
+        if (currentIdx !== -1 && currentIdx + 1 < levels.length) {
+            return levels[currentIdx + 1].value;
+        }
+        return null;
+    }
+
+    const permissionsByRole = {
+        'user': { canViewDashboard: false, canViewTickets: false, canReplyToTickets: false, canChangeTicketStatus: false, canViewUsers: false, canEditUsers: false, canChangeBalance: false, canViewItems: false, canEditItems: false, canViewOrders: false, canViewWithdrawals: false, canProcessWithdrawals: false, canManagePromocodes: false, canManageCategories: false, canEditSettings: false, canViewReports: false, canViewLogs: false, canViewAnalytics: false, canViewPromotions: true, canManagePromotions: false, canViewReportsFinance: false, canViewManagers: false, canManageCollaborations: false },
+        'support_trainee': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: false, canViewUsers: false, canEditUsers: false, canChangeBalance: false, canViewItems: false, canEditItems: false, canViewOrders: false, canViewWithdrawals: false, canProcessWithdrawals: false, canManagePromocodes: false, canManageCategories: false, canEditSettings: false, canViewReports: false, canViewLogs: false, canViewAnalytics: false, canViewPromotions: true, canManagePromotions: false, canViewReportsFinance: false, canViewManagers: false, canManageCollaborations: false },
+        'tech_support': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: false, canEditUsers: false, canChangeBalance: false, canViewItems: false, canEditItems: false, canViewOrders: false, canViewWithdrawals: false, canProcessWithdrawals: false, canManagePromocodes: false, canManageCategories: false, canEditSettings: false, canViewReports: false, canViewLogs: false, canViewAnalytics: false, canViewPromotions: true, canManagePromotions: false, canViewReportsFinance: false, canViewManagers: false, canManageCollaborations: false },
+        'pro_support': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: false, canChangeBalance: false, canViewItems: true, canEditItems: false, canViewOrders: true, canViewWithdrawals: false, canProcessWithdrawals: false, canManagePromocodes: false, canManageCategories: false, canEditSettings: false, canViewReports: false, canViewLogs: false, canViewAnalytics: false, canViewPromotions: true, canManagePromotions: false, canViewReportsFinance: false, canViewManagers: false, canManageCollaborations: false },
+        'recruiter': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: false, canViewItems: true, canEditItems: false, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: false, canManagePromocodes: false, canManageCategories: false, canEditSettings: false, canViewReports: false, canViewLogs: false, canViewAnalytics: false, canViewPromotions: true, canManagePromotions: false, canViewReportsFinance: false, canViewManagers: false, canManageCollaborations: false },
+        'curator': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: false, canViewItems: true, canEditItems: true, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: false, canManagePromocodes: true, canManageCategories: true, canEditSettings: false, canViewReports: true, canViewLogs: false, canViewAnalytics: false, canViewPromotions: true, canManagePromotions: true, canViewReportsFinance: false, canViewManagers: false, canManageCollaborations: false },
+        'community_manager': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: false, canViewItems: true, canEditItems: true, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: true, canManagePromocodes: true, canManageCategories: true, canEditSettings: false, canViewReports: true, canViewLogs: true, canViewAnalytics: true, canViewPromotions: true, canManagePromotions: true, canViewReportsFinance: true, canViewManagers: true, canManageCollaborations: true },
+        'junior_admin': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: true, canViewItems: true, canEditItems: true, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: true, canManagePromocodes: true, canManageCategories: true, canEditSettings: false, canViewReports: true, canViewLogs: true, canViewAnalytics: true, canViewPromotions: true, canManagePromotions: true, canViewReportsFinance: true, canViewManagers: true, canManageCollaborations: true },
+        'admin': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: true, canViewItems: true, canEditItems: true, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: true, canManagePromocodes: true, canManageCategories: true, canEditSettings: false, canViewReports: true, canViewLogs: true, canViewAnalytics: true, canViewPromotions: true, canManagePromotions: true, canViewReportsFinance: true, canEditAnyUserRole: true, canViewManagers: true, canManageCollaborations: true },
+        'tech_admin': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: true, canViewItems: true, canEditItems: true, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: true, canManagePromocodes: true, canManageCategories: true, canEditSettings: true, canViewReports: true, canViewLogs: true, canViewAnalytics: true, canViewPromotions: true, canManagePromotions: true, canViewReportsFinance: true, canEditAnyUserRole: true, canViewManagers: true, canManageCollaborations: true },
+        'developer': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: true, canViewItems: true, canEditItems: true, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: true, canManagePromocodes: true, canManageCategories: true, canEditSettings: true, canViewReports: true, canViewLogs: true, canViewAnalytics: true, canViewPromotions: true, canManagePromotions: true, canViewReportsFinance: true, canEditAnyUserRole: true, canViewManagers: true, canManageCollaborations: true },
+        'project_leadership': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: true, canViewItems: true, canEditItems: true, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: true, canManagePromocodes: true, canManageCategories: true, canEditSettings: true, canViewReports: true, canViewLogs: true, canViewAnalytics: true, canViewPromotions: true, canManagePromotions: true, canViewReportsFinance: true, canEditAnyUserRole: true, canViewManagers: true, canManageCollaborations: true },
+        'co_owner': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: true, canViewItems: true, canEditItems: true, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: true, canManagePromocodes: true, canManageCategories: true, canEditSettings: true, canViewReports: true, canViewLogs: true, canViewAnalytics: true, canViewPromotions: true, canManagePromotions: true, canViewReportsFinance: true, canEditAnyUserRole: true, canViewManagers: true, canManageCollaborations: true },
+        'owner': { canViewDashboard: true, canViewTickets: true, canReplyToTickets: true, canChangeTicketStatus: true, canViewUsers: true, canEditUsers: true, canChangeBalance: true, canViewItems: true, canEditItems: true, canViewOrders: true, canViewWithdrawals: true, canProcessWithdrawals: true, canManagePromocodes: true, canManageCategories: true, canEditSettings: true, canViewReports: true, canViewLogs: true, canViewAnalytics: true, canViewPromotions: true, canManagePromotions: true, canViewReportsFinance: true, canEditAnyUserRole: true, canViewManagers: true, canManageCollaborations: true }
+    };
+
+    const menuItems = [
+        { id: 'dashboard', name: 'Дашборд', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>', permission: 'canViewDashboard', route: '/admin/dashboard' },
+        { id: 'analytics', name: 'Аналитика', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9h-4m-7 9A9 9 0 0 1 3 12m9 9v-4M3 12a9 9 0 0 1 9-9m-9 9h4m7-9a9 9 0 0 1 9 9"/></svg>', permission: 'canViewAnalytics', route: '/admin/analytics' },
+        { id: 'tickets', name: 'Тикеты', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="12" y2="13"/></svg>', permission: 'canViewTickets', route: '/admin/tickets' },
+        { id: 'users', name: 'Пользователи', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>', permission: 'canViewUsers', route: '/admin/users' },
+        { id: 'managers', name: 'Менеджеры', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', permission: 'canViewManagers', route: '/admin/managers' },
+        { id: 'promotions', name: 'Повышения', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>', permission: 'canViewPromotions', route: '/admin/promotions' },
+        { id: 'items', name: 'Товары', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="15" rx="2"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>', permission: 'canViewItems', route: '/admin/items' },
+        { id: 'orders', name: 'Заказы', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>', permission: 'canViewOrders', route: '/admin/orders' },
+        { id: 'withdrawals', name: 'Вывод средств', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M17 7H7.5a3 3 0 0 0 0 6h9a3 3 0 0 1 0 6H7"/></svg>', permission: 'canViewWithdrawals', route: '/admin/withdrawals' },
+        { id: 'promocodes', name: 'Промокоды', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>', permission: 'canManagePromocodes', route: '/admin/promocodes' },
+        { id: 'categories', name: 'Категории', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>', permission: 'canManageCategories', route: '/admin/categories' },
+        { id: 'reports-finance', name: 'Отчеты', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v16h16M8 12h8M8 8h4M8 16h6"/></svg>', permission: 'canViewReportsFinance', route: '/admin/reports-finance' },
+        { id: 'complaints', name: 'Жалобы', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8v4m0 4h.01M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/></svg>', permission: 'canViewReports', route: '/admin/complaints' },
+        { id: 'logs', name: 'Логи', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h4"/></svg>', permission: 'canViewLogs', route: '/admin/logs' },
+        { id: 'settings', name: 'Настройки', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>', permission: 'canEditSettings', route: '/admin/settings' }
+    ];
+
+    const roleDisplayNames = {
+        'owner': 'Владелец', 'co_owner': 'Со-Владелец', 'project_leadership': 'Руководство',
+        'developer': 'Разработчик', 'tech_admin': 'Тех. Администратор', 'admin': 'Администратор',
+        'junior_admin': 'Мл. Администратор', 'community_manager': 'Community Manager',
+        'curator': 'Куратор', 'recruiter': 'Рекрутер', 'pro_support': 'Проф. Поддержка',
+        'tech_support': 'Тех. Поддержка', 'support_trainee': 'Стажер Поддержки', 'user': 'Пользователь'
+    };
+
+    let collaborations = [];
+
+    function loadCollaborations() {
+        const saved = localStorage.getItem('nullmarket_collaborations');
+        if (saved) {
+            collaborations = JSON.parse(saved);
+        } else {
+            collaborations = [
+                { id: 1, company_name: 'GameStream Media', contact_name: 'Алексей Иванов', email: 'a.ivanov@gamestream.com', phone: '+7 (999) 123-45-67', type: 'advertising', message: 'Хотим разместить рекламу вашей платформы на нашем YouTube канале (500k подписчиков)', status: 'pending', created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString() },
+                { id: 2, company_name: 'E-Sports League', contact_name: 'Мария Смирнова', email: 'm.smirnova@esports.ru', phone: '+7 (999) 234-56-78', type: 'partnership', message: 'Предлагаем официальное партнерство для проведения турниров', status: 'approved', created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString() },
+                { id: 3, company_name: 'TechExpo', contact_name: 'Дмитрий Петров', email: 'd.petrov@techexpo.com', phone: '+7 (999) 345-67-89', type: 'event', message: 'Приглашаем вас стать участником выставки TechExpo 2024', status: 'pending', created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() }
+            ];
+            localStorage.setItem('nullmarket_collaborations', JSON.stringify(collaborations));
+        }
+    }
+
+    function saveCollaborations() {
+        localStorage.setItem('nullmarket_collaborations', JSON.stringify(collaborations));
+    }
+
+    function getCollaborationTypeText(type) {
+        const types = { 'partnership': 'Партнёрство', 'advertising': 'Реклама', 'event': 'Мероприятие', 'other': 'Другое' };
+        return types[type] || type;
+    }
+
+    function getCollaborationTypeClass(type) {
+        const classes = { 'partnership': 'type-partnership', 'advertising': 'type-advertising', 'event': 'type-event', 'other': 'type-other' };
+        return classes[type] || 'type-other';
+    }
+
+    function getRoleClass(role) {
+        const classes = {
+            'owner': 'role-owner', 'co_owner': 'role-co_owner', 'project_leadership': 'role-project_leadership',
+            'developer': 'role-developer', 'tech_admin': 'role-tech_admin', 'admin': 'role-admin',
+            'junior_admin': 'role-junior_admin', 'community_manager': 'role-community_manager',
+            'curator': 'role-curator', 'recruiter': 'role-recruiter', 'pro_support': 'role-pro_support',
+            'tech_support': 'role-tech_support', 'support_trainee': 'role-support_trainee', 'user': 'role-user'
+        };
+        return classes[role] || 'role-user';
+    }
+
+    function getRoleDisplay(role) { return roleDisplayNames[role] || 'Пользователь'; }
+    function getStatusText(status) {
+        const map = { 'open': 'Открыт', 'waiting_support': 'Ожидает поддержки', 'waiting_user': 'Ожидает пользователя', 'waiting_admin': 'Ожидает админа', 'in_progress': 'В обработке', 'closed': 'Закрыт', 'completed': 'Завершён', 'pending': 'Ожидает', 'active': 'Активен', 'blocked': 'Заблокирован', 'approved': 'Одобрена', 'rejected': 'Отклонена', 'review': 'На рассмотрении' };
+        return map[status] || status;
+    }
+    function getStatusClass(status) {
+        const map = { 'open': 'status-waiting_support', 'waiting_support': 'status-waiting_support', 'waiting_user': 'status-waiting_user', 'waiting_admin': 'status-waiting_admin', 'in_progress': 'status-in_progress', 'closed': 'status-closed', 'completed': 'status-completed', 'pending': 'status-pending', 'active': 'status-active', 'blocked': 'status-blocked', 'approved': 'status-approved', 'rejected': 'status-rejected', 'review': 'status-review' };
+        return map[status] || 'status-open';
+    }
+    function getPriorityText(p) { const map = { 'low': 'Низкий', 'medium': 'Средний', 'high': 'Высокий', 'urgent': 'Критический' }; return map[p] || 'Средний'; }
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+    
+    async function apiCall(endpoint, options = {}) {
+        const response = await fetch(endpoint, { headers: { 'Content-Type': 'application/json' }, ...options });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Ошибка запроса');
+        return data;
+    }
+
+    function notice(msg, isError = false) {
+        let div = document.createElement('div');
+        div.innerText = msg;
+        div.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:' + (isError ? '#dc2626' : '#181e2c') + ';color:#f0f3fa;padding:12px 28px;border-radius:56px;font-size:14px;font-weight:500;z-index:9999;backdrop-filter:blur(12px);';
+        document.body.appendChild(div);
+        setTimeout(() => div.remove(), 2600);
+    }
+
+    function hasPermission(perm) { return currentUserPermissions[perm] === true; }
+
+    function renderMenu() {
+        const menuContainer = document.getElementById('adminMenu');
+        if (!menuContainer) return;
+        let menuHtml = '';
+        for (const item of menuItems) {
+            if (hasPermission(item.permission)) {
+                menuHtml += `<div class="admin-menu-item" data-section="${item.id}" data-route="${item.route}">
+                    <span class="menu-icon">${item.icon}</span>
+                    <span>${item.name}</span>
+                </div>`;
+            }
+        }
+        menuContainer.innerHTML = menuHtml;
+        
+        document.querySelectorAll('.admin-menu-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.admin-menu-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                const route = item.dataset.route;
+                if (route) navigateTo(route);
+            });
+        });
+    }
+
+    async function navigateTo(route) {
+        const path = route.replace('/admin', '');
+        const section = path.slice(1) || 'dashboard';
+        currentSection = section;
+        window.history.pushState({}, '', route);
+        await loadSection(section);
+    }
+
+    async function loadSection(section) {
+        const container = document.getElementById('contentContainer');
+        if (!container) return;
+        
+        container.innerHTML = '<div class="loading"><div>Загрузка...</div></div>';
+        
+        try {
+            switch(section) {
+                case 'dashboard': await renderDashboard(); break;
+                case 'analytics': await renderAnalytics(); break;
+                case 'tickets': await renderTickets(); break;
+                case 'users': await renderUsers(); break;
+                case 'managers': await renderManagers(); break;
+                case 'promotions': await renderPromotions(); break;
+                case 'items': await renderItems(); break;
+                case 'orders': await renderOrders(); break;
+                case 'withdrawals': await renderWithdrawals(); break;
+                case 'promocodes': await renderPromocodes(); break;
+                case 'categories': await renderCategories(); break;
+                case 'reports-finance': await renderFinanceReports(); break;
+                case 'complaints': await renderComplaints(); break;
+                case 'logs': await renderLogs(); break;
+                case 'settings': await renderSettings(); break;
+                default: container.innerHTML = '<div class="access-denied">Раздел не найден</div>';
+            }
+            addPromotionStatusButton();
+        } catch(e) {
+            console.error(e);
+            container.innerHTML = '<div class="access-denied">Ошибка загрузки раздела</div>';
+        }
+    }
+
+    async function renderDashboard() {
+        const container = document.getElementById('contentContainer');
+        try {
+            const stats = await apiCall('/api/admin/stats');
+            const tickets = await apiCall('/api/admin/tickets');
+            const recentTickets = tickets.slice(0, 8);
+            const users = await apiCall('/api/admin/users');
+            const recentUsers = users.slice(0, 5);
+            const promotions = await apiCall('/api/admin/promotions');
+            const pendingPromotions = promotions.filter(p => p.status === 'pending').length;
+            const pendingCollaborations = collaborations.filter(c => c.status === 'pending').length;
+            
+            container.innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card" onclick="navigateTo('/admin/users')"><div class="stat-value">${stats.totalUsers || 0}</div><div class="stat-label">Пользователей</div></div>
+                    <div class="stat-card" onclick="navigateTo('/admin/items')"><div class="stat-value">${stats.totalItems || 0}</div><div class="stat-label">Товаров</div></div>
+                    <div class="stat-card" onclick="navigateTo('/admin/orders')"><div class="stat-value">${stats.totalOrders || 0}</div><div class="stat-label">Заказов</div></div>
+                    <div class="stat-card" onclick="navigateTo('/admin/tickets')"><div class="stat-value">${stats.totalTickets || 0}</div><div class="stat-label">Тикетов</div></div>
+                    <div class="stat-card" onclick="navigateTo('/admin/tickets')"><div class="stat-value">${stats.pendingTickets || 0}</div><div class="stat-label">Активных тикетов</div></div>
+                    <div class="stat-card" onclick="navigateTo('/admin/reports-finance')"><div class="stat-value">${(stats.totalRevenue || 0).toLocaleString()} ₽</div><div class="stat-label">Выручка</div></div>
+                    <div class="stat-card" onclick="navigateTo('/admin/withdrawals')"><div class="stat-value">${(stats.totalWithdrawals || 0).toLocaleString()} ₽</div><div class="stat-label">Заявки на вывод</div></div>
+                    <div class="stat-card" onclick="navigateTo('/admin/promotions')"><div class="stat-value">${pendingPromotions}</div><div class="stat-label">Заявок на повышение</div></div>
+                    ${hasPermission('canViewManagers') ? `<div class="stat-card" onclick="navigateTo('/admin/managers')"><div class="stat-value">${pendingCollaborations}</div><div class="stat-label">Заявок на сотрудничество</div></div>` : ''}
+                    <div class="stat-card" onclick="checkUserPromotionEligibility()"><div class="stat-value">⬆️</div><div class="stat-label">Проверить повышение</div></div>
+                </div>
+                <div class="data-table">
+                    <div class="table-header"><span>Последние тикеты</span><button class="btn-action btn-primary" onclick="navigateTo('/admin/tickets')">Все тикеты →</button></div>
+                    <table style="width:100%"><thead><tr><th>№</th><th>Тема</th><th>Пользователь</th><th>Статус</th><th>Приоритет</th><th>Действия</th></tr></thead>
+                    <tbody>${recentTickets.map(t => `<tr><td>${t.ticket_number}</td><td>${escapeHtml(t.subject)}</td><td>${escapeHtml(t.user_name)}</td><td><span class="status-badge ${getStatusClass(t.status)}">${getStatusText(t.status)}</span></td><td><span class="status-badge priority-${t.priority}">${getPriorityText(t.priority)}</span></td><td><button class="btn-action btn-reply" onclick="openTicketDetail(${t.id})">Ответить</button></td>`).join('')}</tbody>
+                    </table>
+                    ${recentTickets.length === 0 ? '<div class="text-center" style="padding:40px">Нет тикетов</div>' : ''}
+                </div>
+                <div class="data-table">
+                    <div class="table-header"><span>Новые пользователи</span><button class="btn-action btn-primary" onclick="navigateTo('/admin/users')">Все пользователи →</button></div>
+                    <table style="width:100%"><thead><tr><th>ID</th><th>Имя</th><th>Email</th><th>Роль</th><th>Дата регистрации</th></tr></thead>
+                    <tbody>${recentUsers.map(u => `<tr><td>${u.user_id}</td><td><strong>${escapeHtml(u.name)}</strong></td><td>${u.email}</td><td><span class="role-badge ${getRoleClass(u.role)}">${getRoleDisplay(u.role)}</span></td><td>${new Date(u.created_at).toLocaleDateString()}</td>`).join('')}</tbody>
+                    </table>
+                </div>
+            `;
+        } catch(e) { container.innerHTML = '<div class="access-denied">Ошибка загрузки дашборда</div>'; }
+    }
+
+    async function renderManagers() {
+        if (!hasPermission('canViewManagers')) {
+            document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>';
+            return;
+        }
+        
+        loadCollaborations();
+        const canManage = hasPermission('canManageCollaborations');
+        
+        const pendingCollabs = collaborations.filter(c => c.status === 'pending');
+        const approvedCollabs = collaborations.filter(c => c.status === 'approved');
+        const rejectedCollabs = collaborations.filter(c => c.status === 'rejected');
+        
+        document.getElementById('contentContainer').innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 style="font-size: 24px; font-weight: 700;">Управление заявками на сотрудничество</h2>
+                <button class="btn-action btn-primary" onclick="openCreateCollaborationModal()">+ Создать заявку</button>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="pending">Новые (${pendingCollabs.length})</div>
+                <div class="tab" data-tab="approved">Одобренные (${approvedCollabs.length})</div>
+                <div class="tab" data-tab="rejected">Отклонённые (${rejectedCollabs.length})</div>
+            </div>
+            
+            <div id="collaborationsList">
+                ${renderCollaborationsList(pendingCollabs, canManage)}
+            </div>
+        `;
+        
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const tabName = tab.dataset.tab;
+                let filteredCollabs = [];
+                if (tabName === 'pending') filteredCollabs = pendingCollabs;
+                else if (tabName === 'approved') filteredCollabs = approvedCollabs;
+                else filteredCollabs = rejectedCollabs;
+                document.getElementById('collaborationsList').innerHTML = renderCollaborationsList(filteredCollabs, canManage);
+            });
+        });
+    }
+    
+    function renderCollaborationsList(collabs, canManage) {
+        if (collabs.length === 0) {
+            return '<div class="text-center" style="padding: 60px; color: #94a3b8;">Нет заявок</div>';
+        }
+        
+        return collabs.map(c => `
+            <div class="collaboration-card">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px;">
+                            <h3 style="font-size: 18px; font-weight: 700;">${escapeHtml(c.company_name)}</h3>
+                            <span class="collaboration-type ${getCollaborationTypeClass(c.type)}">${getCollaborationTypeText(c.type)}</span>
+                            <span class="status-badge ${c.status === 'pending' ? 'status-pending' : (c.status === 'approved' ? 'status-active' : 'status-blocked')}">
+                                ${c.status === 'pending' ? 'На рассмотрении' : (c.status === 'approved' ? 'Одобрено' : 'Отклонено')}
+                            </span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px;">
+                            <div><span style="color: #64748b;">Контакт:</span> ${escapeHtml(c.contact_name)}</div>
+                            <div><span style="color: #64748b;">Email:</span> ${escapeHtml(c.email)}</div>
+                            <div><span style="color: #64748b;">Телефон:</span> ${escapeHtml(c.phone || '—')}</div>
+                            <div><span style="color: #64748b;">Дата:</span> ${new Date(c.created_at).toLocaleDateString()}</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 12px; border-radius: 12px; margin-top: 8px;">
+                            <div style="font-weight: 500; margin-bottom: 4px;">Сообщение:</div>
+                            <div style="font-size: 14px; color: #475569;">${escapeHtml(c.message)}</div>
+                        </div>
+                    </div>
+                    ${canManage && c.status === 'pending' ? `
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-action btn-success" onclick="processCollaboration(${c.id}, 'approved')">Одобрить</button>
+                            <button class="btn-action btn-delete" onclick="processCollaboration(${c.id}, 'rejected')">Отклонить</button>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function openCreateCollaborationModal() {
+        document.getElementById('modalTitle').innerHTML = 'Новая заявка на сотрудничество';
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group">
+                <label class="form-label">Название компании/организации *</label>
+                <input type="text" class="form-input" id="collabCompany" placeholder="Например: GameStream Media">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Контактное лицо *</label>
+                <input type="text" class="form-input" id="collabContact" placeholder="ФИО">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email *</label>
+                <input type="email" class="form-input" id="collabEmail" placeholder="example@company.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Телефон</label>
+                <input type="text" class="form-input" id="collabPhone" placeholder="+7 (xxx) xxx-xx-xx">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Тип сотрудничества *</label>
+                <select class="form-select" id="collabType">
+                    <option value="partnership">Партнёрство</option>
+                    <option value="advertising">Реклама</option>
+                    <option value="event">Мероприятие</option>
+                    <option value="other">Другое</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Сообщение / Предложение *</label>
+                <textarea class="form-textarea" id="collabMessage" rows="5" placeholder="Опишите детали сотрудничества..."></textarea>
+            </div>
+        `;
+        document.getElementById('modal').classList.add('active');
+        
+        const newSaveBtn = document.getElementById('modalSaveBtn').cloneNode(true);
+        document.getElementById('modalSaveBtn').parentNode.replaceChild(newSaveBtn, document.getElementById('modalSaveBtn'));
+        newSaveBtn.onclick = () => {
+            const company = document.getElementById('collabCompany')?.value.trim();
+            const contact = document.getElementById('collabContact')?.value.trim();
+            const email = document.getElementById('collabEmail')?.value.trim();
+            const type = document.getElementById('collabType')?.value;
+            const message = document.getElementById('collabMessage')?.value.trim();
+            
+            if (!company || !contact || !email || !message) {
+                notice('Заполните все обязательные поля', true);
+                return;
+            }
+            
+            const newCollab = {
+                id: Date.now(),
+                company_name: company,
+                contact_name: contact,
+                email: email,
+                phone: document.getElementById('collabPhone')?.value || '',
+                type: type,
+                message: message,
+                status: 'pending',
+                created_at: new Date().toISOString()
+            };
+            
+            collaborations.unshift(newCollab);
+            saveCollaborations();
+            notice('Заявка отправлена');
+            closeModal();
+            renderManagers();
+        };
+    }
+    
+    function processCollaboration(id, status) {
+        const index = collaborations.findIndex(c => c.id === id);
+        if (index !== -1) {
+            collaborations[index].status = status;
+            saveCollaborations();
+            notice(status === 'approved' ? 'Заявка одобрена' : 'Заявка отклонена');
+            renderManagers();
+        }
+    }
+
+    async function renderAnalytics() {
+        const container = document.getElementById('contentContainer');
+        try {
+            const stats = await apiCall('/api/admin/stats');
+            const orders = await apiCall('/api/admin/orders');
+            const tickets = await apiCall('/api/admin/tickets');
+            const users = await apiCall('/api/admin/users');
+            
+            const completedOrders = orders.filter(o => o.status === 'completed');
+            const totalRevenue = completedOrders.reduce((sum, o) => sum + o.amount, 0);
+            const avgOrderValue = completedOrders.length ? totalRevenue / completedOrders.length : 0;
+            const ticketsByStatus = tickets.reduce((acc, t) => { acc[t.status] = (acc[t.status] || 0) + 1; return acc; }, {});
+            const usersByRole = users.reduce((acc, u) => { acc[u.role] = (acc[u.role] || 0) + 1; return acc; }, {});
+            
+            container.innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value">${totalRevenue.toLocaleString()} ₽</div><div class="stat-label">Общая выручка</div></div>
+                    <div class="stat-card"><div class="stat-value">${avgOrderValue.toFixed(2)} ₽</div><div class="stat-label">Средний чек</div></div>
+                    <div class="stat-card"><div class="stat-value">${completedOrders.length}</div><div class="stat-label">Выполненных заказов</div></div>
+                    <div class="stat-card"><div class="stat-value">${stats.totalUsers || 0}</div><div class="stat-label">Всего пользователей</div></div>
+                </div>
+                <div class="data-table"><div class="table-header"><span>Статистика по тикетам</span></div>
+                    <div style="padding:20px; display:flex; gap:20px; flex-wrap:wrap;">
+                        ${Object.entries(ticketsByStatus).map(([status, count]) => `<div style="background:#f8fafc; border-radius:16px; padding:16px; min-width:120px; text-align:center;"><div style="font-size:28px; font-weight:700; color:#4f46e5;">${count}</div><div style="font-size:12px; color:#64748b;">${getStatusText(status)}</div></div>`).join('')}
+                    </div>
+                </div>
+                <div class="data-table"><div class="table-header"><span>Распределение пользователей по ролям</span></div>
+                    <div style="padding:20px; display:flex; gap:20px; flex-wrap:wrap;">
+                        ${Object.entries(usersByRole).map(([role, count]) => `<div style="background:#f8fafc; border-radius:16px; padding:16px; min-width:120px; text-align:center;"><div style="font-size:28px; font-weight:700; color:#4f46e5;">${count}</div><div style="font-size:12px; color:#64748b;">${getRoleDisplay(role)}</div></div>`).join('')}
+                    </div>
+                </div>
+                <div class="data-table"><div class="table-header"><span>Динамика заказов (последние 7 дней)</span></div>
+                    <div id="ordersChart" style="padding:20px; text-align:center;">Загрузка графика...</div>
+                </div>
+            `;
+            
+            const last7Days = [];
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                const dayOrders = orders.filter(o => o.created_at && o.created_at.startsWith(dateStr));
+                last7Days.push({ date: dateStr, count: dayOrders.length, revenue: dayOrders.reduce((s, o) => s + o.amount, 0) });
+            }
+            
+            const chartHtml = `<table style="width:100%"><thead><tr><th>Дата</th><th>Заказов</th><th>Выручка</th></tr></thead><tbody>${last7Days.map(d => `<tr><td>${d.date}</td><td>${d.count}</td><td>${d.revenue.toLocaleString()} ₽</td>`).join('')}</tbody></table>`;
+            document.getElementById('ordersChart') && (document.getElementById('ordersChart').innerHTML = chartHtml);
+        } catch(e) { container.innerHTML = '<div class="access-denied">Ошибка загрузки аналитики</div>'; }
+    }
+
+    async function renderTickets() {
+        if (!hasPermission('canViewTickets')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const tickets = await apiCall('/api/admin/tickets');
+            const canChangeStatus = hasPermission('canChangeTicketStatus');
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Управление тикетами</span><div style="display:flex; gap:10px;"><select id="ticketStatusFilter" class="search-input" style="width:180px;"><option value="all">Все статусы</option><option value="waiting_support">Ожидает поддержки</option><option value="waiting_user">Ожидает пользователя</option><option value="in_progress">В обработке</option><option value="closed">Закрыт</option></select><input type="text" class="search-input" id="ticketSearch" placeholder="Поиск..."></div></div>
+                <table style="width:100%"><thead><tr><th>№</th><th>Тема</th><th>Пользователь</th><th>Категория</th><th>Приоритет</th><th>Статус</th><th>Дата</th><th>Действия</th></tr></thead><tbody id="ticketsTableBody">${tickets.map(t => `<tr data-status="${t.status}" data-subject="${escapeHtml(t.subject).toLowerCase()}"><tr><td>${t.ticket_number}</td><td>${escapeHtml(t.subject)}</td><td>${escapeHtml(t.user_name)}</td><td>${t.department}</td><td><span class="status-badge priority-${t.priority}">${getPriorityText(t.priority)}</span></td><td><span class="status-badge ${getStatusClass(t.status)}">${getStatusText(t.status)}</span></td><td>${new Date(t.created_at).toLocaleDateString()}</td><td><button class="btn-action btn-reply" onclick="openTicketDetail(${t.id})">Ответить</button>${canChangeStatus ? `<button class="btn-action btn-warning" onclick="changeTicketStatus(${t.id})">Статус</button>` : ''}</td>`).join('')}</tbody></table></div>
+            `;
+            document.getElementById('ticketStatusFilter')?.addEventListener('change', () => filterTickets());
+            document.getElementById('ticketSearch')?.addEventListener('input', () => filterTickets());
+        } catch(e) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Ошибка загрузки</div>'; }
+    }
+
+    function filterTickets() {
+        const statusFilter = document.getElementById('ticketStatusFilter')?.value || 'all';
+        const searchTerm = document.getElementById('ticketSearch')?.value.toLowerCase() || '';
+        document.querySelectorAll('#ticketsTableBody tr').forEach(row => {
+            const status = row.dataset.status;
+            const subject = row.dataset.subject || '';
+            const matchesStatus = statusFilter === 'all' || status === statusFilter;
+            const matchesSearch = subject.includes(searchTerm);
+            row.style.display = (matchesStatus && matchesSearch) ? '' : 'none';
+        });
+    }
+
+    async function changeTicketStatus(ticketId) {
+        document.getElementById('modalTitle').innerHTML = 'Изменить статус тикета';
+        document.getElementById('modalBody').innerHTML = `<div class="form-group"><label class="form-label">Новый статус</label><select class="form-select" id="newTicketStatus"><option value="waiting_support">Ожидает поддержки</option><option value="waiting_user">Ожидает пользователя</option><option value="in_progress">В обработке</option><option value="closed">Закрыт</option></select></div>`;
+        document.getElementById('modal').classList.add('active');
+        const newSaveBtn = document.getElementById('modalSaveBtn').cloneNode(true);
+        document.getElementById('modalSaveBtn').parentNode.replaceChild(newSaveBtn, document.getElementById('modalSaveBtn'));
+        newSaveBtn.onclick = async () => {
+            await apiCall(`/api/admin/tickets/${ticketId}/status`, { method: 'PUT', body: JSON.stringify({ status: document.getElementById('newTicketStatus').value }) });
+            notice('Статус изменён');
+            closeModal();
+            renderTickets();
+            if (hasPermission('canViewDashboard')) renderDashboard();
+        };
+    }
+
+    async function openTicketDetail(ticketId) {
+        try {
+            const data = await apiCall(`/api/admin/tickets/${ticketId}/detail`);
+            const ticket = data.ticket;
+            const replies = data.replies || [];
+            const canReply = hasPermission('canReplyToTickets');
+            document.getElementById('modalTitle').innerHTML = `Тикет #${ticket.ticket_number}`;
+            document.getElementById('modalBody').innerHTML = `
+                <div style="margin-bottom:20px;"><div style="font-weight:700; font-size:20px;">${escapeHtml(ticket.subject)}</div><div style="font-size:13px; color:#64748b; margin-top:8px; display:flex; flex-wrap:wrap; gap:16px;"><span>${ticket.department}</span><span>${getPriorityText(ticket.priority)}</span><span><span class="status-badge ${getStatusClass(ticket.status)}">${getStatusText(ticket.status)}</span></span><span>${escapeHtml(ticket.user_name)}</span><span>${new Date(ticket.created_at).toLocaleString()}</span></div></div>
+                <div class="message-item"><div class="message-author"><strong>${escapeHtml(ticket.user_name)}</strong><span class="message-role">Пользователь</span></div><div class="message-text">${escapeHtml(ticket.message).replace(/\n/g, '<br>')}</div><div class="message-date">${new Date(ticket.created_at).toLocaleString()}</div></div>
+                <div style="margin:20px 0 12px 0;"><strong>Переписка (${replies.length})</strong></div>
+                <div id="repliesList" style="max-height:300px; overflow-y:auto;">${replies.map(r => `<div class="message-item ${r.is_staff ? 'staff' : ''}"><div class="message-author"><strong>${escapeHtml(r.user_name)}</strong><span class="message-role ${r.is_staff ? 'staff' : ''}">${r.is_staff ? 'Поддержка' : 'Пользователь'}</span></div><div class="message-text">${escapeHtml(r.message).replace(/\n/g, '<br>')}</div><div class="message-date">${new Date(r.created_at).toLocaleString()}</div></div>`).join('')}</div>
+                ${canReply ? `<div class="form-group" style="margin-top:20px;"><label class="form-label">Ответ</label><textarea class="form-textarea" id="adminReply" rows="4" placeholder="Введите ответ..."></textarea></div>` : '<div style="padding:16px; background:#f1f5f9; border-radius:16px; text-align:center;">Нет прав для ответа</div>'}
+            `;
+            document.getElementById('modal').classList.add('active');
+            if (canReply) {
+                const newSaveBtn = document.getElementById('modalSaveBtn').cloneNode(true);
+                document.getElementById('modalSaveBtn').parentNode.replaceChild(newSaveBtn, document.getElementById('modalSaveBtn'));
+                newSaveBtn.onclick = async () => {
+                    const message = document.getElementById('adminReply')?.value.trim();
+                    if (!message) { notice('Введите сообщение', true); return; }
+                    await apiCall(`/api/admin/tickets/${ticketId}/reply`, { method: 'POST', body: JSON.stringify({ message }) });
+                    notice('Ответ отправлен');
+                    closeModal();
+                    renderTickets();
+                    if (hasPermission('canViewDashboard')) renderDashboard();
+                };
+            }
+        } catch(e) { notice('Ошибка загрузки', true); }
+    }
+
+    async function renderUsers() {
+        if (!hasPermission('canViewUsers')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const users = await apiCall('/api/admin/users');
+            const canEditUsers = hasPermission('canEditUsers');
+            const canChangeBalance = hasPermission('canChangeBalance');
+            const canEditAnyUserRole = hasPermission('canEditAnyUserRole');
+            const currentUserRoleLevel = roleHierarchy[currentUserRole] || 0;
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Управление пользователями</span><input type="text" class="search-input" id="userSearch" placeholder="Поиск..."></div>
+                <table style="width:100%"><thead><tr><th>ID</th><th>Имя</th><th>Email</th><th>Баланс</th><th>Роль</th><th>Статус</th><th>Действия</th></tr></thead><tbody id="usersTableBody">${users.map(u => { const userRoleLevel = roleHierarchy[u.role] || 0; const canEditThisUser = canEditUsers && (currentUserRoleLevel > userRoleLevel || canEditAnyUserRole); return `<tr><td>${u.user_id}</td><td><strong>${escapeHtml(u.name)}</strong><br><span class="role-badge ${getRoleClass(u.role)}" style="font-size:10px;">${getRoleDisplay(u.role)}</span></td><td>${u.email}</td><td>${u.balance || 0} ₽</td>${canEditThisUser ? `<td><select class="form-select" style="width:140px; padding:4px 8px; font-size:12px;" onchange="updateUserRole(${u.id}, this.value)">${roleList.map(r => { if (r.level < currentUserRoleLevel || canEditAnyUserRole || r.value === u.role) return `<option value="${r.value}" ${u.role === r.value ? 'selected' : ''}>${r.name}</option>`; return ''; }).join('')}</select></td>` : `<td><span class="role-badge ${getRoleClass(u.role)}">${getRoleDisplay(u.role)}</span></td>`}<td><span class="status-badge ${u.status === 'blocked' ? 'status-blocked' : 'status-active'}">${u.status === 'blocked' ? 'Заблокирован' : 'Активен'}</span></td><td>${canChangeBalance ? `<button class="btn-action btn-view" onclick="changeBalance(${u.id})">Баланс</button>` : ''}${canEditThisUser ? (u.status !== 'blocked' ? `<button class="btn-action btn-block" onclick="blockUser(${u.id})">Блок</button>` : `<button class="btn-action btn-success" onclick="unblockUser(${u.id})">Разблок</button>`) : ''}<button class="btn-action btn-promote" onclick="createPromotionRequest(${u.id}, '${escapeHtml(u.name)}')">Повысить</button></td>`; }).join('')}</tbody></table></div>
+            `;
+            document.getElementById('userSearch')?.addEventListener('input', (e) => { const search = e.target.value.toLowerCase(); document.querySelectorAll('#usersTableBody tr').forEach(row => { row.style.display = row.innerText.toLowerCase().includes(search) ? '' : 'none'; }); });
+        } catch(e) { console.error(e); }
+    }
+
+    // ============ ФУНКЦИИ ДЛЯ РАБОТЫ С ПОВЫШЕНИЯМИ (ИСПРАВЛЕННЫЕ) ============
+
+    async function checkUserPromotionEligibility() {
+        if (!currentUser) return;
+        
+        try {
+            const response = await fetch('/api/promotion/check');
+            const data = await response.json();
+            
+            if (response.ok && data.can_promote && !data.has_pending_request) {
+                // Для pro_support отдельное уведомление, но кнопка повышения работает и для них
+                if (currentUserRole === 'pro_support') {
+                    showProSupportPromotionNotice();
+                }
+                showPromotionModal(data);
+            } else if (response.ok && !data.can_promote && data.next_role && data.criteria) {
+                // Если условия не выполнены, показываем прогресс
+                showPromotionProgressModal(data);
+            } else if (response.ok && data.has_pending_request) {
+                notice('У вас уже есть активная заявка на повышение!', false);
+            } else if (!data.next_role) {
+                notice('Вы достигли максимальной роли!', false);
+            }
+        } catch (error) {
+            console.error('Ошибка проверки повышения:', error);
+            notice('Ошибка при проверке условий повышения', true);
+        }
+    }
+    
+    function showPromotionProgressModal(promotionData) {
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalFooter = document.querySelector('.modal-footer');
+        
+        if (!modalTitle || !modalBody) return;
+        
+        const currentRoleName = getRoleDisplay(promotionData.current_role);
+        const nextRoleName = getRoleDisplay(promotionData.next_role);
+        const criteria = promotionData.criteria || [];
+        const metCount = criteria.filter(c => c.met).length;
+        const percentComplete = criteria.length > 0 ? Math.round((metCount / criteria.length) * 100) : 0;
+        
+        let criteriaHtml = '';
+        if (criteria.length > 0) {
+            criteriaHtml = `
+                <div style="margin: 20px 0;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${percentComplete}%;"></div>
+                    </div>
+                    <div style="text-align: center; margin-bottom: 16px;">Выполнено ${metCount} из ${criteria.length} критериев (${percentComplete}%)</div>
+                    ${criteria.map(c => `
+                        <div class="criteria-card ${c.met ? 'met' : ''}">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 500;">${c.name}</div>
+                                    ${typeof c.required === 'number' ? `<div style="font-size: 11px; color: #64748b;">Требуется: ${c.required}</div>` : ''}
+                                </div>
+                                <div style="font-size: 18px; font-weight: 600; color: ${c.met ? '#16a34a' : '#64748b'};">
+                                    ${typeof c.current === 'number' ? c.current : (c.met ? '✅' : '⏳')}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        modalTitle.innerHTML = `Прогресс повышения: ${currentRoleName} → ${nextRoleName}`;
+        modalBody.innerHTML = `
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">📊</div>
+                <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                    ${percentComplete === 100 ? 'Все условия выполнены!' : 'Выполните все условия для повышения'}
+                </div>
+            </div>
+            ${criteriaHtml}
+            ${percentComplete === 100 ? `
+                <div style="background: #dcfce7; border-radius: 16px; padding: 16px; text-align: center; margin-top: 16px;">
+                    <div style="font-weight: 600; color: #166534;">🎉 Поздравляем! Вы готовы к повышению!</div>
+                    <button class="btn-action btn-primary" style="margin-top: 12px; background: linear-gradient(135deg, #f59e0b, #ea580c);" onclick="applyPromotionNow()">Повыситься сейчас!</button>
+                </div>
+            ` : ''}
+        `;
+        
+        modalFooter.innerHTML = `<button class="btn-cancel" onclick="closeModal()">Закрыть</button>`;
+        document.getElementById('modal').classList.add('active');
+    }
+
+    function showPromotionModal(promotionData) {
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalFooter = document.querySelector('.modal-footer');
+        
+        if (!modalTitle || !modalBody) return;
+        
+        const currentRoleName = getRoleDisplay(promotionData.current_role);
+        const nextRoleName = getRoleDisplay(promotionData.next_role);
+        
+        let criteriaHtml = '';
+        if (promotionData.criteria && promotionData.criteria.length > 0) {
+            criteriaHtml = `
+                <div style="margin: 20px 0; padding: 16px; background: #f8fafc; border-radius: 20px;">
+                    <div style="font-weight: 600; margin-bottom: 12px;">🏆 Ваши достижения:</div>
+                    ${promotionData.criteria.map(c => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>${c.name}:</span>
+                            <span style="font-weight: ${c.met ? '600' : '400'}; color: ${c.met ? '#16a34a' : '#64748b'};">
+                                ${c.current} ${typeof c.required === 'number' ? '/' + c.required : (c.met ? '✅ Выполнено' : '⏳ Не выполнено')}
+                            </span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        modalTitle.innerHTML = `
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #f59e0b;">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            Поздравляем! Вы готовы к повышению!
+        `;
+        
+        modalBody.innerHTML = `
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🏆</div>
+                <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                    ${currentRoleName} → ${nextRoleName}
+                </div>
+                <div style="color: #64748b; font-size: 14px;">
+                    Вы выполнили все условия для повышения!
+                </div>
+            </div>
+            ${criteriaHtml}
+            <div style="background: linear-gradient(135deg, #e0e7ff, #ede9fe); border-radius: 16px; padding: 16px; text-align: center; margin-top: 16px;">
+                <div style="font-weight: 600; margin-bottom: 8px;">✨ Что вы получите:</div>
+                <div style="font-size: 14px; color: #4338ca;">Новые возможности, расширенные права и доступ к дополнительным функциям платформы</div>
+            </div>
+        `;
+        
+        document.getElementById('modal').classList.add('active');
+        
+        if (modalFooter) {
+            modalFooter.innerHTML = `
+                <button class="btn-cancel" onclick="closeModal()">Позже</button>
+                <button class="btn-save" id="applyPromotionBtn" style="background: linear-gradient(135deg, #f59e0b, #ea580c);">Повыситься сейчас! ⭐</button>
+            `;
+            
+            document.getElementById('applyPromotionBtn').onclick = async () => {
+                await applyPromotionNow();
+            };
+        }
+    }
+    
+    async function applyPromotionNow() {
+        try {
+            const response = await fetch('/api/promotion/apply', { method: 'POST' });
+            const result = await response.json();
+            
+            if (response.ok && result.success) {
+                currentUserRole = result.new_role;
+                currentUserPermissions = permissionsByRole[currentUserRole] || permissionsByRole['support_trainee'];
+                
+                showPromotionSuccessModal(result.old_role, result.new_role);
+                
+                renderMenu();
+                if (hasPermission('canViewDashboard')) renderDashboard();
+                if (hasPermission('canViewPromotions')) renderPromotions();
+                
+                if (currentUser) {
+                    currentUser.role = result.new_role;
+                    showUserMenu(currentUser);
+                }
+            } else {
+                notice(result.error || 'Ошибка при повышении. Возможно, условия больше не выполняются.', true);
+                closeModal();
+                // Обновляем данные о повышении
+                await checkUserPromotionEligibility();
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            notice('Ошибка сервера при повышении', true);
+            closeModal();
+        }
+    }
+
+    function showPromotionSuccessModal(oldRoleKey, newRoleKey) {
+        const oldRole = getRoleDisplay(oldRoleKey);
+        const newRole = getRoleDisplay(newRoleKey);
+        
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalFooter = document.querySelector('.modal-footer');
+        
+        modalTitle.innerHTML = `
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #16a34a;">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Повышение успешно!
+        `;
+        
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 20px 0;">
+                <div style="font-size: 64px; margin-bottom: 16px;">🎉</div>
+                <div style="font-size: 24px; font-weight: 700; margin-bottom: 12px; background: linear-gradient(135deg, #4f46e5, #7c3aed); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                    ${oldRole} → ${newRole}
+                </div>
+                <div style="color: #475569; margin-bottom: 20px;">Ваша роль была успешно повышена!</div>
+                <div style="background: #f0fdf4; border-radius: 16px; padding: 16px; margin-top: 16px;">
+                    <div style="font-weight: 600; color: #166534;">🎊 Поздравляем с новым статусом! 🎊</div>
+                    <div style="font-size: 13px; color: #15803d; margin-top: 8px;">Вам открыты новые возможности и функции</div>
+                </div>
+            </div>
+        `;
+        
+        if (modalFooter) {
+            modalFooter.innerHTML = `<button class="btn-save" onclick="closeModal()" style="background: #4f46e5;">Отлично!</button>`;
+        }
+        
+        document.getElementById('modal').classList.add('active');
+        
+        setTimeout(() => {
+            if (hasPermission('canViewPromotions')) renderPromotions();
+        }, 500);
+    }
+
+    function showProSupportPromotionNotice() {
+        const notification = document.createElement('div');
+        notification.className = 'promotion-notification';
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="font-size: 28px;">💎</div>
+                <div style="flex: 1;">
+                    <div style="font-weight: 600; margin-bottom: 4px;">Вы выполнили все критерии!</div>
+                    <div style="font-size: 12px; opacity: 0.8;">Нажмите "Проверить повышение" чтобы повыситься!</div>
+                </div>
+                <button style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;">×</button>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        const closeBtn = notification.querySelector('button');
+        closeBtn.onclick = () => notification.remove();
+        
+        setTimeout(() => {
+            if (notification.parentNode) notification.remove();
+        }, 10000);
+        
+        notification.onclick = (e) => {
+            if (e.target !== closeBtn) {
+                notification.remove();
+                checkUserPromotionEligibility();
+            }
+        };
+    }
+
+    async function createPromotionRequest(userId, userName) {
+        if (!hasPermission('canViewPromotions')) { notice('Нет прав', true); return; }
+        document.getElementById('modalTitle').innerHTML = `Создать заявку на повышение для ${userName}`;
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group"><label class="form-label">Текущая роль</label><input type="text" class="form-input" id="currentRole" readonly value="Загружается..."></div>
+            <div class="form-group"><label class="form-label">Желаемая роль</label><select class="form-select" id="desiredRole">${roleList.filter(r => r.level > 0 && r.value !== 'user').map(r => `<option value="${r.value}">${r.name}</option>`).join('')}</select></div>
+            <div class="form-group"><label class="form-label">Обоснование</label><textarea class="form-textarea" id="reason" rows="4" placeholder="Укажите причины для повышения..."></textarea></div>
+        `;
+        document.getElementById('modal').classList.add('active');
+        
+        try {
+            const users = await apiCall('/api/admin/users');
+            const user = users.find(u => u.id == userId);
+            if (user) {
+                document.getElementById('currentRole').value = getRoleDisplay(user.role);
+                const currentLevel = roleHierarchy[user.role] || 0;
+                const select = document.getElementById('desiredRole');
+                for (let option of select.options) {
+                    const roleLevel = roleHierarchy[option.value] || 0;
+                    if (roleLevel <= currentLevel) option.disabled = true;
+                }
+            }
+        } catch(e) {}
+        
+        const newSaveBtn = document.getElementById('modalSaveBtn').cloneNode(true);
+        document.getElementById('modalSaveBtn').parentNode.replaceChild(newSaveBtn, document.getElementById('modalSaveBtn'));
+        newSaveBtn.onclick = async () => {
+            const desiredRole = document.getElementById('desiredRole').value;
+            const reason = document.getElementById('reason').value;
+            if (!desiredRole) { notice('Выберите желаемую роль', true); return; }
+            await apiCall('/api/admin/promotions', { method: 'POST', body: JSON.stringify({ user_id: userId, desired_role: desiredRole, reason }) });
+            notice('Заявка создана');
+            closeModal();
+            if (hasPermission('canViewPromotions')) renderPromotions();
+        };
+    }
+
+    async function createPromotionRequestAdmin() {
+        if (!hasPermission('canViewPromotions')) { notice('Нет прав', true); return; }
+        document.getElementById('modalTitle').innerHTML = 'Создать заявку на повышение';
+        const users = await apiCall('/api/admin/users');
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group"><label class="form-label">Пользователь</label><select class="form-select" id="userId">${users.map(u => `<option value="${u.id}">${escapeHtml(u.name)} (${getRoleDisplay(u.role)})</option>`).join('')}</select></div>
+            <div class="form-group"><label class="form-label">Желаемая роль</label><select class="form-select" id="desiredRole">${roleList.filter(r => r.level > 0 && r.value !== 'user').map(r => `<option value="${r.value}">${r.name}</option>`).join('')}</select></div>
+            <div class="form-group"><label class="form-label">Обоснование</label><textarea class="form-textarea" id="reason" rows="4" placeholder="Укажите причины для повышения..."></textarea></div>
+        `;
+        document.getElementById('modal').classList.add('active');
+        
+        const newSaveBtn = document.getElementById('modalSaveBtn').cloneNode(true);
+        document.getElementById('modalSaveBtn').parentNode.replaceChild(newSaveBtn, document.getElementById('modalSaveBtn'));
+        newSaveBtn.onclick = async () => {
+            const userId = document.getElementById('userId').value;
+            const desiredRole = document.getElementById('desiredRole').value;
+            const reason = document.getElementById('reason').value;
+            await apiCall('/api/admin/promotions', { method: 'POST', body: JSON.stringify({ user_id: userId, desired_role: desiredRole, reason }) });
+            notice('Заявка создана');
+            closeModal();
+            if (hasPermission('canViewPromotions')) renderPromotions();
+        };
+    }
+
+    async function processPromotion(promotionId, status) {
+        if (!hasPermission('canManagePromotions')) { notice('Нет прав', true); return; }
+        try {
+            await apiCall(`/api/admin/promotions/${promotionId}/process`, { method: 'PUT', body: JSON.stringify({ status }) });
+            notice(status === 'approved' ? 'Заявка одобрена, роль изменена' : 'Заявка отклонена');
+            if (hasPermission('canViewPromotions')) renderPromotions();
+            if (hasPermission('canViewUsers')) renderUsers();
+        } catch(e) { notice(e.message, true); }
+    }
+
+    async function renderPromotions() {
+        if (!hasPermission('canViewPromotions')) { 
+            document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; 
+            return; 
+        }
+    
+        try {
+            const promotionCheck = await fetch('/api/promotion/check').then(r => r.json()).catch(() => ({}));
+            const availableRoles = await fetch('/api/promotion/available-roles').then(r => r.json()).catch(() => []);
+            const userRoleLevel = roleHierarchy[currentUserRole] || 0;
+    
+            const promotionHistory = await apiCall('/api/admin/promotions?user_id=' + currentUser.id).catch(() => []);
+    
+            let nextRole = null;
+            let criteria = [];
+            let canPromote = false;
+    
+            if (promotionCheck.next_role) {
+                nextRole = availableRoles.find(r => r.value === promotionCheck.next_role);
+                if (!nextRole && promotionCheck.next_role) {
+                    nextRole = { value: promotionCheck.next_role, name: getRoleDisplay(promotionCheck.next_role), criteria: [] };
+                }
+            }
+    
+            if (promotionCheck.criteria && promotionCheck.criteria.length > 0) {
+                criteria = promotionCheck.criteria;
+                canPromote = promotionCheck.can_promote === true;
+            } else if (nextRole && nextRole.criteria) {
+                criteria = nextRole.criteria.map(c => ({ name: c, required: true, current: '?', met: false }));
+            }
+    
+            const percentComplete = criteria.length > 0 
+                ? Math.round((criteria.filter(c => c.met).length / criteria.length) * 100) 
+                : 0;
+    
+            const hasPendingRequest = promotionHistory.some(p => p.status === 'pending');
+    
+            document.getElementById('contentContainer').innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
+                    <div class="data-table">
+                        <div class="table-header">
+                            <span>⭐ Мой прогресс повышения</span>
+                            <span class="role-badge ${getRoleClass(currentUserRole)}" style="font-size: 14px;">${getRoleDisplay(currentUserRole)}</span>
+                        </div>
+                        <div style="padding: 24px;">
+                            <div style="text-align: center; margin-bottom: 24px;">
+                                <div style="font-size: 14px; color: #64748b; margin-bottom: 8px;">Текущий уровень</div>
+                                <div style="font-size: 28px; font-weight: 700; color: #4f46e5;">${getRoleDisplay(currentUserRole)}</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${percentComplete}%;"></div>
+                                </div>
+                                <div style="font-size: 20px; font-weight: 600; margin: 16px 0 8px;">
+                                    ${nextRole ? `→ ${nextRole.name}` : '🏆 Максимальный уровень достигнут!'}
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;">
+                                    ${nextRole ? `Прогресс: ${percentComplete}%` : 'Поздравляем! Вы достигли вершины карьерной лестницы'}
+                                </div>
+                            </div>
+    
+                            ${nextRole && criteria.length > 0 ? `
+                                <div style="margin-top: 24px;">
+                                    <div style="font-weight: 600; margin-bottom: 16px;">📋 Критерии для повышения до ${nextRole.name}:</div>
+                                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                                        ${criteria.map(c => `
+                                            <div class="criteria-card ${c.met ? 'met' : ''}">
+                                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                                    <div>
+                                                        <div style="font-weight: 500; font-size: 14px;">${c.name}</div>
+                                                        <div style="font-size: 11px; color: #94a3b8;">${typeof c.required === 'number' ? `Требуется: ${c.required}` : 'Требуется одобрение'}</div>
+                                                    </div>
+                                                    <div style="text-align: right;">
+                                                        <div style="font-size: 18px; font-weight: 600; color: ${c.met ? '#16a34a' : '#64748b'};">
+                                                            ${typeof c.current === 'number' ? c.current : (c.met ? '✅ Выполнено' : '⏳ Ожидание')}
+                                                        </div>
+                                                        ${typeof c.required === 'number' ? `<div style="font-size: 11px; color: #94a3b8;">из ${c.required}</div>` : ''}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+    
+                            ${canPromote && !hasPendingRequest && nextRole ? `
+                                <button class="btn-action btn-primary" onclick="checkUserPromotionEligibility()" style="width: 100%; margin-top: 24px; padding: 12px; background: linear-gradient(135deg, #f59e0b, #ea580c);">
+                                    ⬆️ Повыситься сейчас
+                                </button>
+                            ` : ''}
+    
+                            ${hasPendingRequest ? `
+                                <div style="margin-top: 24px; padding: 16px; background: #fef3c7; border-radius: 16px; text-align: center;">
+                                    <div style="font-weight: 600; color: #92400e;">⏳ Заявка на повышение уже подана!</div>
+                                    <div style="font-size: 13px; color: #b45309; margin-top: 8px;">Ожидайте решения администрации</div>
+                                </div>
+                            ` : ''}
+    
+                            ${!nextRole && currentUserRole !== 'pro_support' ? `
+                                <div style="margin-top: 24px; padding: 16px; background: #f0fdf4; border-radius: 16px; text-align: center;">
+                                    <div style="font-weight: 600; color: #166534;">🎉 Вы достигли максимальной роли!</div>
+                                    <div style="font-size: 13px; color: #15803d; margin-top: 8px;">Спасибо за вашу работу!</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+    
+                    <div style="display: flex; flex-direction: column; gap: 28px;">
+                        <div class="data-table">
+                            <div class="table-header"><span>🏅 Мои достижения</span></div>
+                            <div style="padding: 24px;">
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                                    <div style="text-align: center; padding: 16px; background: #f8fafc; border-radius: 16px;">
+                                        <div style="font-size: 28px; font-weight: 700; color: #4f46e5;">${criteria.filter(c => c.met).length}</div>
+                                        <div style="font-size: 12px; color: #64748b;">Выполнено критериев</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 16px; background: #f8fafc; border-radius: 16px;">
+                                        <div style="font-size: 28px; font-weight: 700; color: #4f46e5;">${criteria.length}</div>
+                                        <div style="font-size: 12px; color: #64748b;">Всего критериев</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="data-table">
+                            <div class="table-header"><span>📜 История повышений</span></div>
+                            <div style="padding: 24px;">
+                                ${promotionHistory.length > 0 ? `
+                                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                                        ${promotionHistory.slice(0, 5).map(p => `
+                                            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8fafc; border-radius: 12px;">
+                                                <div style="font-size: 24px;">${p.status === 'approved' ? '✅' : (p.status === 'pending' ? '⏳' : '❌')}</div>
+                                                <div style="flex: 1;">
+                                                    <div style="font-weight: 500;">${getRoleDisplay(p.current_role)} → ${getRoleDisplay(p.desired_role)}</div>
+                                                    <div style="font-size: 11px; color: #94a3b8;">${new Date(p.created_at).toLocaleDateString()}</div>
+                                                </div>
+                                                <div>
+                                                    <span class="status-badge ${p.status === 'approved' ? 'status-active' : (p.status === 'pending' ? 'status-pending' : 'status-blocked')}">
+                                                        ${p.status === 'approved' ? 'Одобрено' : (p.status === 'pending' ? 'На рассмотрении' : 'Отклонено')}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                ` : `
+                                    <div style="text-align: center; padding: 32px; color: #94a3b8;">
+                                        📭 История повышений пуста
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+    
+                        <div class="data-table">
+                            <div class="table-header"><span>📈 Карьерная лестница</span></div>
+                            <div style="padding: 24px;">
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    ${roleList.map((role, index) => {
+                                        const isCurrent = role.value === currentUserRole;
+                                        const isCompleted = roleHierarchy[role.value] < userRoleLevel;
+                                        const isNext = nextRole && role.value === nextRole.value;
+                                        return `
+                                            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: ${isCurrent ? '#e0e7ff' : (isCompleted ? '#f0fdf4' : '#f8fafc')}; border-radius: 12px; border: 1px solid ${isCurrent ? '#4f46e5' : '#e2e8f0'};">
+                                                <div style="width: 32px; text-align: center;">
+                                                    ${isCurrent ? '⭐' : (isCompleted ? '✅' : (index + 1))}
+                                                </div>
+                                                <div style="flex: 1;">
+                                                    <div style="font-weight: ${isCurrent ? '700' : '500'}; color: ${isCurrent ? '#4f46e5' : '#1e293b'};">${role.name}</div>
+                                                </div>
+                                                ${isCurrent ? '<span class="status-badge status-active">Текущая</span>' : ''}
+                                                ${isNext ? '<span class="status-badge status-pending">Следующая</span>' : ''}
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } catch(e) { 
+            console.error(e); 
+            document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Ошибка загрузки данных о повышении</div>';
+        }
+    }
+    
+    function getRoleBenefits(role) {
+        const benefits = {
+            'support_trainee': ['Доступ к тикетам поддержки', 'Возможность отвечать пользователям', 'Базовая поддержка клиентов'],
+            'tech_support': ['Технические тикеты приоритетом выше', 'Доступ к системным логам', 'Приоритетная поддержка'],
+            'pro_support': ['Сложные и спорные запросы', 'Эскалация сложных тикетов', 'Наставничество над новыми сотрудниками'],
+            'recruiter': ['Поиск и отбор кандидатов', 'Проведение собеседований', 'Доступ к базе кандидатов', 'Участие в HR-процессах'],
+            'curator': ['Управление командой поддержки', 'Распределение задач между сотрудниками', 'Контроль качества ответов'],
+            'community_manager': ['Управление сообществом', 'Модерация всех разделов', 'Проведение официальных мероприятий', 'Управление сотрудничеством с партнёрами'],
+            'junior_admin': ['Базовые административные функции', 'Управление пользователями (блокировка/разблокировка)', 'Просмотр финансовых отчётов', 'Модерация товаров'],
+            'admin': ['Полный доступ к админ-панели', 'Управление настройками платформы', 'Все права администрирования', 'Доступ к логам действий'],
+            'tech_admin': ['Техническое администрирование', 'Доступ к серверным логам', 'Управление системой'],
+            'developer': ['Разработка новых функций', 'Доступ к исходному коду', 'Техническая документация'],
+            'project_leadership': ['Стратегическое управление', 'Принятие ключевых решений', 'Управление командой'],
+            'co_owner': ['Совместное управление проектом', 'Финансовое планирование', 'Бизнес-решения'],
+            'owner': ['Полный контроль над проектом', 'Финальные решения', 'Управление компанией']
+        };
+        return benefits[role] || ['Расширенные права доступа', 'Новые возможности на платформе', 'Повышенный приоритет в поддержке'];
+    }
+    
+    async function refreshPromotionProgress() {
+        if (currentSection === 'promotions') {
+            await renderPromotions();
+        }
+    }
+    
+    setInterval(() => {
+        if (currentSection === 'promotions') {
+            refreshPromotionProgress();
+        }
+    }, 30000);
+
+    async function renderItems() {
+        if (!hasPermission('canViewItems')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const items = await apiCall('/api/admin/items');
+            const canEditItems = hasPermission('canEditItems');
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Управление товарами</span><input type="text" class="search-input" id="itemSearch" placeholder="Поиск..."></div>
+                <table style="width:100%"><thead><tr><th>ID</th><th>Название</th><th>Продавец</th><th>Цена</th><th>Статус</th><th>Действия</th></tr></thead><tbody id="itemsTableBody">${items.map(i => `<tr><td>${i.id}</td><td>${escapeHtml(i.title)}</td><td>${escapeHtml(i.seller_name || '-')}</td><td>${i.price} ₽</td><td><span class="status-badge ${i.status === 'active' ? 'status-active' : 'status-blocked'}">${i.status === 'active' ? 'Активен' : 'Скрыт'}</span></td><td>${canEditItems ? (i.status === 'active' ? `<button class="btn-action btn-block" onclick="hideItem(${i.id})">Скрыть</button>` : `<button class="btn-action btn-success" onclick="activateItem(${i.id})">Активировать</button>`) : ''}${canEditItems ? `<button class="btn-action btn-delete" onclick="deleteItem(${i.id})">Удалить</button>` : ''}</td>`).join('')}</tbody>
+            `;
+            document.getElementById('itemSearch')?.addEventListener('input', (e) => { const search = e.target.value.toLowerCase(); document.querySelectorAll('#itemsTableBody tr').forEach(row => { row.style.display = row.innerText.toLowerCase().includes(search) ? '' : 'none'; }); });
+        } catch(e) { console.error(e); }
+    }
+
+    async function renderOrders() {
+        if (!hasPermission('canViewOrders')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const orders = await apiCall('/api/admin/orders');
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Управление заказами</span></div>
+                <table style="width:100%"><thead><tr><th>ID</th><th>Пользователь</th><th>Сумма</th><th>Тип</th><th>Статус</th><th>Дата</th></tr></thead><tbody>${orders.map(o => `<tr><td>${o.id}</td><td>${escapeHtml(o.user_name)}</td><td>${o.amount} ₽</td><td>${o.type}</td><td><span class="status-badge ${o.status === 'completed' ? 'status-active' : 'status-pending'}">${o.status}</span></td><td>${new Date(o.created_at).toLocaleDateString()}</td>`).join('')}</tbody>
+            `;
+        } catch(e) { console.error(e); }
+    }
+
+    async function renderWithdrawals() {
+        if (!hasPermission('canViewWithdrawals')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const withdrawals = await apiCall('/api/admin/withdrawals');
+            const canProcess = hasPermission('canProcessWithdrawals');
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Заявки на вывод средств</span></div>
+                <table style="width:100%"><thead><tr><th>ID</th><th>Пользователь</th><th>Сумма</th><th>Реквизиты</th><th>Статус</th><th>Дата</th><th>Действия</th></tr></thead><tbody>${withdrawals.map(w => `<tr><td>${w.id}</td><td>${escapeHtml(w.user_name)}</td><td>${w.amount} ₽</td><td>${escapeHtml(w.details)}</td><td><span class="status-badge ${w.status === 'pending' ? 'status-pending' : (w.status === 'completed' ? 'status-active' : 'status-blocked')}">${w.status === 'pending' ? 'Ожидает' : (w.status === 'completed' ? 'Выполнен' : 'Отклонён')}</span></td><td>${new Date(w.created_at).toLocaleDateString()}</td><td>${canProcess && w.status === 'pending' ? `<button class="btn-action btn-success" onclick="processWithdrawal(${w.id}, 'completed')">Подтвердить</button><button class="btn-action btn-delete" onclick="processWithdrawal(${w.id}, 'rejected')">Отклонить</button>` : (w.status === 'pending' ? 'Ожидает' : '-')}</td>`).join('')}</tbody>
+            `;
+        } catch(e) { console.error(e); }
+    }
+
+    async function renderPromocodes() {
+        if (!hasPermission('canManagePromocodes')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const promocodes = await apiCall('/api/admin/promocodes');
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Промокоды</span><button class="btn-action btn-edit" onclick="addPromocode()">+ Создать</button></div>
+                <table style="width:100%"><thead><tr><th>Код</th><th>Скидка</th><th>Использовано</th><th>Статус</th><th>Действия</th></tr></thead><tbody>${promocodes.map(p => `<tr><td><strong>${p.code}</strong></td><td>${p.discount_value}${p.discount_type === 'percent' ? '%' : '₽'}</td><td>${p.used_count || 0}${p.max_uses ? `/${p.max_uses}` : ''}</td><td><span class="status-badge ${p.is_active ? 'status-active' : 'status-blocked'}">${p.is_active ? 'Активен' : 'Отключён'}</span></td><td><button class="btn-action btn-edit" onclick="togglePromocode(${p.id})">${p.is_active ? 'Отключить' : 'Включить'}</button><button class="btn-action btn-delete" onclick="deletePromocode(${p.id})">Удалить</button></td>`).join('')}</tbody>
+            `;
+        } catch(e) { console.error(e); }
+    }
+
+    async function renderCategories() {
+        if (!hasPermission('canManageCategories')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const categories = await apiCall('/api/admin/categories');
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Категории игр</span><button class="btn-action btn-edit" onclick="addCategory()">+ Добавить</button></div>
+                <table style="width:100%"><thead><tr><th>ID</th><th>Игра</th><th>Категория</th><th>Действия</th></tr></thead><tbody>${categories.map(c => `<tr><td>${c.id}</td><td><strong>${escapeHtml(c.game_name)}</strong></td><td>${escapeHtml(c.category_name)}</td><td><button class="btn-action btn-delete" onclick="deleteCategory(${c.id})">Удалить</button></td>`).join('')}</tbody>
+            `;
+        } catch(e) { console.error(e); }
+    }
+
+    async function renderFinanceReports() {
+        if (!hasPermission('canViewReportsFinance')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const orders = await apiCall('/api/admin/orders');
+            const withdrawals = await apiCall('/api/admin/withdrawals');
+            const stats = await apiCall('/api/admin/stats');
+            
+            const completedOrders = orders.filter(o => o.status === 'completed');
+            const totalRevenue = completedOrders.reduce((sum, o) => sum + o.amount, 0);
+            const pendingWithdrawals = withdrawals.filter(w => w.status === 'pending').reduce((sum, w) => sum + w.amount, 0);
+            const completedWithdrawals = withdrawals.filter(w => w.status === 'completed').reduce((sum, w) => sum + w.amount, 0);
+            
+            const monthlyData = {};
+            completedOrders.forEach(o => {
+                const month = o.created_at?.slice(0, 7);
+                if (month) monthlyData[month] = (monthlyData[month] || 0) + o.amount;
+            });
+            
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Финансовые отчеты</span></div>
+                <div style="padding:24px;">
+                    <div class="report-card">
+                        <div class="report-title">Общая статистика</div>
+                        <div class="report-stats">
+                            <div class="report-stat"><div class="report-stat-value">${totalRevenue.toLocaleString()} ₽</div><div class="report-stat-label">Общая выручка</div></div>
+                            <div class="report-stat"><div class="report-stat-value">${pendingWithdrawals.toLocaleString()} ₽</div><div class="report-stat-label">Ожидает вывода</div></div>
+                            <div class="report-stat"><div class="report-stat-value">${completedWithdrawals.toLocaleString()} ₽</div><div class="report-stat-label">Выведено средств</div></div>
+                            <div class="report-stat"><div class="report-stat-value">${stats.totalUsers || 0}</div><div class="report-stat-label">Пользователей</div></div>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-title">Выручка по месяцам</div>
+                        <div class="report-stats">
+                            ${Object.entries(monthlyData).slice(-6).map(([month, amount]) => `<div class="report-stat"><div class="report-stat-value">${amount.toLocaleString()} ₽</div><div class="report-stat-label">${month}</div></div>`).join('')}
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-title">Детализация заказов</div>
+                        <table style="width:100%"><thead><tr><th>Период</th><th>Количество заказов</th><th>Сумма</th></tr></thead><tbody>
+                            ${Object.entries(monthlyData).slice(-6).map(([month, amount]) => {
+                                const count = completedOrders.filter(o => o.created_at?.startsWith(month)).length;
+                                return `<tr><td>${month}</td><td>${count}</td><td>${amount.toLocaleString()} ₽</td>`;
+                            }).join('')}
+                        </tbody></table>
+                    </div>
+                    <button class="btn-action btn-primary" onclick="exportReport()">Экспортировать отчет (CSV)</button>
+                </div></div>
+            `;
+        } catch(e) { console.error(e); }
+    }
+
+    function exportReport() {
+        let csv = "Тип,ID,Пользователь,Сумма,Статус,Дата\n";
+        apiCall('/api/admin/orders').then(orders => {
+            orders.forEach(o => { csv += `Заказ,${o.id},${o.user_name},${o.amount},${o.status},${o.created_at}\n`; });
+            apiCall('/api/admin/withdrawals').then(withdrawals => {
+                withdrawals.forEach(w => { csv += `Вывод,${w.id},${w.user_name},${w.amount},${w.status},${w.created_at}\n`; });
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `report_${new Date().toISOString().slice(0,10)}.csv`;
+                link.click();
+                notice('Отчет экспортирован');
+            });
+        });
+    }
+
+    async function renderComplaints() {
+        if (!hasPermission('canViewReports')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const reports = await apiCall('/api/admin/reports?limit=100');
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Жалобы на сообщения</span><select id="reportStatusFilter" class="search-input" style="width:150px;"><option value="all">Все</option><option value="pending">На рассмотрении</option><option value="approved">Одобрены</option><option value="rejected">Отклонены</option></select></div>
+                <table style="width:100%"><thead><tr><th>ID</th><th>Отправитель</th><th>Нарушитель</th><th>Причина</th><th>Сообщение</th><th>Статус</th><th>Дата</th><th>Действия</th></tr></thead><tbody id="reportsTableBody">${reports.map(r => `<tr data-status="${r.status}"><tr><td>${r.id}</td><td>${escapeHtml(r.reporter_name)}</td><td>${escapeHtml(r.reported_name)}</td><td>${r.reason}</td><td style="max-width:200px; overflow:hidden; text-overflow:ellipsis;">${escapeHtml((r.message_text || '').substring(0, 50))}</td><td><span class="status-badge ${r.status === 'pending' ? 'status-pending' : (r.status === 'approved' ? 'status-active' : 'status-blocked')}">${r.status === 'pending' ? 'На рассмотрении' : (r.status === 'approved' ? 'Одобрена' : 'Отклонена')}</span></td><td>${new Date(r.created_at).toLocaleDateString()}</td><td>${r.status === 'pending' ? `<button class="btn-action btn-success" onclick="processReport(${r.id}, 'approved')">Одобрить</button><button class="btn-action btn-delete" onclick="processReport(${r.id}, 'rejected')">Отклонить</button>` : '-'}</td>`).join('')}</tbody>
+            `;
+            document.getElementById('reportStatusFilter')?.addEventListener('change', () => { const filter = document.getElementById('reportStatusFilter').value; document.querySelectorAll('#reportsTableBody tr').forEach(row => { row.style.display = filter === 'all' || row.dataset.status === filter ? '' : 'none'; }); });
+        } catch(e) { console.error(e); }
+    }
+
+    async function processReport(reportId, status) {
+        try {
+            await apiCall(`/api/admin/reports/${reportId}`, { method: 'PUT', body: JSON.stringify({ status, admin_note: `Обработано администратором` }) });
+            notice(`Жалоба ${status === 'approved' ? 'одобрена' : 'отклонена'}`);
+            renderComplaints();
+        } catch(e) { notice(e.message, true); }
+    }
+
+    async function renderLogs() {
+        if (!hasPermission('canViewLogs')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        document.getElementById('contentContainer').innerHTML = `<div class="data-table"><div class="table-header"><span>Системные логи</span></div><div style="padding:20px;"><textarea id="logOutput" rows="20" style="width:100%; font-family:monospace; font-size:12px; background:#1e1e2e; color:#fff; padding:12px; border-radius:12px;" readonly></textarea></div></div>`;
+        try { const logs = await apiCall('/api/admin/logs'); document.getElementById('logOutput').value = logs.map(l => `[${l.created_at}] ${l.admin_name} | ${l.action} | ${l.details}`).join('\n') || 'Логи отсутствуют'; } catch(e) { document.getElementById('logOutput').value = 'Логи временно недоступны'; }
+    }
+
+    async function renderSettings() {
+        if (!hasPermission('canEditSettings')) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён</div>'; return; }
+        try {
+            const settings = await apiCall('/api/admin/settings');
+            document.getElementById('contentContainer').innerHTML = `
+                <div class="data-table"><div class="table-header"><span>Настройки платформы</span></div><div style="padding:24px;">
+                    <div class="form-group"><label class="form-label">Комиссия платформы (%)</label><input type="number" class="form-input" id="platformFee" value="${settings.platformFee || 5}" step="0.5"></div>
+                    <div class="form-group"><label class="form-label">Минимальная сумма вывода (₽)</label><input type="number" class="form-input" id="minWithdraw" value="${settings.minWithdraw || 100}"></div>
+                    <div class="form-group"><label class="form-label">Email для уведомлений</label><input type="email" class="form-input" id="adminEmail" value="${settings.adminEmail || 'admin@nullmarket.com'}"></div>
+                    <div class="form-group"><label class="form-label">Название платформы</label><input type="text" class="form-input" id="siteName" value="${settings.siteName || 'NULLMARKET'}"></div>
+                    <div class="form-group"><label class="form-label">Описание платформы</label><textarea class="form-textarea" id="siteDescription" rows="3">${settings.siteDescription || 'Маркетплейс цифровых товаров'}</textarea></div>
+                    <div class="form-group"><label class="form-label">Максимальная роль для самостоятельного повышения</label><select class="form-select" id="maxSelfPromoteRole">${roleList.slice(0, 8).map(r => `<option value="${r.value}" ${(settings.maxSelfPromoteRole || 'junior_admin') === r.value ? 'selected' : ''}>${r.name}</option>`).join('')}</select></div>
+                    <button class="btn-action btn-primary" onclick="saveSettings()">Сохранить настройки</button>
+                </div></div>
+            `;
+        } catch(e) { console.error(e); }
+    }
+
+    async function saveSettings() {
+        try {
+            await apiCall('/api/admin/settings', { method: 'PUT', body: JSON.stringify({ 
+                platformFee: parseFloat(document.getElementById('platformFee').value), 
+                minWithdraw: parseFloat(document.getElementById('minWithdraw').value), 
+                adminEmail: document.getElementById('adminEmail').value, 
+                siteName: document.getElementById('siteName').value, 
+                siteDescription: document.getElementById('siteDescription').value,
+                maxSelfPromoteRole: document.getElementById('maxSelfPromoteRole').value
+            }) });
+            notice('Настройки сохранены');
+        } catch(e) { notice(e.message, true); }
+    }
+
+    function addPromocode() {
+        document.getElementById('modalTitle').innerHTML = 'Создать промокод';
+        document.getElementById('modalBody').innerHTML = `<div class="form-group"><input class="form-input" id="promoCode" placeholder="Код"></div><div class="form-group"><select class="form-select" id="promoType"><option value="percent">Процент (%)</option><option value="fixed">Фиксированная (₽)</option></select></div><div class="form-group"><input class="form-input" id="promoValue" type="number" placeholder="Значение скидки"></div><div class="form-group"><input class="form-input" id="promoMaxUses" type="number" placeholder="Макс. использований (пусто - безлимит)"></div>`;
+        document.getElementById('modal').classList.add('active');
+        const newSaveBtn = document.getElementById('modalSaveBtn').cloneNode(true);
+        document.getElementById('modalSaveBtn').parentNode.replaceChild(newSaveBtn, document.getElementById('modalSaveBtn'));
+        newSaveBtn.onclick = async () => {
+            const code = document.getElementById('promoCode').value.toUpperCase();
+            const discount_value = parseFloat(document.getElementById('promoValue').value);
+            if (!code || !discount_value) { notice('Заполните поля', true); return; }
+            await apiCall('/api/admin/promocodes', { method: 'POST', body: JSON.stringify({ code, discount_type: document.getElementById('promoType').value, discount_value, max_uses: document.getElementById('promoMaxUses').value || null }) });
+            notice('Промокод создан');
+            closeModal();
+            renderPromocodes();
+        };
+    }
+
+    function addCategory() {
+        document.getElementById('modalTitle').innerHTML = 'Добавить категорию';
+        document.getElementById('modalBody').innerHTML = `<div class="form-group"><input class="form-input" id="gameName" placeholder="Название игры"></div><div class="form-group"><input class="form-input" id="categoryName" placeholder="Название категории"></div>`;
+        document.getElementById('modal').classList.add('active');
+        const newSaveBtn = document.getElementById('modalSaveBtn').cloneNode(true);
+        document.getElementById('modalSaveBtn').parentNode.replaceChild(newSaveBtn, document.getElementById('modalSaveBtn'));
+        newSaveBtn.onclick = async () => {
+            const game_name = document.getElementById('gameName').value;
+            const category_name = document.getElementById('categoryName').value;
+            if (!game_name || !category_name) { notice('Заполните все поля', true); return; }
+            await apiCall('/api/admin/categories', { method: 'POST', body: JSON.stringify({ game_name, category_name }) });
+            notice('Категория добавлена');
+            closeModal();
+            renderCategories();
+        };
+    }
+
+    function togglePromocode(id) { if (!hasPermission('canManagePromocodes')) return; apiCall(`/api/admin/promocodes/${id}/toggle`, { method: 'POST' }).then(() => { notice('Статус изменён'); renderPromocodes(); }).catch(e => notice(e.message, true)); }
+    function deletePromocode(id) { if (!hasPermission('canManagePromocodes')) return; if(confirm('Удалить промокод?')) apiCall(`/api/admin/promocodes/${id}`, { method: 'DELETE' }).then(() => { notice('Удалён'); renderPromocodes(); }).catch(e => notice(e.message, true)); }
+    function deleteCategory(id) { if(confirm('Удалить категорию?')) apiCall(`/api/admin/categories/${id}`, { method: 'DELETE' }).then(() => { notice('Категория удалена'); renderCategories(); }).catch(e => notice(e.message, true)); }
+    function blockUser(id) { if(confirm('Заблокировать пользователя?')) apiCall(`/api/admin/users/${id}/block`, { method: 'POST' }).then(() => { notice('Заблокирован'); renderUsers(); }).catch(e => notice(e.message, true)); }
+    function unblockUser(id) { apiCall(`/api/admin/users/${id}/unblock`, { method: 'POST' }).then(() => { notice('Разблокирован'); renderUsers(); }).catch(e => notice(e.message, true)); }
+    function hideItem(id) { apiCall(`/api/admin/items/${id}/hide`, { method: 'POST' }).then(() => { notice('Скрыт'); renderItems(); }).catch(e => notice(e.message, true)); }
+    function activateItem(id) { apiCall(`/api/admin/items/${id}/activate`, { method: 'POST' }).then(() => { notice('Активирован'); renderItems(); }).catch(e => notice(e.message, true)); }
+    function deleteItem(id) { if(confirm('Удалить товар?')) apiCall(`/api/admin/items/${id}`, { method: 'DELETE' }).then(() => { notice('Удалён'); renderItems(); }).catch(e => notice(e.message, true)); }
+    function processWithdrawal(id, status) { apiCall(`/api/admin/withdrawals/${id}/process`, { method: 'POST', body: JSON.stringify({ status }) }).then(() => { notice(status === 'completed' ? 'Подтверждён' : 'Отклонён'); renderWithdrawals(); if(hasPermission('canViewDashboard')) renderDashboard(); }).catch(e => notice(e.message, true)); }
+    function updateUserRole(userId, newRole) { if (!hasPermission('canEditUsers')) return; const currentUserRoleLevel = roleHierarchy[currentUserRole] || 0; const newRoleLevel = roleHierarchy[newRole] || 0; if (newRoleLevel >= currentUserRoleLevel && !hasPermission('canEditAnyUserRole')) { notice('Вы не можете назначить роль выше или равную вашей', true); renderUsers(); return; } try { apiCall(`/api/admin/users/${userId}`, { method: 'PUT', body: JSON.stringify({ role: newRole }) }).then(() => { notice(`Роль изменена на ${getRoleDisplay(newRole)}`); renderUsers(); }).catch(e => notice(e.message, true)); } catch(e) { notice(e.message, true); } }
+    function changeBalance(userId) { if (!hasPermission('canChangeBalance')) { notice('Нет прав', true); return; } document.getElementById('modalTitle').innerHTML = 'Изменение баланса'; document.getElementById('modalBody').innerHTML = `<input type="number" class="form-input" id="balanceAmount" placeholder="Сумма (+ пополнение, - списание)"><input type="text" class="form-input" id="balanceReason" placeholder="Причина" style="margin-top:10px;">`; document.getElementById('modal').classList.add('active'); const newSaveBtn = document.getElementById('modalSaveBtn').cloneNode(true); document.getElementById('modalSaveBtn').parentNode.replaceChild(newSaveBtn, document.getElementById('modalSaveBtn')); newSaveBtn.onclick = async () => { const amount = parseFloat(document.getElementById('balanceAmount').value); if (isNaN(amount)) { notice('Введите сумму', true); return; } await apiCall(`/api/admin/users/${userId}/balance`, { method: 'POST', body: JSON.stringify({ amount, reason: document.getElementById('balanceReason').value }) }); notice('Баланс изменён'); closeModal(); renderUsers(); }; }
+
+    function closeModal() { document.getElementById('modal').classList.remove('active'); }
+
+    function addPromotionStatusButton() {
+        const statsGrid = document.querySelector('.stats-grid');
+        if (statsGrid && !statsGrid.querySelector('.promotion-check-card')) {
+            const promotionWidget = document.createElement('div');
+            promotionWidget.className = 'stat-card promotion-check-card';
+            promotionWidget.style.cursor = 'pointer';
+            promotionWidget.onclick = () => checkUserPromotionEligibility();
+            promotionWidget.innerHTML = `
+                <div class="stat-value" style="font-size: 28px;">⬆️</div>
+                <div class="stat-label">Проверить повышение</div>
+            `;
+            statsGrid.appendChild(promotionWidget);
+        }
+    }
+
+    function startPromotionCheck() {
+        if (promotionCheckInterval) clearInterval(promotionCheckInterval);
+        
+        setTimeout(() => checkUserPromotionEligibility(), 5000);
+        promotionCheckInterval = setInterval(() => checkUserPromotionEligibility(), 60 * 60 * 1000);
+    }
+
+    async function checkAuth() {
+        try {
+            const response = await fetch('/api/me');
+            if (response.ok) {
+                currentUser = await response.json();
+                currentUserRole = currentUser.role;
+                currentUserPermissions = permissionsByRole[currentUserRole] || permissionsByRole['support_trainee'];
+                const hasAnyAccess = Object.values(currentUserPermissions).some(v => v === true);
+                if (!hasAnyAccess) { document.getElementById('contentContainer').innerHTML = '<div class="access-denied">Доступ запрещён. У вас недостаточно прав.</div>'; return; }
+                showUserMenu(currentUser);
+                renderMenu();
+                
+                const currentPath = window.location.pathname;
+                let section = 'dashboard';
+                if (currentPath.startsWith('/admin/')) section = currentPath.replace('/admin/', '');
+                
+                const menuItem = menuItems.find(m => m.id === section && hasPermission(m.permission));
+                if (menuItem) { document.querySelector(`.admin-menu-item[data-section="${section}"]`)?.classList.add('active'); await loadSection(section); }
+                else { await loadSection('dashboard'); }
+                
+                startPromotionCheck();
+                
+                loadCollaborations();
+                
+            } else { window.location.href = '/auth'; }
+        } catch(e) { window.location.href = '/auth'; }
+    }
+
+    function showUserMenu(user) {
+        const container = document.getElementById('authButtonContainer');
+        const roleDisplay = getRoleDisplay(user.role);
+        container.innerHTML = `<div class="user-menu-container"><img src="${user.avatar}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=40'"><span class="user-name">${user.name}</span><span class="role-badge ${getRoleClass(user.role)}" style="font-size:11px;">${roleDisplay}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg><div class="user-dropdown"><div class="dropdown-header"><div class="dropdown-name">${user.name}</div><div class="dropdown-email">${user.email}</div></div><div class="dropdown-item logout" data-action="logout"><svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Выйти</div></div></div>`;
+        const menuContainer = document.querySelector('.user-menu-container');
+        const dropdown = document.querySelector('.user-dropdown');
+        menuContainer?.addEventListener('click', (e) => { e.stopPropagation(); dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'; });
+        document.addEventListener('click', () => { if (dropdown) dropdown.style.display = 'none'; });
+        document.querySelectorAll('.dropdown-item').forEach(item => { item.addEventListener('click', async (e) => { e.stopPropagation(); dropdown.style.display = 'none'; if (item.dataset.action === 'logout') { await fetch('/api/logout', { method: 'POST' }); window.location.href = '/'; } }); });
+    }
+
+    // Глобальные функции для вызова из HTML
+    window.openTicketDetail = openTicketDetail;
+    window.changeBalance = changeBalance;
+    window.blockUser = blockUser;
+    window.unblockUser = unblockUser;
+    window.hideItem = hideItem;
+    window.activateItem = activateItem;
+    window.deleteItem = deleteItem;
+    window.processWithdrawal = processWithdrawal;
+    window.addPromocode = addPromocode;
+    window.togglePromocode = togglePromocode;
+    window.deletePromocode = deletePromocode;
+    window.saveSettings = saveSettings;
+    window.updateUserRole = updateUserRole;
+    window.changeTicketStatus = changeTicketStatus;
+    window.addCategory = addCategory;
+    window.deleteCategory = deleteCategory;
+    window.closeModal = closeModal;
+    window.navigateTo = navigateTo;
+    window.processReport = processReport;
+    window.createPromotionRequest = createPromotionRequest;
+    window.createPromotionRequestAdmin = createPromotionRequestAdmin;
+    window.processPromotion = processPromotion;
+    window.exportReport = exportReport;
+    window.checkUserPromotionEligibility = checkUserPromotionEligibility;
+    window.refreshPromotionProgress = refreshPromotionProgress;
+    window.openCreateCollaborationModal = openCreateCollaborationModal;
+    window.processCollaboration = processCollaboration;
+    window.applyPromotionNow = applyPromotionNow;
+
+    window.addEventListener('popstate', () => { const path = window.location.pathname; if (path.startsWith('/admin/')) { const section = path.replace('/admin/', ''); loadSection(section); } else { loadSection('dashboard'); } });
+    checkAuth();
+</script>
+</body>
+</html>

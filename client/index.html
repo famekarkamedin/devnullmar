@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="NULLMARKET — маркетплейс цифровых товаров. Покупайте и продавайте игровую валюту, аккаунты, ключи, подписки и услуги с защитой сделки.">
+    <title>NULLMARKET — Маркетплейс цифровых товаров</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: #f3f5fc;
+            color: #121826;
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        /* Абстрактные размытые объекты на фоне */
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #a78bfa, #3b82f6);
+            top: -150px;
+            left: -150px;
+        }
+
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f97316, #facc15);
+            bottom: -250px;
+            right: -200px;
+            opacity: 0.4;
+        }
+
+        .blur-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2dd4bf, #14b8a6);
+            top: 40%;
+            left: 60%;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Стекло-эффекты и градиентные карточки */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+        }
+
+        /* Шапка с размытием */
+        .header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.6);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+
+        .badge {
+            background: linear-gradient(105deg, #d9e3f0, #ffffff);
+            padding: 6px 14px;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e2a47;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02), 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .btn-download {
+            background: #11181c;
+            color: white;
+            border: none;
+            padding: 10px 26px;
+            border-radius: 48px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 14px -8px rgba(0,0,0,0.2);
+        }
+
+        /* Герой */
+        .hero {
+            margin: 48px 0 40px;
+            border-radius: 48px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(245,248,255,0.8) 100%);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-inner {
+            padding: 48px 40px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #c084fc, #818cf8);
+            filter: blur(70px);
+            bottom: -100px;
+            right: -80px;
+            opacity: 0.5;
+            border-radius: 50%;
+        }
+
+        .hero-text {
+            flex: 2;
+        }
+
+        .hero-badge {
+            background: linear-gradient(95deg, #e0e7ff, #ede9fe);
+            border-radius: 32px;
+            padding: 6px 16px;
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4338ca;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -1.5px;
+            background: linear-gradient(115deg, #111827, #2d3a5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .hero-stats {
+            flex: 1.2;
+            background: rgba(0,0,0,0.02);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 28px 24px;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: 0 20px 30px -20px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(145deg, #d97706, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-card {
+            background: linear-gradient(105deg, #ffffff, #f8fafc);
+            border-radius: 32px;
+            padding: 28px;
+            border: 1px solid rgba(209, 213, 219, 0.3);
+            box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.05);
+            transition: all 0.25s;
+        }
+
+        .gradient-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 40px -16px rgba(0, 0, 0, 0.12);
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+
+        .section-title {
+            font-size: 34px;
+            font-weight: 700;
+            margin: 56px 0 24px;
+            letter-spacing: -0.3px;
+            background: linear-gradient(125deg, #1e293b, #334155);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .two-cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+            margin-bottom: 48px;
+        }
+
+        .pay-block {
+            background: linear-gradient(112deg, #f1f5f9, #ffffff);
+            border-radius: 38px;
+            padding: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(165, 180, 252, 0.3);
+            margin: 28px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin: 32px 0 48px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 28px;
+            border: 1px solid rgba(255,255,240,0.6);
+            transition: all 0.2s;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin: 14px 0 12px;
+        }
+
+        .accent-link {
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 20px;
+            color: #4f46e5;
+            cursor: pointer;
+            border-bottom: 1px dashed #a5b4fc;
+        }
+
+        .bonus-chip {
+            background: linear-gradient(95deg, #fef9c3, #fde047);
+            border-radius: 40px;
+            padding: 5px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 18px;
+            color: #854d0e;
+        }
+
+        .partner-strip {
+            background: linear-gradient(105deg, #ede9fe, #e0e7ff);
+            border-radius: 32px;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 44px 0;
+        }
+
+        .subscribe-card {
+            background: linear-gradient(125deg, #d9e6f2, #ffffff);
+            border-radius: 38px;
+            padding: 36px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(4px);
+        }
+
+        .subscribe-card::after {
+            content: '';
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(#60a5fa, #3b82f6);
+            filter: blur(50px);
+            bottom: -60px;
+            right: -40px;
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+
+        .deposit-block {
+            background: linear-gradient(135deg, #0b1120, #1c2b3a);
+            border-radius: 40px;
+            padding: 36px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            color: white;
+            margin: 48px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #4f46e5;
+        }
+
+        .nav-link.active {
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 42px;
+            padding: 40px;
+            margin: 56px 0;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+            gap: 28px;
+            margin-top: 28px;
+        }
+
+        .footer {
+            padding: 48px 0 32px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            margin-top: 48px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        button {
+            font-family: inherit;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary-dark {
+            background: #0f172a;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: 0.2s;
+            box-shadow: 0 8px 18px -8px rgba(0,0,0,0.2);
+        }
+
+        .btn-outline-light {
+            border: 1px solid #cbd5e1;
+            padding: 10px 28px;
+            border-radius: 48px;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            font-weight: 500;
+        }
+
+        .game-services-row {
+            background: rgba(255,255,245,0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 42px;
+            padding: 32px 28px;
+            margin: 20px 0 40px;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .platform-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 20px 0 8px;
+        }
+
+        .platform-item {
+            background: white;
+            border-radius: 100px;
+            padding: 8px 20px;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Стили для пользовательского меню */
+        .user-menu-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            min-width: 220px;
+            display: none;
+            overflow: hidden;
+            z-index: 50;
+        }
+        
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        
+        .dropdown-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .dropdown-email {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        
+        .dropdown-balance {
+            font-size: 13px;
+            margin-top: 6px;
+            color: #f59e0b;
+            font-weight: 600;
+        }
+        
+        .dropdown-reviews {
+            font-size: 11px;
+            color: #10b981;
+            margin-top: 2px;
+        }
+        
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dropdown-item:hover {
+            background: #f1f5f9;
+        }
+        
+        .dropdown-item.logout {
+            border-top: 1px solid #e2e8f0;
+            color: #ef4444;
+        }
+        
+        .chevron {
+            transition: transform 0.2s;
+        }
+        
+        .user-menu-container:hover .chevron {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 760px) {
+            .hero h1 { font-size: 36px; }
+            .container { padding: 0 20px; }
+            .hero-inner { padding: 32px 24px; }
+            .user-name { display: none; }
+            .user-menu-container { gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+<div class="blur-object blur-3"></div>
+
+<header class="header">
+    <div class="container header-inner">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+			<div class="nav-links">
+				<a href="/" class="nav-link active">Главная</a>
+				<a href="/marketplace" class="nav-link">Маркетплейс</a>
+				<a href="/support" class="nav-link">Поддержка</a>
+				<a href="/media" class="nav-link">Медиа</a>
+			</div>
+        </div>
+		
+        <div id="authButtonContainer">
+            <button class="btn-download" id="downloadAppBtn">Авторизация</button>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <!-- HERO — маркетплейс, продажа и покупка цифровых товаров -->
+    <div class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="hero-badge">Крупнейший маркетплейс цифровых товаров</div>
+                <h1>Покупайте и продавайте игровую валюту, аккаунты, ключи и услуги с защитой сделки</h1>
+                <p style="font-size: 17px; color:#2d3a5e; margin-bottom: 28px;">
+                    NULLMARKET — прямая альтернатива многим торговым площадкам. Тысячи продавцов игровых ценностей, подписок, софта и доната. 
+                    Безопасная сделка, моментальные выплаты продавцам и полная гарантия для покупателей.
+                </p>
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <button class="btn-primary-dark" id="heroCta">Стать продавцом</button>
+                    <button class="btn-outline-light" id="learnMoreBtn">Как купить с гарантией</button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-number">1 500 000+</div>
+                <div style="font-weight: 600; margin-top: 6px;">товаров и услуг на маркетплейсе</div>
+                <div style="margin-top: 20px; height: 2px; background: radial-gradient(circle, #cbd5e1, transparent);"></div>
+                <div style="margin-top: 18px; font-size: 14px;">95% сделок с защитой — возврат средств при проблемах</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Спецблок: что продаём и покупаем — полный аналог FunPay -->
+    <div class="game-services-row">
+        <div style="font-size: 26px; font-weight: 700; margin-bottom: 10px;">NULLMARKET — всё как на многих маркетплейсах, только безопаснее и выгоднее</div>
+        <p style="font-size: 17px; margin-bottom: 20px;">Крупнейшая площадка для торговли цифровыми товарами: внутриигровая валюта (Robux, V-Bucks, голоса VK), аккаунты, игровые ключи, Premium-подписки, донаты, софт и услуги. Полный аналог FunPay с удобной системой споров и моментальным выводом средств.</p>
+        <div class="platform-icons">
+            <span class="platform-item">Steam-аккаунты</span>
+            <span class="platform-item">Roblox / Robux</span>
+            <span class="platform-item">Любые подписки</span>
+            <span class="platform-item">Игровые ключи</span>
+            <span class="platform-item">Донаты / Голоса</span>
+            <span class="platform-item">Прокачка и буст</span>
+            <span class="platform-item">Софт и лицензии</span>
+            <span class="platform-item">Аккаунты VK / Telegram</span>
+        </div>
+        <div class="bonus-chip" style="margin-top: 24px; background:#d9f99d;">+ Более 5000 активных продавцов цифровых товаров</div>
+    </div>
+
+    <!-- Две основные плашки: для покупателей и продавцов (маркетплейс) -->
+    <div class="section-title">Как работает NULLMARKET — маркетплейс цифровых товаров</div>
+    <div class="two-cols">
+        <div class="gradient-card">
+            <h3 style="font-size: 26px; margin: 0 0 10px 0;">Покупайте с гарантией</h3>
+            <p>Ищете, где купить игровую валюту или аккаунт? NULLMARKET — безопасная сделка: деньги заморожены до получения товара. Если продавец не передал товар — вернём полную сумму. Никаких рисков, как на сторонних площадках.</p>
+            <span class="accent-link" id="cardPayLink">Каталог товаров →</span>
+        </div>
+        <div class="gradient-card">
+            <h3 style="font-size: 26px; margin: 0 0 10px 0;">Продавайте и зарабатывайте</h3>
+            <p>Создавайте объявления на игры, софт, услуги. Комиссия ниже, чем у всех маркетплейсов. Мгновенный вывод на карту, баланс телефона или криптовалюту. Система отзывов и рейтинг продавцов для доверия.</p>
+            <span class="accent-link" id="splitLink">Открыть магазин →</span>
+        </div>
+    </div>
+
+    <!-- Кнопка перехода в маркет -->
+    <div class="pay-block">
+        <div>
+            <div style="font-size: 22px; font-weight: 700;">Ищете что-то конкретное?</div>
+            <p style="margin-top: 6px;">Тысячи лотов: от бюджетных аккаунтов до эксклюзивных предметов в CS2, Warframe, Genshin Impact.</p>
+        </div>
+        <button class="btn-primary-dark" id="storesBtn">Перейти в маркетплейс →</button>
+    </div>
+
+    <!-- Что ещё есть на NULLMARKET — преимущества перед FunPay -->
+    <div class="section-title">Почему NULLMARKET — лучшая альтернатива многим торговым площадкам?</div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>Защита покупателя и продавца</h3>
+            <p>Система «Безопасная сделка»: деньги списываются только после подтверждения получения товара. Арбитраж разрешает споры за 24 часа.</p>
+            <div class="bonus-chip" id="monthCategoriesBtn">Узнать детали</div>
+        </div>
+        <div class="feature-card">
+            <h3>Мгновенные выплаты</h3>
+            <p>Выводите средства на карты любых банков, СБП, USDT. Комиссия на вывод всего 8% — ниже чем у остальных маркетплейсов.</p>
+            <div class="bonus-chip" id="questionsBtn">Тарифы для продавцов</div>
+        </div>
+        <div class="feature-card">
+            <h3>Продвижение объявлений</h3>
+            <p>Внутренняя реклама лотов, буст в поиске, аналитика конверсий — продавайте быстрее.</p>
+            <div class="bonus-chip" id="monthBonusBtn">Как продвинуть товар</div>
+        </div>
+        <div class="feature-card">
+            <h3>Массовое выставление товаров</h3>
+            <p>API для продавцов и загрузка сотен объявлений через Excel. Удобно для крупных магазинов цифровых товаров.</p>
+            <div class="bonus-chip" id="travelFaqBtn">Для бизнеса</div>
+        </div>
+    </div>
+
+    <!-- Партнёрские интеграции — как на FunPay, но больше -->
+    <div class="partner-strip">
+        <div><strong style="font-size: 20px;">Интеграции с платёжными системами и популярными сервисами</strong><br>ЮMoney, Qiwi, криптовалюта, банковские карты, NULL Pay — любые способы оплаты для покупателей.</div>
+        <button class="btn-outline-light" id="partnersBtn" style="background: white;">Список партнёров →</button>
+    </div>
+
+    <!-- Блок про "Продавай как на FunPay" -->
+    <div class="subscribe-card">
+        <div style="position: relative; z-index: 2;">
+            <div style="font-size: 32px; font-weight: 800;">Продавай на NULLMARKET выгоднее, чем на FunPay</div>
+            <p style="margin: 12px 0 16px; max-width: 620px;">Ниже комиссия с продаж — всего 8% вместо 10-15%. Бесплатное размещение до 200 товаров в месяц. Персональный менеджер для крупных селлеров и ускоренная модерация.</p>
+            <button class="btn-primary-dark" id="plusDetailsBtn">Регистрация продавца</button>
+        </div>
+    </div>
+
+    <!-- Вклады для продавцов и покупателей -->
+    <div class="deposit-block">
+        <div>
+            <div style="font-size: 28px; font-weight: 700;">NULL Кошелёк — копите и тратьте на маркетплейсе</div>
+            <p style="margin-top: 8px; opacity: 0.9;">Пополняйте баланс и покупайте товары в 1 клик. Для продавцов — автоматические выплаты на внутренний счёт без комиссии.</p>
+        </div>
+        <button class="btn-download" id="depositBtn" style="background: #facc15; color: #0f172a; font-weight: 700;">Пополнить кошелёк</button>
+    </div>
+
+    <!-- FAQ про маркетплейс и FunPay -->
+    <div class="faq-section">
+        <div style="font-size: 32px; font-weight: 700;">Частые вопросы про NULLMARKET</div>
+        <div class="faq-grid">
+            <div><div style="font-weight: 700;">Чем NULLMARKET отличается от многих торговых площадок?</div><div>Ниже комиссия, быстрые выплаты, расширенная система защиты сделок и поддержка 24/7. Полный функционал FunPay + дополнительные инструменты для продавцов.</div></div>
+            <div><div style="font-weight: 700;">Можно ли продавать аккаунты игр?</div><div>Да! Любые аккаунты Steam, Battle.net, Riot, социальных сетей, игровые аккаунты — по правилам площадки с безопасной передачей данных.</div></div>
+            <div><div style="font-weight: 700;">Как получить выплату после продажи?</div><div>Сразу после подтверждения сделки покупателем, средства доступны к выводу на карту, СБП или криптовалюту (USDT, BTC).</div></div>
+            <div><div style="font-weight: 700;">Есть ли мобильное приложение?</div><div>Да, NULLMARKET доступен на iOS и Android. Полноценный маркетплейс, чат с покупателем, уведомления о продажах.</div></div>
+        </div>
+        <div style="display: flex; gap: 24px; margin-top: 36px;">
+            <button class="btn-outline-light" id="followBtn">Правила площадки</button>
+            <button class="btn-outline-light" id="createBtn">Открыть магазин бесплатно</button>
+        </div>
+    </div>
+
+    <!-- Управляйте продажами в одном месте -->
+    <div style="background: rgba(255,255,235,0.7); backdrop-filter: blur(16px); border-radius: 38px; padding: 28px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+        <div><span style="font-weight: 800; font-size: 24px;">NULLMARKET — всё для продажи цифровых товаров</span><br>Тысячи продавцов уже зарабатывают. Присоединяйтесь к крупнейшему маркетплейсу — NULLMARKET.</div>
+        <button class="btn-download" id="footerDownloadBtn" style="background:#1f2937;">Начать продавать</button>
+    </div>
+
+    <footer class="footer">
+        <div>© 2025-2026 NULLMARKET — маркетплейс цифровых товаров. Безопасные сделки, защита покупателей и продавцов.<br>Работаем по всему СНГ и миру.</div>
+        <div style="display: flex; gap: 32px;">
+            <span>Продавцам</span>
+            <span>Покупателям</span>
+            <span>Безопасность</span>
+        </div>
+    </footer>
+</main>
+
+<script>
+    // Переменная для хранения состояния авторизации
+    let isAuthenticated = false;
+    let currentUser = null;
+
+    // Уведомления
+    function notice(msg, isError = false) {
+        let div = document.createElement('div');
+        div.innerText = msg;
+        div.style.position = 'fixed';
+        div.style.bottom = '28px';
+        div.style.left = '50%';
+        div.style.transform = 'translateX(-50%)';
+        div.style.backgroundColor = isError ? '#dc2626' : '#181e2c';
+        div.style.color = '#f0f3fa';
+        div.style.padding = '12px 28px';
+        div.style.borderRadius = '56px';
+        div.style.fontSize = '14px';
+        div.style.fontWeight = '500';
+        div.style.zIndex = '9999';
+        div.style.backdropFilter = 'blur(12px)';
+        div.style.border = '1px solid rgba(255,255,255,0.2)';
+        div.style.boxShadow = '0 12px 18px -8px rgba(0,0,0,0.2)';
+        document.body.appendChild(div);
+        setTimeout(() => div.remove(), 2600);
+    }
+
+    // Функция для перехода в маркетплейс с проверкой авторизации
+    function goToMarketplace() {
+        if (isAuthenticated) {
+            window.location.href = '/marketplace.html';
+        } else {
+            window.location.href = '/auth';
+        }
+    }
+
+    // Функция для перехода в регистрацию продавца / маркетплейс
+    function goToSellerRegister() {
+        if (isAuthenticated) {
+            window.location.href = '/marketplace.html';
+        } else {
+            window.location.href = '/auth';
+        }
+    }
+
+    // Проверка авторизации
+    async function checkAuth() {
+        try {
+            const response = await fetch('/api/me');
+            if (response.ok) {
+                isAuthenticated = true;
+                currentUser = await response.json();
+                showUserMenu(currentUser);
+            } else {
+                isAuthenticated = false;
+                showAuthButton();
+            }
+        } catch(e) {
+            console.log('Ошибка проверки авторизации:', e);
+            isAuthenticated = false;
+            showAuthButton();
+        }
+    }
+    
+    function showAuthButton() {
+        const container = document.getElementById('authButtonContainer');
+        if (container) {
+            container.innerHTML = '<button class="btn-download" id="downloadAppBtn">Авторизация</button>';
+            const newBtn = document.getElementById('downloadAppBtn');
+            if (newBtn) {
+                newBtn.addEventListener('click', () => window.location.href = '/auth');
+            }
+        }
+    }
+    
+    function showUserMenu(user) {
+        const container = document.getElementById('authButtonContainer');
+        
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-menu-container';
+        userDiv.innerHTML = `
+            <img src="${user.avatar}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=40&rounded=true'">
+            <span class="user-name">${user.name}</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="user-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-name">${user.name}</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-balance">Баланс: ${user.balance || 0} ₽</div>
+                </div>
+                <div class="dropdown-item" data-action="purchases">
+                    Покупки
+                </div>
+                <div class="dropdown-item" data-action="sales">
+                    Продажи
+                </div>
+                <div class="dropdown-item" data-action="messages">
+                    Сообщения
+                </div>
+                <div class="dropdown-item" data-action="finance">
+                    Финансы
+                </div>
+                <div class="dropdown-item" data-action="profile" data-user-id="${user.user_id}">
+                    Профиль
+                </div>
+                <div class="dropdown-item logout" data-action="logout">
+                    Выйти
+                </div>
+            </div>
+        `;
+        
+        container.innerHTML = '';
+        container.appendChild(userDiv);
+        
+        const menuContainer = document.querySelector('.user-menu-container');
+        const dropdown = document.querySelector('.user-dropdown');
+        
+        menuContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdown.style.display === 'block';
+            dropdown.style.display = isOpen ? 'none' : 'block';
+        });
+        
+        document.addEventListener('click', () => {
+            dropdown.style.display = 'none';
+        });
+        
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                dropdown.style.display = 'none';
+                const action = item.dataset.action;
+                const userId = item.dataset.userId;
+                
+                switch(action) {
+                    case 'logout':
+                        try {
+                            await fetch('/api/logout', { method: 'POST' });
+                            isAuthenticated = false;
+                            currentUser = null;
+                            notice('Вы вышли из аккаунта');
+                            setTimeout(() => window.location.reload(), 1000);
+                        } catch(e) {
+                            notice('Ошибка при выходе', true);
+                        }
+                        break;
+                    case 'profile':
+                        if (userId) {
+                            window.location.href = `/user/${userId}`;
+                        } else {
+                            window.location.href = '/profile.html';
+                        }
+                        break;
+                    case 'purchases':
+                        notice('История покупок скоро появится');
+                        break;
+                    case 'sales':
+                        notice('Ваши продажи будут здесь');
+                        break;
+                    case 'messages':
+                        notice('Сообщения от покупателей');
+                        break;
+                    case 'finance':
+                        notice('Финансовые операции и вывод средств');
+                        break;
+                    default:
+                        notice(`Раздел "${item.innerText.trim()}" в разработке`);
+                }
+            });
+        });
+    }
+    
+    // Обработчики для кнопок с новой логикой
+    document.getElementById('heroCta')?.addEventListener('click', goToSellerRegister);
+    document.getElementById('storesBtn')?.addEventListener('click', goToMarketplace);
+    document.getElementById('plusDetailsBtn')?.addEventListener('click', goToSellerRegister);
+    
+    // Остальные обработчики (без изменений)
+    document.getElementById('learnMoreBtn')?.addEventListener('click', () => notice('Как работает защита сделки: покупатель переводит деньги на счёт NULLMARKET, продавец передаёт товар, после подтверждения — выплата.'));
+    document.getElementById('cardPayLink')?.addEventListener('click', (e) => { e.preventDefault(); notice('Каталог товаров: игры, аккаунты, подписки, софт, ключи, донат. Более 1.5 млн объявлений.'); });
+    document.getElementById('splitLink')?.addEventListener('click', (e) => { e.preventDefault(); notice('Открыть магазин: настройка витрины, управление ценами, аналитика продаж. Регистрация за 2 минуты.'); });
+    document.getElementById('monthCategoriesBtn')?.addEventListener('click', () => notice('Система безопасности сделки: эскроу-сервис, арбитраж и возврат средств при неисполнении условий.'));
+    document.getElementById('questionsBtn')?.addEventListener('click', () => notice('Комиссия для продавцов: 3% от суммы сделки. Вывод средств: от 0.5%.'));
+    document.getElementById('monthBonusBtn')?.addEventListener('click', () => notice('Платное продвижение: поднятие в поиске, баннеры на главной, спецметки для ваших товаров.'));
+    document.getElementById('travelFaqBtn')?.addEventListener('click', () => notice('API для селлеров: загрузка товаров через Excel и интеграция с CRM. Быстрая модерация.'));
+    document.getElementById('partnersBtn')?.addEventListener('click', () => notice('Партнёры NULLMARKET: платёжные системы, криптобиржи, маркетплейсы — полная интеграция.'));
+    document.getElementById('depositBtn')?.addEventListener('click', () => notice('NULL Кошелёк: удобные покупки и выплаты. Пополните баланс и покупайте товары без комиссии за транзакцию.'));
+    document.getElementById('followBtn')?.addEventListener('click', () => notice('Запрещённые товары: читы, фишинг, краденые аккаунты. Изучите полные правила площадки.'));
+    document.getElementById('createBtn')?.addEventListener('click', () => notice('Откройте магазин на NULLMARKET: регистрация занимает 2 минуты. Начните продавать цифровые товары как на FunPay, но с большей выгодой!'));
+    document.getElementById('footerDownloadBtn')?.addEventListener('click', () => notice('Переходите на NULLMARKET — лучший аналог FunPay для продажи игровых валют, аккаунтов и сервисов.'));
+    
+    // Запуск проверки авторизации
+    document.addEventListener('DOMContentLoaded', checkAuth);
+</script>
+</body>
+</html>

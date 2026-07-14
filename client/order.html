@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Заказ — NULLMARKET</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f0f2f5;
+            color: #0f1419;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        /* ============ HEADER ============ */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e1e8ed;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: #657786;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .header-nav a:hover {
+            color: #1da1f2;
+        }
+
+        .header-nav a.active {
+            color: #1da1f2;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-back {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            background: #e2e8f0;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 4px 12px 4px 4px;
+            border-radius: 24px;
+            border: 1px solid #e1e8ed;
+            transition: border-color 0.15s;
+        }
+
+        .user-menu:hover {
+            border-color: #1da1f2;
+        }
+
+        .user-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-name-small {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .user-menu-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            min-width: 200px;
+            border: 1px solid #e1e8ed;
+            z-index: 200;
+        }
+
+        .user-menu-dropdown.open {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background 0.1s;
+            font-size: 14px;
+            color: #0f1419;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f8fa;
+        }
+
+        .dropdown-item.logout {
+            border-top: 1px solid #e1e8ed;
+            color: #e0245e;
+        }
+
+        /* ============ MAIN ============ */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            display: flex;
+            gap: 28px;
+        }
+
+        .order-content {
+            flex: 2;
+            min-width: 0;
+        }
+
+        .order-sidebar {
+            flex: 1;
+            min-width: 280px;
+            max-width: 360px;
+        }
+
+        /* ============ ORDER CARD ============ */
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge.pending {
+            background: #f5a623;
+            color: white;
+        }
+
+        .badge.completed {
+            background: #17bf63;
+            color: white;
+        }
+
+        .badge.refunded {
+            background: #94a3b8;
+            color: white;
+        }
+
+        .badge.closed {
+            background: #e0245e;
+            color: white;
+        }
+
+        .order-number {
+            font-size: 13px;
+            color: #657786;
+            font-weight: 500;
+        }
+
+        .order-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 4px 0 6px;
+            color: #0f1419;
+        }
+
+        .order-meta {
+            color: #657786;
+            font-size: 13px;
+        }
+
+        .order-meta span {
+            margin-right: 12px;
+        }
+
+        /* ============ DETAILS ============ */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 24px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 14px;
+            border-bottom: 1px solid #f5f8fa;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #657786;
+            font-weight: 400;
+        }
+
+        .detail-value {
+            font-weight: 500;
+            color: #0f1419;
+            text-align: right;
+        }
+
+        .detail-value.price {
+            color: #f5a623;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .detail-value .highlight {
+            color: #1da1f2;
+        }
+
+        /* ============ ESCROW INFO ============ */
+        .escrow-info {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 14px 16px;
+            border: 1px solid #d4e9ff;
+            margin-top: 12px;
+        }
+
+        .escrow-title {
+            font-weight: 700;
+            color: #1a5c9e;
+            font-size: 14px;
+        }
+
+        .escrow-text {
+            font-size: 13px;
+            color: #1a5c9e;
+            margin-top: 4px;
+        }
+
+        /* ============ CREDENTIALS ============ */
+        .credentials-block {
+            background: #fef8e7;
+            border-radius: 8px;
+            padding: 14px 16px;
+            border: 1px solid #f5d89a;
+            margin-top: 12px;
+        }
+
+        .credentials-block .cred-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: #8a6d1b;
+        }
+
+        .credentials-block .cred-row {
+            font-size: 14px;
+            padding: 3px 0;
+            font-family: 'SF Mono', 'Menlo', monospace;
+            color: #1e293b;
+        }
+
+        .credentials-block .cred-warning {
+            font-size: 12px;
+            color: #8a6d1b;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* ============ DESCRIPTION ============ */
+        .description-text {
+            white-space: pre-wrap;
+            font-size: 14px;
+            color: #1e293b;
+            line-height: 1.6;
+            background: #fafbfc;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+        }
+
+        /* ============ HISTORY ============ */
+        .history-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #f5f8fa;
+            font-size: 14px;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-item .time {
+            color: #657786;
+            font-size: 12px;
+        }
+
+        .history-item .text {
+            color: #0f1419;
+            margin-top: 2px;
+        }
+
+        .history-item .text.system {
+            color: #657786;
+            font-style: italic;
+        }
+
+        /* ============ BUTTONS ============ */
+        .order-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+        }
+
+        .btn-confirm {
+            background: #17bf63;
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background: #13a854;
+        }
+
+        .btn-refund {
+            background: #e0245e;
+            color: white;
+        }
+
+        .btn-refund:hover {
+            background: #c01e4f;
+        }
+
+        .btn-admin {
+            background: #1da1f2;
+            color: white;
+        }
+
+        .btn-admin:hover {
+            background: #1a8cd4;
+        }
+
+        .btn-admin-refund {
+            background: #f5a623;
+            color: white;
+        }
+
+        .btn-admin-refund:hover {
+            background: #d9951e;
+        }
+
+        /* ============ SELLER CARD ============ */
+        .seller-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+        }
+
+        .seller-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .seller-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .seller-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .seller-status {
+            font-size: 12px;
+        }
+
+        .seller-status.online {
+            color: #17bf63;
+        }
+
+        .seller-status.offline {
+            color: #657786;
+        }
+
+        .seller-stats {
+            font-size: 13px;
+            color: #657786;
+            margin-top: 6px;
+        }
+
+        .seller-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .seller-actions button,
+        .seller-actions a {
+            background: #f5f8fa;
+            border: 1px solid #e1e8ed;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-decoration: none;
+            color: #0f1419;
+        }
+
+        .seller-actions button:hover,
+        .seller-actions a:hover {
+            background: #e8edf2;
+        }
+
+        /* ============ CHAT ============ */
+        .chat-container {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 460px;
+        }
+
+        .chat-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e1e8ed;
+            font-weight: 700;
+            font-size: 14px;
+            background: #fafbfc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 12px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: #ffffff;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 8px 14px;
+            border-radius: 16px;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+
+        .chat-message.own {
+            align-self: flex-end;
+            background: #1da1f2;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.other {
+            align-self: flex-start;
+            background: #f5f8fa;
+            color: #0f1419;
+            border: 1px solid #e1e8ed;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message.system {
+            align-self: center;
+            background: #f5f8fa;
+            color: #657786;
+            font-style: italic;
+            font-size: 13px;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .chat-message .time {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 3px;
+            display: block;
+        }
+
+        .chat-input-area {
+            padding: 10px 12px;
+            border-top: 1px solid #e1e8ed;
+            background: white;
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 8px 14px;
+            border: 1px solid #e1e8ed;
+            border-radius: 20px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border 0.2s;
+        }
+
+        .chat-input-area input:focus {
+            outline: none;
+            border-color: #1da1f2;
+        }
+
+        .chat-input-area button {
+            background: #1da1f2;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .chat-input-area button:hover {
+            background: #1a8cd4;
+        }
+
+        .chat-input-area button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .empty-chat {
+            text-align: center;
+            color: #657786;
+            padding: 30px 20px;
+            font-size: 14px;
+        }
+
+        .empty-chat p:first-child {
+            font-weight: 600;
+            color: #0f1419;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #657786;
+        }
+
+        .error-state {
+            text-align: center;
+            padding: 40px;
+            color: #e0245e;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+                padding: 16px;
+            }
+            .order-sidebar {
+                max-width: 100%;
+                min-width: 0;
+            }
+            .chat-container {
+                height: 380px;
+            }
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+            .header-nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-inner {
+                padding: 8px 12px;
+            }
+            .order-title {
+                font-size: 18px;
+            }
+            .card {
+                padding: 14px 16px;
+            }
+            .detail-value.price {
+                font-size: 16px;
+            }
+            .user-name-small {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+    <div class="header-inner">
+        <div class="header-left">
+            <a href="/" class="logo">NULLMARKET</a>
+            <div class="header-nav">
+                <a href="/">Главная</a>
+                <a href="/marketplace" class="active">Маркетплейс</a>
+                <a href="/support">Поддержка</a>
+                <a href="/media">Медиа</a>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="/marketplace" class="btn-back">← Назад</a>
+            <div id="authButtonContainer">
+                <div class="loading" style="padding: 0; font-size: 13px;">Загрузка...</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ============ MAIN ============ -->
+<div class="main-container">
+    <div class="order-content">
+
+        <!-- Информация о заказе -->
+        <div class="card" id="orderInfo">
+            <div class="loading">Загрузка заказа...</div>
+        </div>
+
+        <!-- Детали -->
+        <div class="card" id="orderDetails">
+            <div class="loading">Загрузка деталей...</div>
+        </div>
+
+        <!-- Описание -->
+        <div class="card" id="orderDescription">
+            <div class="loading">Загрузка описания...</div>
+        </div>
+
+        <!-- История -->
+        <div class="card" id="orderHistory">
+            <div class="loading">Загрузка истории...</div>
+        </div>
+    </div>
+
+    <div class="order-sidebar">
+        <!-- Продавец -->
+        <div class="seller-card" id="sellerInfo">
+            <div class="loading">Загрузка продавца...</div>
+        </div>
+
+        <!-- Чат -->
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header" id="chatHeader">
+                <span>Чат с продавцом</span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="empty-chat">Загрузка сообщений...</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Написать сообщение..." />
+                <button id="chatSendBtn">Отправить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+    // ============================================================
+    const orderNumber = window.location.pathname.split('/').pop();
+    let currentUser = null;
+    let orderData = null;
+    let chatId = null;
+    let pollInterval = null;
+
+    // ============================================================
+    // API ВСПОМОГАТЕЛЬ
+    // ============================================================
+    async function apiCall(endpoint, options = {}) {
+        const response = await fetch(endpoint, {
+            headers: { 'Content-Type': 'application/json' },
+            ...options
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Ошибка запроса');
+        return data;
+    }
+
+    function notice(msg, isError = false) {
+        let div = document.createElement('div');
+        div.innerText = msg;
+        div.style.position = 'fixed';
+        div.style.bottom = '20px';
+        div.style.left = '50%';
+        div.style.transform = 'translateX(-50%)';
+        div.style.backgroundColor = isError ? '#e0245e' : '#0f1419';
+        div.style.color = 'white';
+        div.style.padding = '10px 24px';
+        div.style.borderRadius = '24px';
+        div.style.fontSize = '14px';
+        div.style.fontWeight = '500';
+        div.style.zIndex = '9999';
+        div.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        document.body.appendChild(div);
+        setTimeout(() => div.remove(), 2600);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        const date = new Date(dateStr);
+        return date.toLocaleString('ru-RU', {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    function getStatusInfo(status) {
+        const map = {
+            'pending': { label: 'Средства заморожены', class: 'pending' },
+            'completed': { label: 'Завершён', class: 'completed' },
+            'refunded': { label: 'Деньги возвращены', class: 'refunded' },
+            'closed': { label: 'Закрыт', class: 'closed' }
+        };
+        return map[status] || map.pending;
+    }
+
+    // ============================================================
+    // АВТОРИЗАЦИЯ
+    // ============================================================
+    async function getCurrentUser() {
+        try {
+            const response = await fetch('/api/me');
+            if (response.ok) {
+                currentUser = await response.json();
+                showUserMenu(currentUser);
+                return currentUser;
+            }
+        } catch(e) {
+            console.error('Ошибка получения пользователя:', e);
+        }
+        showAuthButton();
+        return null;
+    }
+
+    function showAuthButton() {
+        const container = document.getElementById('authButtonContainer');
+        if (container) {
+            container.innerHTML = '<button class="btn-back" onclick="window.location.href=\'/auth\'" style="background:#1da1f2; color:white; border:none; padding:6px 18px;">Войти</button>';
+        }
+    }
+
+    function showUserMenu(user) {
+        const container = document.getElementById('authButtonContainer');
+        if (!container) return;
+
+        const div = document.createElement('div');
+        div.style.position = 'relative';
+        div.innerHTML = `
+            <div class="user-menu" onclick="this.querySelector('.user-menu-dropdown').classList.toggle('open')">
+                <img src="${user.avatar || 'https://ui-avatars.com/api/?background=4f46e5&color=fff&name=' + encodeURIComponent(user.name)}" class="user-avatar-small" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=28'">
+                <span class="user-name-small">${user.name}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <div class="user-menu-dropdown">
+                    <div class="dropdown-item" onclick="window.location.href='/user/${user.user_id}'">Мой профиль</div>
+                    <div class="dropdown-item" onclick="window.location.href='/finances'">Финансы</div>
+                    <div class="dropdown-item logout" onclick="logout()">Выйти</div>
+                </div>
+            </div>
+        `;
+        container.innerHTML = '';
+        container.appendChild(div);
+    }
+
+    async function logout() {
+        await fetch('/api/logout', { method: 'POST' });
+        window.location.reload();
+    }
+
+    // ============================================================
+    // ЗАГРУЗКА ЗАКАЗА
+    // ============================================================
+    async function loadOrder() {
+        try {
+            const order = await apiCall(`/api/orders/${orderNumber}`);
+            orderData = order;
+
+            let history = [];
+            try {
+                history = await apiCall(`/api/orders/${orderNumber}/history`);
+            } catch(e) {
+                console.log('История не найдена');
+            }
+            orderData.history = history || [];
+
+            await findOrCreateChat();
+
+            renderOrder();
+            loadChat();
+
+        } catch(e) {
+            console.error('Ошибка загрузки заказа:', e);
+            document.getElementById('orderInfo').innerHTML = `
+                <div class="error-state">
+                    <strong>Ошибка загрузки заказа</strong>
+                    <p style="margin-top:8px; font-size:13px;">${e.message}</p>
+                    <button onclick="location.reload()" style="margin-top:12px; padding:6px 18px; border-radius:20px; border:1px solid #e1e8ed; background:white; cursor:pointer;">Обновить</button>
+                </div>
+            `;
+        }
+    }
+
+    // ============================================================
+    // ПОИСК ИЛИ СОЗДАНИЕ ЧАТА
+    // ============================================================
+    async function findOrCreateChat() {
+        if (!currentUser || !orderData) return;
+
+        try {
+            const chats = await apiCall('/api/chats');
+            if (chats && chats.length > 0) {
+                const foundChat = chats.find(c =>
+                    (c.user1_id === currentUser.id && c.user2_id === orderData.seller_id) ||
+                    (c.user2_id === currentUser.id && c.user1_id === orderData.seller_id)
+                );
+                if (foundChat) {
+                    chatId = foundChat.id;
+                    console.log('Чат найден:', chatId);
+                    return;
+                }
+            }
+
+            console.log('Создаём новый чат...');
+            const result = await apiCall('/api/chats', {
+                method: 'POST',
+                body: JSON.stringify({
+                    otherUserId: orderData.seller_id,
+                    itemId: orderData.item_id || 1,
+                    initialMessage: `Здравствуйте! Я заказал "${orderData.item_title}" (#${orderNumber})`
+                })
+            });
+            if (result.chat_id) {
+                chatId = result.chat_id;
+                console.log('Чат создан:', chatId);
+            }
+        } catch(e) {
+            console.log('Ошибка поиска/создания чата:', e.message);
+        }
+    }
+
+    // ============================================================
+    // ОТОБРАЖЕНИЕ ЗАКАЗА (FunPay стиль)
+    // ============================================================
+    function renderOrder() {
+        const order = orderData;
+        const status = getStatusInfo(order.status);
+        const isBuyer = currentUser?.id === order.buyer_id;
+        const isSeller = currentUser?.id === order.seller_id;
+        const isAdmin = currentUser?.role && ['tech_admin', 'developer', 'ceo', 'board_of_directors', 'head_support', 'head_moderation'].includes(currentUser.role);
+
+        // ===== ОСНОВНАЯ ИНФОРМАЦИЯ =====
+        document.getElementById('orderInfo').innerHTML = `
+            <div class="card-header">
+                <span class="badge ${status.class}">${status.label}</span>
+                <span class="order-number">Заказ #${order.order_number}</span>
+                ${isBuyer ? '<span style="font-size:11px; background:#dbeafe; color:#1d4ed8; padding:2px 10px; border-radius:12px;">Вы покупатель</span>' : ''}
+                ${isSeller ? '<span style="font-size:11px; background:#d1fae5; color:#065f46; padding:2px 10px; border-radius:12px;">Вы продавец</span>' : ''}
+                ${isAdmin ? '<span style="font-size:11px; background:#fef3c7; color:#92400e; padding:2px 10px; border-radius:12px;">Админ</span>' : ''}
+            </div>
+            <div class="order-title">${escapeHtml(order.item_title || 'Товар')}</div>
+            <div class="order-meta">
+                <span>Создан: ${formatDate(order.created_at)}</span>
+                ${order.closed_at ? `<span>Закрыт: ${formatDate(order.closed_at)}</span>` : ''}
+                ${order.confirmed_at ? `<span>Подтверждён: ${formatDate(order.confirmed_at)}</span>` : ''}
+                ${order.refunded_at ? `<span>Возврат: ${formatDate(order.refunded_at)}</span>` : ''}
+            </div>
+        `;
+
+        // ===== ДЕТАЛИ =====
+        const details = [
+            { label: 'Оплата', value: 'Эскроу (заморожено)' },
+            { label: 'Игра', value: order.game_name || 'Не указано' },
+            { label: 'Категория', value: order.category_name || 'Не указано' },
+            { label: 'Статус', value: status.label },
+        ];
+
+        document.getElementById('orderDetails').innerHTML = `
+            <h4 style="margin-bottom:12px; font-size:15px; font-weight:600;">Детали заказа</h4>
+            <div class="details-grid">
+                ${details.map(d => `
+                    <div class="detail-row">
+                        <span class="detail-label">${d.label}</span>
+                        <span class="detail-value">${d.value}</span>
+                    </div>
+                `).join('')}
+                <div class="detail-row">
+                    <span class="detail-label">Сумма</span>
+                    <span class="detail-value price">${order.price} ₽ ${order.status === 'pending' ? '(заморожено)' : ''}</span>
+                </div>
+            </div>
+            ${order.status === 'pending' ? `
+                <div class="escrow-info">
+                    <div class="escrow-title">Деньги заморожены в системе</div>
+                    <div class="escrow-text">
+                        Средства списаны с вашего баланса и временно заморожены до подтверждения сделки.
+                        ${isBuyer ? 'Подтвердите получение товара, чтобы деньги поступили продавцу.' : ''}
+                        ${isSeller ? 'Деньги будут переведены вам после подтверждения покупателем.' : ''}
+                    </div>
+                </div>
+            ` : ''}
+            ${isBuyer && order.status === 'pending' ? `
+                <div class="order-actions">
+                    <button class="btn btn-confirm" onclick="confirmOrder()">Подтвердить получение</button>
+                    <button class="btn btn-refund" onclick="requestRefund()">Запросить возврат</button>
+                </div>
+            ` : ''}
+            ${isSeller && order.status === 'pending' ? `
+                <div class="order-actions">
+                    <button class="btn btn-refund" onclick="refundOrder()">Вернуть деньги покупателю</button>
+                </div>
+            ` : ''}
+            ${isAdmin && order.status === 'pending' ? `
+                <div class="order-actions">
+                    <button class="btn btn-admin" onclick="adminResolve('release')">Перевести деньги продавцу</button>
+                    <button class="btn btn-admin-refund" onclick="adminResolve('refund')">Вернуть деньги покупателю</button>
+                </div>
+            ` : ''}
+        `;
+
+        // ===== ОПИСАНИЕ =====
+        let credentialsHtml = '';
+        if (order.credentials) {
+            try {
+                const creds = JSON.parse(order.credentials);
+                credentialsHtml = `
+                    <div class="credentials-block">
+                        <div class="cred-title">Данные доступа</div>
+                        ${Object.entries(creds).map(([key, value]) => `
+                            <div class="cred-row">${escapeHtml(key)}: ${escapeHtml(value)}</div>
+                        `).join('')}
+                        <div class="cred-warning">Пароль лучше менять сразу! После выдачи ответственность за аккаунты не несём.</div>
+                    </div>
+                `;
+            } catch(e) {
+                credentialsHtml = `
+                    <div class="credentials-block">
+                        <div class="cred-title">Данные доступа</div>
+                        <div style="font-size:13px; margin-top:8px; white-space:pre-wrap;">${escapeHtml(order.credentials)}</div>
+                        <div class="cred-warning">Пароль лучше менять сразу! После выдачи ответственность за аккаунты не несём.</div>
+                    </div>
+                `;
+            }
+        }
+
+        document.getElementById('orderDescription').innerHTML = `
+            <h4 style="margin-bottom:12px; font-size:15px; font-weight:600;">Подробное описание</h4>
+            <div class="description-text">${escapeHtml(order.item_description || 'Описание не указано')}</div>
+            ${credentialsHtml}
+        `;
+
+        // ===== ИСТОРИЯ =====
+        document.getElementById('orderHistory').innerHTML = `
+            <h4 style="margin-bottom:12px; font-size:15px; font-weight:600;">История заказа</h4>
+            ${order.history && order.history.length > 0 ? order.history.map(h => `
+                <div class="history-item">
+                    <div class="time">${formatDate(h.created_at)}</div>
+                    <div class="text ${h.from_user === 'system' ? 'system' : ''}">${escapeHtml(h.text)}</div>
+                </div>
+            `).join('') : '<div style="color:#657786; padding:12px 0;">История пуста</div>'}
+        `;
+
+        // ===== ПРОДАВЕЦ =====
+        document.getElementById('sellerInfo').innerHTML = `
+            <div class="seller-header">
+                <img src="${order.seller_avatar || 'https://ui-avatars.com/api/?background=4f46e5&color=fff&name=' + encodeURIComponent(order.seller_name)}" class="seller-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(order.seller_name)}&size=48'">
+                <div>
+                    <div class="seller-name">${escapeHtml(order.seller_name || 'Продавец')}</div>
+                    <div class="seller-status online">Онлайн</div>
+                </div>
+            </div>
+            <div class="seller-stats">${order.seller_reviews || 0} отзывов</div>
+            <div class="seller-actions">
+                <button onclick="notice('Уведомления включены')">Включить оповещение</button>
+                <a href="/user/${order.seller_uid || order.seller_id}">Профиль</a>
+            </div>
+        `;
+
+        // ===== ЧАТ — ЗАГОЛОВОК =====
+        const chatHeader = document.getElementById('chatHeader');
+        chatHeader.innerHTML = `
+            <img src="${order.seller_avatar || 'https://ui-avatars.com/api/?background=4f46e5&color=fff&name=' + encodeURIComponent(order.seller_name)}" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(order.seller_name)}&size=28'">
+            <span>Чат с ${escapeHtml(order.seller_name || 'продавцом')}</span>
+        `;
+    }
+
+    // ============================================================
+    // ЗАГРУЗКА ЧАТА
+    // ============================================================
+    async function loadChat() {
+        const container = document.getElementById('chatMessages');
+
+        if (!chatId) {
+            container.innerHTML = `
+                <div class="empty-chat">
+                    <p>Чат с продавцом</p>
+                    <p style="font-size:12px; margin-top:4px;">Напишите продавцу, чтобы начать диалог</p>
+                </div>
+            `;
+            return;
+        }
+
+        try {
+            const data = await apiCall(`/api/chats/${chatId}/messages`);
+            renderMessages(data.messages || []);
+
+            if (pollInterval) clearInterval(pollInterval);
+            pollInterval = setInterval(async () => {
+                try {
+                    const newData = await apiCall(`/api/chats/${chatId}/messages`);
+                    renderMessages(newData.messages || []);
+                } catch(e) {}
+            }, 5000);
+
+        } catch(e) {
+            console.error('Ошибка загрузки сообщений:', e);
+            container.innerHTML = '<div class="empty-chat">Ошибка загрузки сообщений</div>';
+        }
+    }
+
+    function renderMessages(messages) {
+        const container = document.getElementById('chatMessages');
+        if (!messages || messages.length === 0) {
+            container.innerHTML = `
+                <div class="empty-chat">
+                    <p>Нет сообщений</p>
+                    <p style="font-size:12px; margin-top:4px;">Начните диалог с продавцом</p>
+                </div>
+            `;
+            return;
+        }
+
+        const userId = currentUser?.id;
+        container.innerHTML = messages.map(msg => {
+            let className = 'other';
+            if (msg.sender_id === userId) className = 'own';
+            else if (msg.sender_id === 1) className = 'system';
+            return `
+                <div class="chat-message ${className}">
+                    ${escapeHtml(msg.message)}
+                    <span class="time">${formatDate(msg.created_at)}</span>
+                </div>
+            `;
+        }).join('');
+        container.scrollTop = container.scrollHeight;
+    }
+
+    // ============================================================
+    // ОТПРАВКА СООБЩЕНИЯ
+    // ============================================================
+    document.getElementById('chatSendBtn')?.addEventListener('click', sendMessage);
+    document.getElementById('chatInput')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    async function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text || !chatId) {
+            if (!chatId) notice('Чат ещё не создан', true);
+            return;
+        }
+
+        const btn = document.getElementById('chatSendBtn');
+        btn.disabled = true;
+
+        try {
+            await apiCall(`/api/chats/${chatId}/messages`, {
+                method: 'POST',
+                body: JSON.stringify({ message: text })
+            });
+            input.value = '';
+            const data = await apiCall(`/api/chats/${chatId}/messages`);
+            renderMessages(data.messages || []);
+        } catch(e) {
+            notice('Ошибка отправки: ' + e.message, true);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    // ============================================================
+    // ДЕЙСТВИЯ С ЗАКАЗОМ
+    // ============================================================
+    window.confirmOrder = async function() {
+        if (!confirm('Вы подтверждаете получение товара? Деньги будут переведены продавцу.')) return;
+        try {
+            const result = await apiCall(`/api/orders/${orderNumber}/confirm`, { method: 'POST' });
+            notice(result.message);
+            setTimeout(() => loadOrder(), 1000);
+        } catch(e) {
+            notice('Ошибка: ' + e.message, true);
+        }
+    };
+
+    window.refundOrder = async function() {
+        if (!confirm('Вы уверены, что хотите вернуть деньги покупателю?')) return;
+        try {
+            const result = await apiCall(`/api/orders/${orderNumber}/refund`, { method: 'POST' });
+            notice(result.message);
+            setTimeout(() => loadOrder(), 1000);
+        } catch(e) {
+            notice('Ошибка: ' + e.message, true);
+        }
+    };
+
+    window.requestRefund = async function() {
+        if (!confirm('Вы уверены, что хотите запросить возврат средств?')) return;
+        try {
+            const result = await apiCall(`/api/orders/${orderNumber}/refund`, { method: 'POST' });
+            notice(result.message);
+            setTimeout(() => loadOrder(), 1000);
+        } catch(e) {
+            notice('Ошибка: ' + e.message, true);
+        }
+    };
+
+    window.adminResolve = async function(action) {
+        const actionText = action === 'release' ? 'перевести деньги продавцу' : 'вернуть деньги покупателю';
+        if (!confirm(`Вы уверены, что хотите ${actionText}?`)) return;
+        try {
+            const result = await apiCall(`/api/admin/orders/${orderNumber}/resolve`, {
+                method: 'POST',
+                body: JSON.stringify({ action })
+            });
+            notice(result.message);
+            setTimeout(() => loadOrder(), 1000);
+        } catch(e) {
+            notice('Ошибка: ' + e.message, true);
+        }
+    };
+
+    // ============================================================
+    // ИНИЦИАЛИЗАЦИЯ
+    // ============================================================
+    async function init() {
+        await getCurrentUser();
+        await loadOrder();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+    window.addEventListener('beforeunload', () => {
+        if (pollInterval) clearInterval(pollInterval);
+    });
+</script>
+
+</body>
+</html>

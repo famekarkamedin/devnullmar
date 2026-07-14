@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Правила NULLMARKET — полные условия использования</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f5f7fc 0%, #eef2f8 100%);
+            color: #121826;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #818cf8, #4f46e5);
+            top: -150px;
+            left: -150px;
+        }
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f97316, #facc15);
+            bottom: -250px;
+            right: -200px;
+            opacity: 0.3;
+        }
+        .blur-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2dd4bf, #14b8a6);
+            top: 40%;
+            left: 60%;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: #4f46e5; }
+        .nav-link.active { color: #4f46e5; font-weight: 600; }
+
+        .btn-download {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .btn-download:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .user-menu-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+        }
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            min-width: 200px;
+            display: none;
+            overflow: hidden;
+            z-index: 50;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        .dropdown-name { font-weight: 700; font-size: 14px; }
+        .dropdown-email { font-size: 11px; color: #64748b; margin-top: 2px; }
+        .dropdown-balance { font-size: 12px; margin-top: 6px; color: #f59e0b; font-weight: 600; }
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 14px;
+        }
+        .dropdown-item:hover { background: #f1f5f9; }
+        .dropdown-item.logout { border-top: 1px solid #e2e8f0; color: #ef4444; }
+
+        .rules-wrapper {
+            padding: 40px 0 60px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.2);
+            padding: 40px 36px;
+            margin-bottom: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15);
+        }
+
+        .rules-hero {
+            text-align: center;
+            padding: 48px 36px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rules-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(79, 70, 229, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .rules-hero .hero-badge {
+            display: inline-block;
+            background: linear-gradient(95deg, #e0e7ff, #ede9fe);
+            border-radius: 40px;
+            padding: 4px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4338ca;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .rules-hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(115deg, #111827, #2d3a5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .rules-hero p {
+            color: #475569;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .rules-hero .last-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #94a3b8;
+            background: #f8fafc;
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .rules-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .rules-nav a {
+            color: #475569;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid #e2e8f0;
+        }
+
+        .rules-nav a:hover {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79,70,229,0.2);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .glass-card h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .glass-card .section-desc {
+            color: #64748b;
+            font-size: 15px;
+            margin-bottom: 24px;
+            padding-left: 50px;
+        }
+
+        .glass-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 28px 0 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(79,70,229,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .glass-card h3 .sub-number {
+            font-size: 13px;
+            color: #4f46e5;
+            font-weight: 700;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 20px;
+            background: rgba(248, 250, 252, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            margin-bottom: 12px;
+            border-left: 4px solid #4f46e5;
+            transition: all 0.2s;
+        }
+
+        .rule-item:hover {
+            background: #f1f5f9;
+            transform: translateX(6px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .rule-item .rule-number {
+            font-weight: 700;
+            color: #4f46e5;
+            font-size: 14px;
+            min-width: 60px;
+            flex-shrink: 0;
+            font-family: monospace;
+        }
+
+        .rule-item .rule-text {
+            color: #1e293b;
+            font-size: 14px;
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .rule-item .rule-sanction {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 40px;
+            padding: 4px 16px;
+            font-size: 12px;
+            color: #b91c1c;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .rule-item .rule-sanction.warning {
+            background: #fef3c7;
+            border-color: #fde68a;
+            color: #92400e;
+        }
+
+        .rule-item .rule-sanction.success {
+            background: #dcfce7;
+            border-color: #bbf7d0;
+            color: #166534;
+        }
+
+        .rule-item .rule-sanction.info {
+            background: #dbeafe;
+            border-color: #93c5fd;
+            color: #1e40af;
+        }
+
+        .sub-rule {
+            padding-left: 40px;
+            border-left-color: #818cf8;
+            background: rgba(248, 250, 252, 0.5);
+        }
+
+        .sub-rule .rule-number {
+            color: #818cf8;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 16px 0 24px;
+            border-radius: 20px;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        .rules-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .rules-table thead {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .rules-table th {
+            padding: 14px 18px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .rules-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            color: #334155;
+            vertical-align: top;
+        }
+
+        .rules-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rules-table .sanction-cell {
+            font-size: 12px;
+            font-weight: 600;
+            color: #b91c1c;
+            background: #fef2f2;
+            border-radius: 40px;
+            padding: 4px 14px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .rules-table .sanction-cell.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .rules-table .sanction-cell.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .rules-table .sanction-cell.info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .rules-footer {
+            text-align: center;
+            padding: 32px 0 16px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            margin-top: 16px;
+        }
+
+        .rules-footer p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        @media (max-width: 760px) {
+            .container { padding: 0 16px; }
+            .glass-card { padding: 24px 20px; border-radius: 32px; }
+            .rules-hero { padding: 28px 20px; }
+            .rules-hero h1 { font-size: 28px; }
+            .rule-item { flex-wrap: wrap; padding: 14px 16px; }
+            .rule-item .rule-sanction { white-space: normal; width: 100%; text-align: center; margin-top: 6px; }
+            .sub-rule { padding-left: 16px; }
+            .rules-table { font-size: 12px; }
+            .rules-table th, .rules-table td { padding: 10px 12px; }
+            .rules-nav { gap: 6px; padding: 12px 14px; border-radius: 28px; }
+            .rules-nav a { font-size: 12px; padding: 4px 12px; }
+            .section-number { width: 28px; height: 28px; font-size: 12px; }
+            .glass-card .section-desc { padding-left: 0; }
+            .user-name { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .rules-hero h1 { font-size: 24px; }
+            .glass-card h2 { font-size: 20px; }
+            .rule-item .rule-number { min-width: 40px; font-size: 12px; }
+            .rules-nav a { font-size: 11px; padding: 3px 10px; }
+        }
+    </style>
+</head>
+<body>
+<div class="blur-object blur-1"></div>
+<div class="blur-object blur-2"></div>
+<div class="blur-object blur-3"></div>
+
+<header class="header">
+    <div class="container header-inner">
+        <div style="display: flex; align-items: center; gap: 32px;">
+            <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Главная</a>
+                <a href="/marketplace" class="nav-link">Маркетплейс</a>
+                <a href="/support" class="nav-link">Поддержка</a>
+                <a href="/media" class="nav-link">Медиа</a>
+                <a href="/rules" class="nav-link active">Правила</a>
+            </div>
+        </div>
+        <div id="authButtonContainer">
+            <button class="btn-download" onclick="window.location.href='/auth'">Авторизация</button>
+        </div>
+    </div>
+</header>
+
+<main class="container rules-wrapper">
+
+    <div class="rules-nav">
+        <a href="#section1">Общие правила</a>
+        <a href="#section2">Правила для продавцов</a>
+        <a href="#section3">Ответственность продавцов</a>
+        <a href="#section4">Запрещённые товары</a>
+        <a href="#section5">Правила для покупателей</a>
+        <a href="#section6">Разрешение споров</a>
+        <a href="#section7">Заключительные положения</a>
+    </div>
+
+    <div class="glass-card rules-hero">
+        <div class="hero-badge">Официальный документ</div>
+        <h1>Правила NULLMARKET</h1>
+        <p>Настоящие правила являются обязательными для всех пользователей платформы NULLMARKET. Нарушение правил влечёт за собой санкции вплоть до блокировки аккаунта и отказа в выплатах.</p>
+        <div class="last-updated">
+            <span>🕒</span>
+            <span>Последнее обновление: 15 июня 2026 года</span>
+        </div>
+    </div>
+
+    <div class="glass-card" id="section1">
+        <div class="section-header">
+            <span class="section-number">1</span>
+            <h2>Общие правила</h2>
+        </div>
+        <p class="section-desc">Правила, обязательные для всех пользователей платформы независимо от их роли.</p>
+
+        <div class="rule-item">
+            <span class="rule-number">1.1</span>
+            <span class="rule-text">Передача другому пользователю контактных данных (Telegram, Discord, ВКонтакте, телефон и др.) любым способом. Использование контактных данных, полученных от другого пользователя. Связь в игре после выполнения заказа.</span>
+            <span class="rule-sanction">Блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.2</span>
+            <span class="rule-text">Недобросовестное использование системы отзывов (накрутка, шантаж, безосновательное изменение отзыва по старому заказу и т. д.).</span>
+            <span class="rule-sanction warning">Удаление отзыва</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.3</span>
+            <span class="rule-text">Передача третьим лицам либо разглашение какой-либо информации (имя пользователя, идентификатор игрока, сумма и пр.) с целью нанесения вреда пользователю.</span>
+            <span class="rule-sanction">Отказ в выплатах</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.4</span>
+            <span class="rule-text">Попытка покупки или продажи аккаунта NULLMARKET.</span>
+            <span class="rule-sanction warning">Блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.5</span>
+            <span class="rule-text">Размещение на аватаре ссылок или названий любых интернет-ресурсов, противозаконной, порнографической или политической информации.</span>
+            <span class="rule-sanction warning">Удаление аватара</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.6</span>
+            <span class="rule-text">Упоминание в имени ссылок или названий любых интернет-ресурсов, противозаконной или политической информации.</span>
+            <span class="rule-sanction info">Переименование</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.7</span>
+            <span class="rule-text">Нарушения в общем чате: сообщения о продаже, ссылки на предложения, обсуждение или реклама торговых интернет-ресурсов, размещение запросов на массовую покупку товаров в несоответствующем разделе, критика других продавцов или их предложений, спам, флуд, оскорбления, политические обсуждения, а также любые сообщения, нарушающие действующее законодательство.</span>
+            <span class="rule-sanction warning">Блокировка чата</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.8</span>
+            <span class="rule-text">Нарушение правил общения в личном чате или ином месте: оскорбления, угрозы, спам предложениями, флуд. Навязывание диалога с политическим подтекстом, отправка материалов эротического характера без согласия собеседника.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.9</span>
+            <span class="rule-text">Реклама, спам, массовая рассылка пользователям.</span>
+            <span class="rule-sanction warning">Блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.10</span>
+            <span class="rule-text">Мошенничество и обман других пользователей, умышленное вредительство.</span>
+            <span class="rule-sanction">Отказ в выплатах</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.11</span>
+            <span class="rule-text">Обмен денежных средств из одной платёжной системы в другую, перевод денежных средств с одних реквизитов на другие без цели совершения каких-либо заказов. Кардинг, прочие финансовые махинации.</span>
+            <span class="rule-sanction">Отказ в выплатах</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.12</span>
+            <span class="rule-text">Передача ссылок на файлообменники и хостинги изображений без явной необходимости.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.13</span>
+            <span class="rule-text">Обход блокировок и создание новых аккаунтов после блокировки.</span>
+            <span class="rule-sanction">Отказ в выплатах</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.14</span>
+            <span class="rule-text">Использование нецензурной лексики и выражений в любых публичных разделах платформы.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.15</span>
+            <span class="rule-text">Размещение контента, нарушающего авторские права и интеллектуальную собственность третьих лиц.</span>
+            <span class="rule-sanction">Удаление контента</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.16</span>
+            <span class="rule-text">Создание нескольких учётных записей для обхода ограничений или получения нечестного преимущества.</span>
+            <span class="rule-sanction">Блокировка всех аккаунтов</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.17</span>
+            <span class="rule-text">Публикация ложной информации о товарах, ценах или условиях сделки.</span>
+            <span class="rule-sanction warning">Удаление объявлений</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.18</span>
+            <span class="rule-text">Использование автоматических скриптов и ботов для взаимодействия с платформой без явного разрешения администрации.</span>
+            <span class="rule-sanction">Блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.19</span>
+            <span class="rule-text">Попытка взлома, DDoS-атак или других действий, направленных на нарушение работы платформы.</span>
+            <span class="rule-sanction">Отказ в выплатах</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">1.20</span>
+            <span class="rule-text">Игнорирование требований и запросов администрации платформы.</span>
+            <span class="rule-sanction warning">Временная блокировка</span>
+        </div>
+
+        <p style="margin-top: 20px; font-size: 14px; color: #64748b; font-style: italic; background: #f8fafc; padding: 14px 20px; border-radius: 16px; border-left: 3px solid #4f46e5;">Администрация оставляет за собой право смягчить или отменить любое наложенное наказание, если оно нецелесообразно в каком-либо конкретном случае.</p>
+    </div>
+
+    <div class="glass-card" id="section2">
+        <div class="section-header">
+            <span class="section-number">2</span>
+            <h2>Правила для продавцов</h2>
+        </div>
+        <p class="section-desc">Дополнительные правила, регулирующие деятельность продавцов на платформе.</p>
+
+        <h3><span class="sub-number">2.1</span> Запрещённые действия</h3>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.1</span>
+            <span class="rule-text">Попытка передачи товара или оказания услуги без проведения платежа через NULLMARKET. Обмен товарами или услугами.</span>
+            <span class="rule-sanction">Отказ в выплатах</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.2</span>
+            <span class="rule-text">Просьба к покупателю о подтверждении заказа до его фактического выполнения.</span>
+            <span class="rule-sanction warning">Временная блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.3</span>
+            <span class="rule-text">Недобросовестная борьба с конкурентами (покупка товаров для негативных отзывов, недостоверные жалобы).</span>
+            <span class="rule-sanction warning">Временная блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.4</span>
+            <span class="rule-text">Беспричинное игнорирование вопросов покупателей.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.5</span>
+            <span class="rule-text">Осознанное размещение недействительных предложений либо предложений с недействительной ценой.</span>
+            <span class="rule-sanction warning">Временная блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.6</span>
+            <span class="rule-text">Составление некорректного описания товара (например, из одной буквы).</span>
+            <span class="rule-sanction warning">Удаление предложений</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.7</span>
+            <span class="rule-text">При использовании функции «Автоматическая выдача» — внесение в поле «товары» посторонней информации.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.8</span>
+            <span class="rule-text">Использование функции «Автоматическая выдача» для товаров, при продаже которых требуется общение или предоставление дополнительных услуг.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.9</span>
+            <span class="rule-text">Игнорирование рассылок и уведомлений от администрации.</span>
+            <span class="rule-sanction warning">Удаление предложений</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.10</span>
+            <span class="rule-text">Дублирование предложений, засорение таблицы предложений. Размещение предложений о покупке.</span>
+            <span class="rule-sanction warning">Удаление предложений</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.11</span>
+            <span class="rule-text">Продажа товара или услуги через раздел, не предназначенный для этого.</span>
+            <span class="rule-sanction warning">Доначисление комиссии</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.12</span>
+            <span class="rule-text">Размещение объявлений на других площадках. При этом разрешается размещать объявления в социальных сетях, продавать в магазины и т. д.</span>
+            <span class="rule-sanction">Отказ в выплатах</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.13</span>
+            <span class="rule-text">Размещение в предложениях изображений с противозаконной, экстремистской, порнографической или политической информацией, а также со ссылками, фотографиями людей, упоминанием сторонних интернет-ресурсов и изображений, не имеющих отношения к товару.</span>
+            <span class="rule-sanction warning">Удаление изображений</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.14</span>
+            <span class="rule-text">Размещение в предложениях любой информации (включая изображения), которая нарушает права и законные интересы третьих лиц.</span>
+            <span class="rule-sanction warning">Удаление предложений</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.15</span>
+            <span class="rule-text">Установка завышенных цен на товары с целью искусственного завышения рыночной стоимости.</span>
+            <span class="rule-sanction warning">Корректировка цены</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.16</span>
+            <span class="rule-text">Отказ от выполнения заказа после его подтверждения и оплаты покупателем.</span>
+            <span class="rule-sanction">Возврат средств + штраф</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.17</span>
+            <span class="rule-text">Передача неполного или несоответствующего описанию товара.</span>
+            <span class="rule-sanction warning">Возврат части средств</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.18</span>
+            <span class="rule-text">Использование чужих изображений и описаний товаров без разрешения правообладателя.</span>
+            <span class="rule-sanction warning">Удаление контента</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.19</span>
+            <span class="rule-text">Создание нескольких магазинов одним продавцом с целью обхода лимитов и ограничений.</span>
+            <span class="rule-sanction">Блокировка лишних магазинов</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.1.20</span>
+            <span class="rule-text">Продажа товаров, предназначенных для взлома, фишинга или других незаконных действий.</span>
+            <span class="rule-sanction">Отказ в выплатах</span>
+        </div>
+
+        <h3><span class="sub-number">2.2</span> Обязанности продавцов</h3>
+
+        <div class="rule-item">
+            <span class="rule-number">2.2.1</span>
+            <span class="rule-text">Продавец обязан предоставить полную и достоверную информацию о товаре.</span>
+            <span class="rule-sanction success">Исполнение обязательно</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.2.2</span>
+            <span class="rule-text">Продавец должен отвечать на сообщения покупателей в течение 24 часов.</span>
+            <span class="rule-sanction success">Исполнение обязательно</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.2.3</span>
+            <span class="rule-text">Продавец обязан выполнить заказ в оговорённые с покупателем сроки.</span>
+            <span class="rule-sanction success">Исполнение обязательно</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.2.4</span>
+            <span class="rule-text">Продавец должен поддерживать актуальность цен и наличия товаров.</span>
+            <span class="rule-sanction success">Исполнение обязательно</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">2.2.5</span>
+            <span class="rule-text">Продавец обязан соблюдать политику конфиденциальности и не разглашать данные покупателей.</span>
+            <span class="rule-sanction">Отказ в выплатах</span>
+        </div>
+    </div>
+
+    <div class="glass-card" id="section3">
+        <div class="section-header">
+            <span class="section-number">3</span>
+            <h2>Ответственность продавцов</h2>
+        </div>
+        <p class="section-desc">Степень ответственности продавцов при невыполнении обязательств перед покупателями.</p>
+
+        <h3><span class="sub-number">3.1</span> Общие положения</h3>
+
+        <div class="rule-item">
+            <span class="rule-number">3.1.1</span>
+            <span class="rule-text">Отказ в выполнении задач, поставленных сотрудником арбитража, игнорирование его сообщений, а также безучастность во время разрешения спора.</span>
+            <span class="rule-sanction">Возврат до 100%</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.1.2</span>
+            <span class="rule-text">Отказ от консультирования покупателя касательно его заказа, игнорирование вопросов покупателя, отсутствие обслуживания.</span>
+            <span class="rule-sanction">Возврат до 100%</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.1.3</span>
+            <span class="rule-text">Необоснованный отказ от выполнения заказа после его подтверждения.</span>
+            <span class="rule-sanction">Возврат 100% + штраф</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.1.4</span>
+            <span class="rule-text">Предоставление неполной информации о товаре, повлёкшее за собой недовольство покупателя.</span>
+            <span class="rule-sanction warning">Частичный возврат</span>
+        </div>
+
+        <h3><span class="sub-number">3.2</span> Игровая валюта и предметы</h3>
+
+        <div class="rule-item">
+            <span class="rule-number">3.2.1</span>
+            <span class="rule-text">Администрация игры применила к покупателю санкции, поскольку игровая валюта или предметы были получены нелегальным путём.</span>
+            <span class="rule-sanction">Возврат до 100%</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.2.2</span>
+            <span class="rule-text">Администрация игры применила к покупателю санкции из-за покупки игровой валюты или предметов.</span>
+            <span class="rule-sanction warning">Возврат до 50%</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.2.3</span>
+            <span class="rule-text">Продавец обязан покрывать внутриигровую комиссию за передачу валюты. Покупатель должен получить полную сумму, указанную в заказе.</span>
+            <span class="rule-sanction info">Возврат комиссии</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.2.4</span>
+            <span class="rule-text">Стоимость донат-валюты должна быть указана без учёта бонусов, акций или других дополнительных предложений.</span>
+            <span class="rule-sanction">Пропорциональный возврат</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.2.5</span>
+            <span class="rule-text">Передача валюты в меньшем объёме, чем указано в заказе.</span>
+            <span class="rule-sanction">Возврат недостающей суммы</span>
+        </div>
+
+        <h3><span class="sub-number">3.3</span> Аккаунты</h3>
+
+        <div class="rule-item">
+            <span class="rule-number">3.3.1</span>
+            <span class="rule-text">Утрата покупателем аккаунта вследствие восстановления доступа к нему продавцом или первоначальным владельцем.</span>
+            <span class="rule-sanction">Возврат до 100%</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.3.2</span>
+            <span class="rule-text">Блокировка аккаунта администрацией игры из-за самого факта покупки/продажи аккаунта.</span>
+            <span class="rule-sanction warning">Возврат до 50%</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.3.3</span>
+            <span class="rule-text">Передача аккаунта с неполным инвентарём или характеристиками, не соответствующими описанию.</span>
+            <span class="rule-sanction warning">Частичный возврат</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.3.4</span>
+            <span class="rule-text">Отказ от предоставления гарантии на аккаунт в течение оговорённого срока.</span>
+            <span class="rule-sanction">Возврат до 100%</span>
+        </div>
+
+        <h3><span class="sub-number">3.4</span> Услуги</h3>
+
+        <div class="rule-item">
+            <span class="rule-number">3.4.1</span>
+            <span class="rule-text">Существенное изменение характеристик аккаунта, не оговорённое с покупателем.</span>
+            <span class="rule-sanction info">Компенсация ущерба</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.4.2</span>
+            <span class="rule-text">Выполнение услуги с отрицательным результатом.</span>
+            <span class="rule-sanction">Возврат 100% + компенсация</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.4.3</span>
+            <span class="rule-text">Блокировка аккаунта из-за некачественно оказываемой услуги.</span>
+            <span class="rule-sanction">Возврат 100% + компенсация</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.4.4</span>
+            <span class="rule-text">Блокировка аккаунта из-за оказываемой услуги.</span>
+            <span class="rule-sanction warning">Возврат до 50%</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.4.5</span>
+            <span class="rule-text">Необоснованный отказ продавца от дальнейшего выполнения услуги.</span>
+            <span class="rule-sanction info">Оплата 50% работы</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.4.6</span>
+            <span class="rule-text">Задержка оговорённых с покупателем сроков.</span>
+            <span class="rule-sanction info">Снижение оплаты</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">3.4.7</span>
+            <span class="rule-text">Выполнение услуги не в полном объёме, указанном в заказе.</span>
+            <span class="rule-sanction">Пропорциональный возврат</span>
+        </div>
+
+        <p style="margin-top: 20px; font-size: 14px; color: #64748b; font-style: italic; background: #f8fafc; padding: 14px 20px; border-radius: 16px; border-left: 3px solid #4f46e5;">Каждый спор между покупателем и продавцом индивидуален, поэтому окончательное решение о степени ответственности продавца может существенно отличаться от написанного выше. Договорённости в чате между продавцом и покупателем могут быть приняты во внимание.</p>
+    </div>
+
+    <div class="glass-card" id="section4">
+        <div class="section-header">
+            <span class="section-number">4</span>
+            <h2>Запрещённые товары</h2>
+        </div>
+        <p class="section-desc">Перечень категорий товаров, которые запрещены к продаже на NULLMARKET.</p>
+
+        <div class="table-wrapper">
+            <table class="rules-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Категория</th>
+                        <th>Описание</th>
+                        <th style="width: 25%;">Санкции</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Нелегальные товары</strong></td>
+                        <td>Товары, полученные неправомерным путём (взлом, брут, кардинг)</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Обучение незаконным действиям</strong></td>
+                        <td>Способы дюпа, кардинга, взлома</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Персональные данные</strong></td>
+                        <td>Продажа личной информации третьих лиц</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Нелицензионное ПО</strong></td>
+                        <td>Пиратские копии, вредоносное ПО, кейгены</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Аккаунты соцсетей</strong></td>
+                        <td>Кроме специальных разделов для отдельных игр</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Телефонные номера</strong></td>
+                        <td>В том числе виртуальные</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Аккаунты оптом</strong></td>
+                        <td>Кроме лично зарегистрированных продавцом</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Эротика и порнография</strong></td>
+                        <td>Товары и услуги соответствующего содержания</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Спам-услуги</strong></td>
+                        <td>Массовые рассылки, спам-инструменты</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ставки и казино</strong></td>
+                        <td>Любые товары и услуги, связанные с азартными играми</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Донат и накрутка</strong></td>
+                        <td>Все способы искусственного увеличения показателей</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Оффлайн активации</strong></td>
+                        <td>Перепродажа оффлайн активаций и геймпассов</td>
+                        <td><span class="sanction-cell warning">Предупреждение</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Лотереи и розыгрыши</strong></td>
+                        <td>Продажа «рандома», проведение лотерей</td>
+                        <td><span class="sanction-cell warning">Предупреждение</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Криптовалюта</strong></td>
+                        <td>Продажа и обмен криптовалют</td>
+                        <td><span class="sanction-cell warning">Предупреждение</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Наркотические средства</strong></td>
+                        <td>Любые товары и услуги, связанные с наркотиками</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Оружие и боеприпасы</strong></td>
+                        <td>Реальное оружие, макеты, инструкции по изготовлению</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Экстремистские материалы</strong></td>
+                        <td>Пропаганда экстремизма, насилия, разжигание ненависти</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Документы и удостоверения</strong></td>
+                        <td>Паспорта, права, любые официальные документы</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Медицинские препараты</strong></td>
+                        <td>Лекарства, медицинские приборы, рецепты</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Животные и растения</strong></td>
+                        <td>Продажа животных, растений, частей тел</td>
+                        <td><span class="sanction-cell">Блокировка</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="glass-card" id="section5">
+        <div class="section-header">
+            <span class="section-number">5</span>
+            <h2>Правила для покупателей</h2>
+        </div>
+        <p class="section-desc">Правила, регулирующие поведение покупателей на платформе.</p>
+
+        <div class="rule-item">
+            <span class="rule-number">5.1</span>
+            <span class="rule-text">Покупатель обязан ознакомиться с описанием товара перед совершением заказа.</span>
+            <span class="rule-sanction success">Исполнение обязательно</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">5.2</span>
+            <span class="rule-text">Покупатель должен подтвердить получение товара только после фактической проверки.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">5.3</span>
+            <span class="rule-text">Запрещено требовать от продавца передачи товара до совершения оплаты.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">5.4</span>
+            <span class="rule-text">Запрещено использовать систему отзывов для шантажа продавцов.</span>
+            <span class="rule-sanction">Блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">5.5</span>
+            <span class="rule-text">Покупатель обязан соблюдать правила общения и не оскорблять продавцов.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">5.6</span>
+            <span class="rule-text">Запрещено создавать ложные заказы с целью проверки продавца.</span>
+            <span class="rule-sanction warning">Временная блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">5.7</span>
+            <span class="rule-text">Покупатель должен своевременно подтверждать получение товара.</span>
+            <span class="rule-sanction success">Исполнение обязательно</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">5.8</span>
+            <span class="rule-text">Запрещено требовать от продавца выполнения условий, не указанных в описании товара.</span>
+            <span class="rule-sanction info">Отказ в требованиях</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">5.9</span>
+            <span class="rule-text">Покупатель обязан предоставлять достоверную информацию при регистрации и совершении заказов.</span>
+            <span class="rule-sanction">Блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">5.10</span>
+            <span class="rule-text">Запрещено использовать чужие платёжные средства для совершения покупок.</span>
+            <span class="rule-sanction">Отказ в обслуживании</span>
+        </div>
+    </div>
+
+    <div class="glass-card" id="section6">
+        <div class="section-header">
+            <span class="section-number">6</span>
+            <h2>Разрешение споров</h2>
+        </div>
+        <p class="section-desc">Порядок разрешения спорных ситуаций между покупателями и продавцами.</p>
+
+        <div class="rule-item">
+            <span class="rule-number">6.1</span>
+            <span class="rule-text">При возникновении спора стороны обязаны предоставить все доказательства своей позиции (скриншоты, логи, видео).</span>
+            <span class="rule-sanction success">Рассмотрение в течение 24 часов</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">6.2</span>
+            <span class="rule-text">Арбитраж принимает решение на основе предоставленных доказательств и правил платформы.</span>
+            <span class="rule-sanction success">Решение окончательно</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">6.3</span>
+            <span class="rule-text">В случае признания продавца виновным средства возвращаются покупателю.</span>
+            <span class="rule-sanction success">Возврат в течение 3 дней</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">6.4</span>
+            <span class="rule-text">При признании покупателя недобросовестным средства размораживаются в пользу продавца.</span>
+            <span class="rule-sanction success">Зачисление продавцу</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">6.5</span>
+            <span class="rule-text">Стороны обязаны сотрудничать с арбитражем и предоставлять запрашиваемую информацию.</span>
+            <span class="rule-sanction warning">Игнорирование влечёт санкции</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">6.6</span>
+            <span class="rule-text">Решение арбитража может быть обжаловано в течение 3 дней с момента вынесения.</span>
+            <span class="rule-sanction info">Повторное рассмотрение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">6.7</span>
+            <span class="rule-text">При повторном рассмотрении спора учитываются только новые доказательства.</span>
+            <span class="rule-sanction info">Только новые данные</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">6.8</span>
+            <span class="rule-text">За злоупотребление системой арбитража предусмотрены санкции.</span>
+            <span class="rule-sanction warning">Временная блокировка</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">6.9</span>
+            <span class="rule-text">Стороны не имеют права разглашать информацию о ходе рассмотрения спора третьим лицам.</span>
+            <span class="rule-sanction warning">Предупреждение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">6.10</span>
+            <span class="rule-text">Окончательное решение по спору принимается арбитром и не подлежит дальнейшему оспариванию.</span>
+            <span class="rule-sanction success">Исполнение обязательно</span>
+        </div>
+    </div>
+
+    <div class="glass-card" id="section7">
+        <div class="section-header">
+            <span class="section-number">7</span>
+            <h2>Заключительные положения</h2>
+        </div>
+        <p class="section-desc">Общие положения, регулирующие действие правил.</p>
+
+        <div class="rule-item">
+            <span class="rule-number">7.1</span>
+            <span class="rule-text">Администрация оставляет за собой право изменять правила в любое время без предварительного уведомления.</span>
+            <span class="rule-sanction success">Вступают в силу с момента публикации</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">7.2</span>
+            <span class="rule-text">Пользователь обязан самостоятельно отслеживать изменения в правилах.</span>
+            <span class="rule-sanction warning">Незнание не освобождает от ответственности</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">7.3</span>
+            <span class="rule-text">Регистрируясь на платформе, пользователь автоматически соглашается с действующими правилами.</span>
+            <span class="rule-sanction success">Согласие обязательно</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">7.4</span>
+            <span class="rule-text">В случае противоречия между правилами на разных языках, приоритет имеет русскоязычная версия.</span>
+            <span class="rule-sanction success">Русская версия основная</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">7.5</span>
+            <span class="rule-text">Все правила применяются ко всем пользователям независимо от их статуса и роли.</span>
+            <span class="rule-sanction success">Равное применение</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">7.6</span>
+            <span class="rule-text">В случае обнаружения нарушения правил пользователями, администрация имеет право применить санкции без предупреждения.</span>
+            <span class="rule-sanction warning">Без предупреждения</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">7.7</span>
+            <span class="rule-text">Администрация не несёт ответственности за потери пользователей, связанные с блокировкой аккаунтов за нарушение правил.</span>
+            <span class="rule-sanction info">Ответственность на пользователе</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-number">7.8</span>
+            <span class="rule-text">Все спорные вопросы, не урегулированные настоящими правилами, решаются администрацией в индивидуальном порядке.</span>
+            <span class="rule-sanction info">Индивидуальное решение</span>
+        </div>
+
+        <p style="margin-top: 20px; font-size: 14px; color: #64748b; font-style: italic; background: #f8fafc; padding: 14px 20px; border-radius: 16px; border-left: 3px solid #4f46e5;">Настоящие правила вступают в силу с момента их публикации. Используя NULLMARKET, вы подтверждаете, что ознакомлены с правилами и принимаете их.</p>
+    </div>
+
+    <div class="rules-footer">
+        <p>© 2026 NULLMARKET. Все права защищены.</p>
+    </div>
+
+</main>
+
+<script>
+    async function checkAuth() {
+        try {
+            const response = await fetch('/api/me');
+            if (response.ok) {
+                const user = await response.json();
+                const container = document.getElementById('authButtonContainer');
+                container.innerHTML = `
+                    <div class="user-menu-container">
+                        <img src="${user.avatar}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=38&rounded=true'">
+                        <span class="user-name">${user.name}</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        <div class="user-dropdown">
+                            <div class="dropdown-header">
+                                <div class="dropdown-name">${user.name}</div>
+                                <div class="dropdown-email">${user.email}</div>
+                                <div class="dropdown-balance">Баланс: ${user.balance || 0} ₽</div>
+                            </div>
+                            <div class="dropdown-item" onclick="window.location.href='/profile'">Профиль</div>
+                            <div class="dropdown-item" onclick="window.location.href='/finances'">Финансы</div>
+                            <div class="dropdown-item" onclick="window.location.href='/messages'">Сообщения</div>
+                            <div class="dropdown-item logout" onclick="logout()">Выйти</div>
+                        </div>
+                    </div>
+                `;
+                const menuContainer = container.querySelector('.user-menu-container');
+                const dropdown = container.querySelector('.user-dropdown');
+                menuContainer.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                });
+                document.addEventListener('click', () => { dropdown.style.display = 'none'; });
+            }
+        } catch(e) {
+            console.log('Не авторизован');
+        }
+    }
+
+    async function logout() {
+        await fetch('/api/logout', { method: 'POST' });
+        window.location.href = '/';
+    }
+
+    document.addEventListener('DOMContentLoaded', checkAuth);
+</script>
+
+</body>
+</html>

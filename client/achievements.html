@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NULLMARKET — Достижения бета-тестеров</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: #f3f5fc;
+            color: #121826;
+            line-height: 1.4;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .blur-object {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .blur-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #a78bfa, #3b82f6);
+            top: -150px;
+            left: -150px;
+        }
+
+        .blur-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f97316, #facc15);
+            bottom: -250px;
+            right: -200px;
+            opacity: 0.4;
+        }
+
+        .blur-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2dd4bf, #14b8a6);
+            top: 40%;
+            left: 60%;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(125deg, #0F2027, #203A43, #2C5364);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+            letter-spacing: -0.5px;
+        }
+
+        .badge-gold {
+            background: linear-gradient(105deg, #fef3c7, #fde68a);
+            padding: 5px 14px;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #92400e;
+            margin-left: 12px;
+        }
+
+        .badge-gold.other-user {
+            background: linear-gradient(105deg, #dbeafe, #93c5fd);
+            color: #1e40af;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #475569;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #4f46e5;
+        }
+
+        .btn-download {
+            background: #11181c;
+            color: white;
+            border: none;
+            padding: 10px 26px;
+            border-radius: 48px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 14px -8px rgba(0, 0, 0, 0.2);
+        }
+
+        .user-menu-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            min-width: 220px;
+            display: none;
+            overflow: hidden;
+            z-index: 50;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        .dropdown-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .dropdown-email {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .dropdown-balance {
+            font-size: 13px;
+            margin-top: 6px;
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dropdown-item:hover {
+            background: #f1f5f9;
+        }
+
+        .dropdown-item.logout {
+            border-top: 1px solid #e2e8f0;
+            color: #ef4444;
+        }
+
+        .chevron {
+            transition: transform 0.2s;
+        }
+
+        .user-menu-container:hover .chevron {
+            transform: rotate(180deg);
+        }
+
+        .page-header {
+            margin: 32px 0 24px;
+        }
+
+        .page-header h1 {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(115deg, #111827, #2d3a5e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .page-header .subtitle {
+            font-size: 17px;
+            color: #2d3a5e;
+            margin-top: 8px;
+        }
+
+        .page-header .subtitle .highlight {
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 20px 28px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .profile-card .avatar-large {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e2e8f0;
+        }
+
+        .profile-card .user-info h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .profile-card .user-info .user-email {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .profile-card .user-info .user-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .profile-card .user-info .user-stats span {
+            font-size: 13px;
+            color: #475569;
+        }
+
+        .profile-card .user-info .user-stats strong {
+            color: #1e293b;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 16px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #4338ca;
+        }
+
+        .back-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 24px 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 34px;
+            font-weight: 800;
+            background: linear-gradient(145deg, #4f46e5, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .collections-tabs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .collection-tab {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            font-weight: 500;
+            font-size: 14px;
+            color: #1e293b;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .collection-tab:hover {
+            border-color: #4f46e5;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .collection-tab.active {
+            background: #4f46e5;
+            border-color: #4f46e5;
+            color: white;
+        }
+
+        .collection-tab.active svg {
+            stroke: white;
+        }
+
+        .collection-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: #4f46e5;
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .collection-tab.active .collection-icon svg {
+            stroke: white;
+        }
+
+        .collection-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .collection-count {
+            font-size: 11px;
+            opacity: 0.7;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0 8px;
+            border-radius: 12px;
+        }
+
+        .collection-tab.active .collection-count {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .collection-tab.view-only {
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 24px 24px 20px;
+            transition: all 0.25s;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.04);
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.1);
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+
+        .achievement-card.locked {
+            opacity: 0.6;
+        }
+
+        .achievement-card.locked .achievement-icon {
+            filter: grayscale(0.5);
+        }
+
+        .achievement-card.unlocked {
+            border-left: 4px solid #10b981;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 253, 244, 0.7));
+        }
+
+        .achievement-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .achievement-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(241, 245, 249, 0.7);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            backdrop-filter: blur(4px);
+        }
+
+        .achievement-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .achievement-icon.unlocked svg {
+            stroke: #10b981;
+        }
+
+        .achievement-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .achievement-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .achievement-desc {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .rarity-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 12px;
+        }
+
+        .rarity-common {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .rarity-rare {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .rarity-epic {
+            background: #f3e8ff;
+            color: #6b21a5;
+        }
+
+        .rarity-legendary {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .rarity-mythic {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #78350f;
+        }
+
+        .achievement-reward {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #fef3c7;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #d97706;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            background: rgba(226, 232, 240, 0.6);
+            border-radius: 20px;
+            height: 6px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-fill.locked-fill {
+            background: linear-gradient(90deg, #94a3b8, #64748b);
+        }
+
+        .progress-text {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        .unlocked-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .locked-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #94a3b8;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .feature-btn {
+            margin-top: 14px;
+            padding: 6px 16px;
+            background: rgba(241, 245, 249, 0.8);
+            border: none;
+            border-radius: 24px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #1e293b;
+            backdrop-filter: blur(4px);
+        }
+
+        .feature-btn.active {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .feature-btn:hover:not(:disabled) {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .feature-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .feature-btn.hidden-btn {
+            display: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 56px;
+            z-index: 200;
+            font-size: 14px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 18px -8px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 760px) {
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .user-menu-container {
+                gap: 4px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .stats-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-value {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                gap: 8px;
+            }
+
+            .nav-link {
+                font-size: 13px;
+            }
+
+            .collections-tabs {
+                gap: 8px;
+            }
+
+            .collection-tab {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 16px;
+            }
+
+            .profile-card .user-info .user-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-cards {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 16px 12px;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blur-object blur-1"></div>
+    <div class="blur-object blur-2"></div>
+    <div class="blur-object blur-3"></div>
+
+    <header class="header">
+        <div class="container header-inner">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <span class="logo" onclick="window.location.href='/'">NULLMARKET</span>
+					<div class="nav-links">
+						<a href="/" class="nav-link">Главная</a>
+						<a href="/marketplace" class="nav-link">Маркетплейс</a>
+						<a href="/support" class="nav-link">Поддержка</a>
+						<a href="/achievements" class="nav-link active">Достижения</a>
+						<a href="/media" class="nav-link">Медиа</a>
+						
+					</div>
+            </div>
+            <div id="authButtonContainer">Загрузка...</div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <a href="#" class="back-link" id="backLink" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Назад к профилю
+        </a>
+
+        <div class="profile-card" id="profileCard" style="display: none;">
+            <img src="" class="avatar-large" id="profileAvatar" alt="Avatar">
+            <div class="user-info">
+                <h2 id="profileName">Пользователь</h2>
+                <div class="user-email" id="profileEmail">email@example.com</div>
+                <div class="user-stats">
+                    <span>🏆 <strong id="profileAchievementsCount">0</strong> достижений</span>
+                    <span>⭐ <strong id="profilePointsCount">0</strong> баллов</span>
+                    <span>👑 <strong id="profileRank">Не определён</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-header">
+            <h1 id="pageTitle">Достижения NULLMARKET</h1>
+            <p class="subtitle" id="pageSubtitle">Зарабатывайте баллы за тестирование, открывайте новые достижения и показывайте свои успехи в профиле</p>
+        </div>
+
+        <div class="stats-cards" id="statsCards">
+            <div class="stat-card"><div class="stat-value" id="totalAchievements">0</div><div class="stat-label">Всего достижений</div></div>
+            <div class="stat-card"><div class="stat-value" id="unlockedCount">0</div><div class="stat-label">Разблокировано</div></div>
+            <div class="stat-card"><div class="stat-value" id="completionPercent">0%</div><div class="stat-label">Прогресс</div></div>
+            <div class="stat-card"><div class="stat-value" id="totalRewards">0</div><div class="stat-label">Всего баллов</div></div>
+        </div>
+
+        <div class="collections-tabs" id="collectionsTabs">
+            <div style="width:100%;text-align:center;padding:20px;color:#94a3b8;">Загрузка категорий...</div>
+        </div>
+
+        <div class="achievements-grid" id="achievementsGrid">
+            <div class="empty-state"><span class="icon">⏳</span>Загрузка достижений...</div>
+        </div>
+
+    </main>
+
+    <script>
+        let currentUser = null;
+        let collections = [];
+        let currentCollectionCode = null;
+        let viewingUserId = null;
+        let viewedUser = null;
+
+        // Все роли с их уровнями и отображаемыми названиями
+        const ROLES = {
+            'user': { level: 0, name: 'Пользователь' },
+            'beta_tester': { level: 20, name: 'Бета-Тестер' },
+            'active_beta_tester': { level: 40, name: 'Активный Бета-Тестер' },
+            'senior_beta_tester': { level: 60, name: 'Старший Бета-Тестер' },
+            'lead_beta_tester': { level: 80, name: 'Ведущий Бета-Тестер' },
+            'head_beta_testers': { level: 90, name: 'Руководитель Бета-Тестирования' },
+            'support_trainee': { level: 30, name: 'Стажер Поддержки' },
+            'tech_support': { level: 35, name: 'Тех. Поддержка' },
+            'pro_support': { level: 40, name: 'Проф. Поддержка' },
+            'recruiter': { level: 60, name: 'Рекрутер (HR)' },
+            'smm_manager': { level: 70, name: 'SMM Менеджер' },
+            'pr_manager': { level: 75, name: 'PR Менеджер' },
+            'senior_pr_manager': { level: 80, name: 'Старший PR Менеджер' },
+            'content_label_moderator': { level: 86, name: 'Модератор разметки контента' },
+            'content_moderator': { level: 87, name: 'Модератор Контента' },
+            'senior_content_label_moderator': { level: 88, name: 'Старший Модератор разметки контента' },
+            'senior_content_moderator': { level: 89, name: 'Старший Модератор контента' },
+            'head_cooperation': { level: 91, name: 'Руководитель Сотрудничеств' },
+            'head_marketing': { level: 92, name: 'Руководитель Маркетинга и PR' },
+            'head_support': { level: 93, name: 'Руководитель Поддержки' },
+            'head_moderation': { level: 94, name: 'Руководитель Модерации' },
+            'tech_admin': { level: 95, name: 'Тех. Администратор' },
+            'developer': { level: 96, name: 'Разработчик' },
+            'tech_lead': { level: 97, name: 'Ведущий разработчик' },
+            'ciso': { level: 98, name: 'Глава Безопасности' },
+            'ceo': { level: 99, name: 'Исполнительный Директор' },
+            'board_of_directors': { level: 100, name: 'Совет Директоров' }
+        };
+
+        // Список бета-ролей для определения ранга
+        const BETA_ROLES = ['beta_tester', 'active_beta_tester', 'senior_beta_tester', 'lead_beta_tester', 'head_beta_testers'];
+
+        function getRoleName(role) {
+            return ROLES[role]?.name || role || 'Пользователь';
+        }
+
+        function getRoleLevel(role) {
+            return ROLES[role]?.level || 0;
+        }
+
+        function getBetaRank(role) {
+            if (!role) return 'Не участвует';
+            const rankMap = {
+                'beta_tester': 'Бета-Тестер',
+                'active_beta_tester': 'Активный Бета-Тестер',
+                'senior_beta_tester': 'Старший Бета-Тестер',
+                'lead_beta_tester': 'Ведущий Бета-Тестер',
+                'head_beta_testers': 'Руководитель Бета-Тестирования'
+            };
+            return rankMap[role] || null;
+        }
+
+        function getUserIdFromUrl() {
+            const path = window.location.pathname;
+            const match = path.match(/^\/user\/(\d+)\/achievements$/);
+            return match ? parseInt(match[1]) : null;
+        }
+
+        async function checkAuth() {
+            viewingUserId = getUserIdFromUrl();
+
+            try {
+                const response = await fetch('/api/me');
+                if (response.ok) {
+                    currentUser = await response.json();
+                    showUserMenu(currentUser);
+
+                    if (viewingUserId) {
+                        await loadUserProfile(viewingUserId);
+                        await loadAchievements(viewingUserId);
+                    } else {
+                        await loadAchievements(null);
+                    }
+                } else {
+                    if (viewingUserId) {
+                        await loadUserProfile(viewingUserId);
+                        await loadAchievements(viewingUserId);
+                    } else {
+                        window.location.href = '/auth.html';
+                    }
+                }
+            } catch (error) {
+                if (viewingUserId) {
+                    try {
+                        await loadUserProfile(viewingUserId);
+                        await loadAchievements(viewingUserId);
+                    } catch (e) {
+                        window.location.href = '/auth.html';
+                    }
+                } else {
+                    window.location.href = '/auth.html';
+                }
+            }
+        }
+
+        async function loadUserProfile(userId) {
+            try {
+                const response = await fetch(`/api/users/${userId}`);
+                if (response.ok) {
+                    viewedUser = await response.json();
+                    renderProfileCard(viewedUser);
+                    updatePageForOtherUser(viewedUser);
+                } else {
+                    showToast('Пользователь не найден', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+                showToast('Ошибка загрузки профиля', 'error');
+            }
+        }
+
+        function renderProfileCard(user) {
+            const card = document.getElementById('profileCard');
+            const avatar = document.getElementById('profileAvatar');
+            const name = document.getElementById('profileName');
+            const email = document.getElementById('profileEmail');
+            const achievementsCount = document.getElementById('profileAchievementsCount');
+            const pointsCount = document.getElementById('profilePointsCount');
+            const rank = document.getElementById('profileRank');
+
+            avatar.src = user.avatar || `https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=64&rounded=true`;
+            name.textContent = user.name || 'Пользователь';
+            email.textContent = user.email || '';
+
+            // Подсчёт достижений и баллов из коллекций
+            let totalAchievements = 0;
+            let totalPoints = 0;
+            collections.forEach(col => {
+                (col.achievements || []).forEach(ach => {
+                    if (ach.unlocked) {
+                        totalAchievements++;
+                        totalPoints += ach.points_reward || 0;
+                    }
+                });
+            });
+
+            achievementsCount.textContent = totalAchievements;
+            pointsCount.textContent = totalPoints;
+
+            // Определение ранга бета-тестера
+            const betaRank = getBetaRank(user.role);
+            if (betaRank) {
+                rank.textContent = betaRank;
+                rank.style.color = '#4f46e5';
+            } else {
+                rank.textContent = 'Не участвует';
+                rank.style.color = '#94a3b8';
+            }
+
+            card.style.display = 'flex';
+        }
+
+        function updatePageForOtherUser(user) {
+            const badge = document.getElementById('pageBadge');
+            badge.textContent = `Достижения ${user.name}`;
+            badge.className = 'badge-gold other-user';
+
+            document.getElementById('pageTitle').textContent = `Достижения ${user.name}`;
+            document.getElementById('pageSubtitle').innerHTML = `Достижения пользователя <span class="highlight">${user.name}</span> в программе бета-тестирования NULLMARKET`;
+
+            const backLink = document.getElementById('backLink');
+            backLink.style.display = 'inline-flex';
+            backLink.href = `/user/${user.user_id}`;
+        }
+
+        function showUserMenu(user) {
+            const container = document.getElementById('authButtonContainer');
+            const userDiv = document.createElement('div');
+            userDiv.className = 'user-menu-container';
+            const avatarUrl = user.avatar || `https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=40&rounded=true`;
+
+            const betaRank = getBetaRank(user.role);
+            const rankDisplay = betaRank ? ` (${betaRank})` : '';
+
+            userDiv.innerHTML = `
+                <img src="${avatarUrl}" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?background=4f46e5&color=fff&name=${encodeURIComponent(user.name)}&size=40&rounded=true'">
+                <span class="user-name">${escapeHtml(user.name)}${rankDisplay}</span>
+                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <div class="user-dropdown">
+                    <div class="dropdown-header">
+                        <div class="dropdown-name">${escapeHtml(user.name)}</div>
+                        <div class="dropdown-email">${escapeHtml(user.email)}</div>
+                        <div class="dropdown-balance">Баланс: ${user.balance || 0} ₽</div>
+                    </div>
+                    <div class="dropdown-item" data-action="profile">Профиль</div>
+                    <div class="dropdown-item" data-action="betaTesting">Бета-тестинг</div>
+                    <div class="dropdown-item" data-action="achievements">Мои достижения</div>
+                    <div class="dropdown-item logout" data-action="logout">Выйти</div>
+                </div>
+            `;
+            container.innerHTML = '';
+            container.appendChild(userDiv);
+
+            const menuContainer = document.querySelector('.user-menu-container');
+            const dropdown = document.querySelector('.user-dropdown');
+
+            menuContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+
+            document.addEventListener('click', () => {
+                dropdown.style.display = 'none';
+            });
+
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                item.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    dropdown.style.display = 'none';
+                    const action = item.dataset.action;
+                    if (action === 'logout') {
+                        await fetch('/api/logout', { method: 'POST' });
+                        window.location.href = '/auth.html';
+                    } else if (action === 'profile') {
+                        window.location.href = `/user/${user.user_id}`;
+                    } else if (action === 'betaTesting') {
+                        window.location.href = '/beta-testing';
+                    } else if (action === 'achievements') {
+                        window.location.href = '/achievements';
+                    }
+                });
+            });
+        }
+
+        async function loadAchievements(userId) {
+            try {
+                const targetId = userId || (currentUser ? currentUser.user_id : null);
+                const url = targetId ? `/api/achievements/collections?user_id=${targetId}` : '/api/achievements/collections';
+
+                const response = await fetch(url);
+                if (response.ok) {
+                    collections = await response.json();
+                    console.log('Загружено коллекций:', collections.length);
+
+                    if (collections.length > 0) {
+                        renderCollections();
+                        if (!currentCollectionCode || !collections.find(c => c.code === currentCollectionCode)) {
+                            currentCollectionCode = collections[0].code;
+                        }
+                        setActiveCollection(currentCollectionCode);
+
+                        // Обновляем профиль, если он показан
+                        if (viewedUser) {
+                            renderProfileCard(viewedUser);
+                        }
+                    } else {
+                        document.getElementById('collectionsTabs').innerHTML = '<div style="width:100%;text-align:center;padding:20px;color:#94a3b8;">Коллекции не найдены</div>';
+                        document.getElementById('achievementsGrid').innerHTML = '<div class="empty-state"><span class="icon">📭</span>Коллекции не найдены</div>';
+                    }
+                    updateStats();
+                } else {
+                    console.error('Ошибка загрузки коллекций:', response.status);
+                    document.getElementById('achievementsGrid').innerHTML = '<div class="empty-state"><span class="icon">❌</span>Ошибка загрузки достижений</div>';
+                }
+            } catch (error) {
+                console.error('Error loading achievements:', error);
+                document.getElementById('achievementsGrid').innerHTML = '<div class="empty-state"><span class="icon">❌</span>Ошибка загрузки достижений</div>';
+            }
+        }
+
+        function renderCollections() {
+            const container = document.getElementById('collectionsTabs');
+            if (!container) return;
+
+            const isViewingOther = !!viewingUserId;
+
+            container.innerHTML = collections.map(col => {
+                const count = (col.achievements || []).length;
+                const unlockedCount = (col.achievements || []).filter(a => a.unlocked).length;
+                return `
+                    <div class="collection-tab ${isViewingOther ? 'view-only' : ''}" data-collection="${escapeHtml(col.code)}">
+                        <div class="collection-icon">
+                            ${col.icon_svg ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="${escapeHtml(col.icon_svg)}"/></svg>` : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/></svg>'}
+                        </div>
+                        <span class="collection-name">${escapeHtml(col.name)}</span>
+                        <span class="collection-count">${unlockedCount}/${count}</span>
+                    </div>
+                `;
+            }).join('');
+
+            if (!viewingUserId) {
+                document.querySelectorAll('.collection-tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const code = tab.dataset.collection;
+                        if (code) {
+                            setActiveCollection(code);
+                        }
+                    });
+                });
+            }
+        }
+
+        function setActiveCollection(collectionCode) {
+            if (!collectionCode) return;
+
+            currentCollectionCode = collectionCode;
+
+            document.querySelectorAll('.collection-tab').forEach(tab => {
+                if (tab.dataset.collection === collectionCode) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            renderAchievements();
+        }
+
+        function renderAchievements() {
+            const container = document.getElementById('achievementsGrid');
+            if (!container) return;
+
+            const collection = collections.find(c => c.code === currentCollectionCode);
+
+            if (!collection) {
+                container.innerHTML = `<div class="empty-state"><span class="icon">🔍</span>Коллекция "${currentCollectionCode}" не найдена</div>`;
+                return;
+            }
+
+            const achievements = collection.achievements || [];
+
+            if (achievements.length === 0) {
+                container.innerHTML = `<div class="empty-state"><span class="icon">📭</span>Нет достижений в этой коллекции</div>`;
+                return;
+            }
+
+            const isViewingOther = !!viewingUserId;
+
+            container.innerHTML = achievements.map(ach => {
+                const isUnlocked = !!ach.unlocked;
+                const rarityClass = `rarity-${ach.rarity || 'common'}`;
+                const rarityName = {
+                    common: 'Обычное',
+                    rare: 'Редкое',
+                    epic: 'Эпическое',
+                    legendary: 'Легендарное',
+                    mythic: 'Мифическое'
+                } [ach.rarity] || 'Обычное';
+
+                let progressPercent = ach.is_completed ? 100 : (ach.progress || 0);
+                if (progressPercent > 100) progressPercent = 100;
+
+                let progressText = ach.is_completed ? 'Выполнено' : `${ach.progress || 0} / ${ach.requirement_value}`;
+
+                if (isViewingOther) {
+                    progressText = isUnlocked ? 'Разблокировано' : 'Закрыто';
+                    progressPercent = isUnlocked ? 100 : 0;
+                }
+
+                let iconHtml = `<svg viewBox="0 0 24 24" fill="none" stroke="${ach.icon_color || '#4f46e5'}" stroke-width="1.8"><circle cx="12" cy="12" r="10"/></svg>`;
+                if (ach.icon_svg) {
+                    iconHtml = `<svg viewBox="0 0 24 24" fill="none" stroke="${ach.icon_color || '#4f46e5'}" stroke-width="1.8"><path d="${escapeHtml(ach.icon_svg)}"/></svg>`;
+                }
+
+                const isFeatured = ach.is_featured || 0;
+                const showFeatureBtn = !isViewingOther;
+
+                return `
+                    <div class="achievement-card ${isUnlocked ? 'unlocked' : 'locked'}">
+                        ${isUnlocked ? '<div class="unlocked-badge">Разблокировано</div>' : (isViewingOther ? '<div class="locked-badge">Закрыто</div>' : '')}
+                        <div class="achievement-header">
+                            <div class="achievement-icon ${isUnlocked ? 'unlocked' : ''}" style="background: ${isUnlocked ? 'rgba(240, 253, 244, 0.7)' : 'rgba(241, 245, 249, 0.7)'}">
+                                ${iconHtml}
+                            </div>
+                            <div class="achievement-info">
+                                <div class="achievement-name">${escapeHtml(ach.name)}</div>
+                                <div class="achievement-desc">${escapeHtml(ach.description)}</div>
+                            </div>
+                        </div>
+                        <div class="rarity-badge ${rarityClass}">${rarityName}</div>
+                        ${ach.points_reward > 0 ? `<div class="achievement-reward">+${ach.points_reward} баллов</div>` : ''}
+                        <div class="progress-bar"><div class="progress-fill ${!isUnlocked && isViewingOther ? 'locked-fill' : ''}" style="width: ${progressPercent}%"></div></div>
+                        <div class="progress-text">${progressText}</div>
+                        <button class="feature-btn ${isFeatured ? 'active' : ''} ${showFeatureBtn ? '' : 'hidden-btn'}" data-id="${ach.id}" ${(!isUnlocked || showFeatureBtn === false) ? 'disabled' : ''}>
+                            ${isFeatured ? 'В профиле' : 'Поставить в профиль'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            if (!viewingUserId) {
+                document.querySelectorAll('.feature-btn:not(.hidden-btn)').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        const achievementId = btn.dataset.id;
+                        if (!achievementId) return;
+
+                        try {
+                            const response = await fetch('/api/achievements/feature', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ achievement_id: parseInt(achievementId) })
+                            });
+                            if (response.ok) {
+                                showToast('Достижение установлено в профиль', 'success');
+                                await loadAchievements(null);
+                                if (currentCollectionCode) {
+                                    setActiveCollection(currentCollectionCode);
+                                }
+                            } else {
+                                const data = await response.json();
+                                showToast(data.error || 'Ошибка', 'error');
+                            }
+                        } catch (error) {
+                            console.error('Error setting featured:', error);
+                            showToast('Ошибка при установке', 'error');
+                        }
+                    });
+                });
+            }
+        }
+
+        function updateStats() {
+            let total = 0;
+            let unlocked = 0;
+            let totalRewards = 0;
+
+            collections.forEach(col => {
+                (col.achievements || []).forEach(ach => {
+                    total++;
+                    if (ach.unlocked) {
+                        unlocked++;
+                        totalRewards += ach.points_reward || 0;
+                    }
+                });
+            });
+
+            const percent = total ? Math.round(unlocked / total * 100) : 0;
+            document.getElementById('totalAchievements').innerText = total;
+            document.getElementById('unlockedCount').innerText = unlocked;
+            document.getElementById('completionPercent').innerText = percent + '%';
+            document.getElementById('totalRewards').innerText = totalRewards;
+        }
+
+        function showToast(message, type = 'info') {
+            document.querySelectorAll('.toast').forEach(el => el.remove());
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.style.background = type === 'error' ? '#dc2626' : (type === 'success' ? '#10b981' : '#1e293b');
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+        }
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+
+</body>
+</html>
